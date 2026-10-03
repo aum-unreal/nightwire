@@ -3,14 +3,15 @@
 Several agents (Codex, Claude Code) work on this project. GitHub is the shared record:
 `origin` = https://github.com/aum-unreal/nightwire (**public**), branch `main`.
 
-## After every APK version is built: commit and push to main
+## After every APK version is built: release it
 
-Whenever you bump the version (`package.json` and the `AndroidManifest.xml` versionCode/versionName) and `./build.sh` succeeds with the tests passing:
+Whenever you bump the version (`package.json` and the `AndroidManifest.xml` versionCode/versionName), add the README's `Nightwire <version> ...` paragraph, and `./build.sh` succeeds with the tests passing, run:
 
-1. `git pull --rebase origin main` first. Another agent may have pushed.
-2. `git add -A` and `git commit -m "Nightwire <version>: <one-line summary>"`.
-3. `git push origin main`.
-4. Check that `git status -sb` shows `## main...origin/main` with nothing ahead.
+```sh
+scripts/release.sh "one-line summary"
+```
+
+It refuses to run if the versions disagree, if the APK is older than the source, or if the README paragraph is missing. It then commits, runs `git pull --rebase`, pushes `main`, tags `v<version>`, and creates a GitHub release with `Nightwire-<version>.apk` attached and the README paragraph as notes. Every built version must end up as a release with its APK. If the script fails, fix the cause and rerun it. Use `--replace` only to re-upload a corrected APK for the same version.
 
 Rules:
 - Never force-push or rewrite `main` history. If the rebase conflicts, resolve it or stop and ask.
