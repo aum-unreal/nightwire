@@ -1,0 +1,53 @@
+/* Full, unmodified upstream TrueType faces. Loaded from the APK only when selected. */
+@font-face{font-family:"NW Source Sans 3";src:url("fonts/source-sans3.ttf") format("truetype");font-style:normal;font-weight:200 900;font-display:swap}
+@font-face{font-family:"NW Source Sans 3";src:url("fonts/source-sans3-italic.ttf") format("truetype");font-style:italic;font-weight:200 900;font-display:swap}
+@font-face{font-family:"NW Literata";src:url("fonts/literata.ttf") format("truetype");font-style:normal;font-weight:200 900;font-display:swap}
+@font-face{font-family:"NW Literata";src:url("fonts/literata-italic.ttf") format("truetype");font-style:italic;font-weight:200 900;font-display:swap}
+@font-face{font-family:"NW Atkinson Next";src:url("fonts/atkinson-next.ttf") format("truetype");font-style:normal;font-weight:200 800;font-display:swap}
+@font-face{font-family:"NW Atkinson Next";src:url("fonts/atkinson-next-italic.ttf") format("truetype");font-style:italic;font-weight:200 800;font-display:swap}
+@font-face{font-family:"NW Plex Mono";src:url("fonts/plex-mono.ttf") format("truetype");font-style:normal;font-weight:400;font-display:swap}
+@font-face{font-family:"NW Plex Mono";src:url("fonts/plex-mono-italic.ttf") format("truetype");font-style:italic;font-weight:400;font-display:swap}
+@font-face{font-family:"NW Plex Mono";src:url("fonts/plex-mono-semibold.ttf") format("truetype");font-style:normal;font-weight:600 700;font-display:swap}
+@font-face{font-family:"NW Plex Mono";src:url("fonts/plex-mono-semibold-italic.ttf") format("truetype");font-style:italic;font-weight:600 700;font-display:swap}
+@font-face{font-family:"NW Inter";src:url("fonts/inter-italic.ttf") format("truetype");font-style:italic;font-weight:100 900;font-display:swap}
+@font-face{font-family:"NW Inter";src:url("fonts/inter.ttf") format("truetype");font-style:normal;font-weight:100 900;font-display:swap}
+@font-face{font-family:"NW DM Sans";src:url("fonts/dm-italic.ttf") format("truetype");font-style:italic;font-weight:100 1000;font-display:swap}
+@font-face{font-family:"NW DM Sans";src:url("fonts/dm.ttf") format("truetype");font-style:normal;font-weight:100 1000;font-display:swap}
+@font-face{font-family:"NW Work Sans";src:url("fonts/work-italic.ttf") format("truetype");font-style:italic;font-weight:100 900;font-display:swap}
+@font-face{font-family:"NW Work Sans";src:url("fonts/work.ttf") format("truetype");font-style:normal;font-weight:100 900;font-display:swap}
+@font-face{font-family:"NW Nunito Sans";src:url("fonts/nunito-italic.ttf") format("truetype");font-style:italic;font-weight:200 1000;font-display:swap}
+@font-face{font-family:"NW Nunito Sans";src:url("fonts/nunito.ttf") format("truetype");font-style:normal;font-weight:200 1000;font-display:swap}
+@font-face{font-family:"NW Lora";src:url("fonts/lora-italic.ttf") format("truetype");font-style:italic;font-weight:400 700;font-display:swap}
+@font-face{font-family:"NW Lora";src:url("fonts/lora.ttf") format("truetype");font-style:normal;font-weight:400 700;font-display:swap}
+@font-face{font-family:"NW Newsreader";src:url("fonts/newsreader-italic.ttf") format("truetype");font-style:italic;font-weight:200 800;font-display:swap}
+@font-face{font-family:"NW Newsreader";src:url("fonts/newsreader.ttf") format("truetype");font-style:normal;font-weight:200 800;font-display:swap}
+@font-face{font-family:"NW Alegreya";src:url("fonts/alegreya-italic.ttf") format("truetype");font-style:italic;font-weight:400 900;font-display:swap}
+@font-face{font-family:"NW Alegreya";src:url("fonts/alegreya.ttf") format("truetype");font-style:normal;font-weight:400 900;font-display:swap}
+@font-face{font-family:"NW Crimson Pro";src:url("fonts/crimson-italic.ttf") format("truetype");font-style:italic;font-weight:200 900;font-display:swap}
+@font-face{font-family:"NW Crimson Pro";src:url("fonts/crimson.ttf") format("truetype");font-style:normal;font-weight:200 900;font-display:swap}
+@font-face{font-family:"NW Fraunces";src:url("fonts/fraunces-italic.ttf") format("truetype");font-style:italic;font-weight:100 900;font-display:swap}
+@font-face{font-family:"NW Fraunces";src:url("fonts/fraunces.ttf") format("truetype");font-style:normal;font-weight:100 900;font-display:swap}
+@font-face{font-family:"NW JetBrains Mono";src:url("fonts/jetbrains-italic.ttf") format("truetype");font-style:italic;font-weight:100 800;font-display:swap}
+@font-face{font-family:"NW JetBrains Mono";src:url("fonts/jetbrains.ttf") format("truetype");font-style:normal;font-weight:100 800;font-display:swap}
+@font-face{font-family:"NW Space Mono";src:url("fonts/space-bold.ttf") format("truetype");font-style:normal;font-weight:700;font-display:swap}
+@font-face{font-family:"NW Space Mono";src:url("fonts/space-bold-italic.ttf") format("truetype");font-style:italic;font-weight:700;font-display:swap}
+@font-face{font-family:"NW Space Mono";src:url("fonts/space-italic.ttf") format("truetype");font-style:italic;font-weight:400;font-display:swap}
+@font-face{font-family:"NW Space Mono";src:url("fonts/space.ttf") format("truetype");font-style:normal;font-weight:400;font-display:swap}
+@font-face{font-family:"NW Roboto Mono";src:url("fonts/roboto-italic.ttf") format("truetype");font-style:italic;font-weight:100 700;font-display:swap}
+@font-face{font-family:"NW Roboto Mono";src:url("fonts/roboto.ttf") format("truetype");font-style:normal;font-weight:100 700;font-display:swap}
+@font-face{font-family:"NW Lexend";src:url("fonts/lexend.ttf") format("truetype");font-style:normal;font-weight:100 900;font-display:swap}
+@font-face{font-family:"NW OpenDyslexic";src:url("fonts/opendyslexic.woff2") format("woff2");font-style:normal;font-weight:400;font-display:swap}
+@font-face{font-family:"NW OpenDyslexic";src:url("fonts/opendyslexic-italic.woff2") format("woff2");font-style:italic;font-weight:400;font-display:swap}
+@font-face{font-family:"NW OpenDyslexic";src:url("fonts/opendyslexic-bold.woff2") format("woff2");font-style:normal;font-weight:600 900;font-display:swap}
+@font-face{font-family:"NW OpenDyslexic";src:url("fonts/opendyslexic-bold-italic.woff2") format("woff2");font-style:italic;font-weight:600 900;font-display:swap}
+.reader-main .markdown,.reader-theme-preview p,.reader-theme-preview blockquote,.type-preview p,.type-preview .type-glyphs{font-family:var(--reading-font,var(--sans));font-optical-sizing:auto}
+.reader-main .markdown :is(h1,h2,h3,h4,h5,h6){font-family:inherit;font-optical-sizing:auto}
+.type-preview{padding:19px 20px;background:var(--read-bg);border:1px solid var(--read-line);border-radius:7px;margin:16px 0 6px;min-width:0;overflow-wrap:anywhere}
+.type-preview-caption{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:10px;color:var(--read-muted);margin-bottom:15px}
+.type-preview-caption strong{color:var(--read-link);font-weight:500}
+.type-preview-caption small{font-size:9px;text-align:right}
+.type-preview p{font-size:var(--font-size);line-height:var(--reader-leading);color:var(--read-text);margin:0 0 13px}
+.type-preview p strong{color:var(--read-bold);font-weight:650}.type-preview p em{color:var(--read-italic)}
+.type-preview .type-glyphs{display:block;font-size:15px;letter-spacing:.025em;color:var(--read-muted);line-height:1.6}
+@media(max-width:560px){.setting-row select#setting-font{width:145px;max-width:145px;min-width:0;text-overflow:ellipsis}.type-preview-caption{flex-wrap:wrap;gap:6px}.type-preview-caption small{text-align:left}.type-preview{padding:17px}}
+@media(max-width:360px){.setting-row select#setting-font{width:128px;max-width:128px}}

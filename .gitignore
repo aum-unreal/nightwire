@@ -1,0 +1,8 @@
+node_modules/
+build/
+*.apk
+*.idsig
+tests/*.png
+tests/*.jpg
+tests/*.log
+scripts/__pycache__/

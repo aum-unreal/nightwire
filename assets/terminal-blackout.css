@@ -1,0 +1,14 @@
+/* Words only. Keep the existing word element and font; remove every other surface. */
+body.reading-blackout{background:#000;overflow:hidden}
+body.reading-blackout :is(.sidebar,.topbar,.mobile-nav,#toast,.busy-indicator){display:none!important}
+body.reading-blackout .main-column{margin:0!important;height:100dvh;background:#000}
+body.reading-blackout .terminal-main[data-terminal-size]{position:fixed;inset:0;z-index:50;width:100%;height:100dvh;max-width:none;margin:0;padding:0!important;background:#000!important;overflow:hidden}
+body.reading-blackout .terminal-deck{display:none!important}
+.terminal-blackout-surface{position:fixed;inset:0;display:flex;align-items:stretch;justify-content:center;background:#000;z-index:60;outline:none;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+body.reading-blackout .terminal-main[data-terminal-size] .terminal-blackout-surface .terminal-stage{flex:1;width:100%;height:100%;min-height:0;margin:0;padding:24px;background:#000;border:0;box-shadow:none;box-sizing:border-box;outline:none}
+body.reading-blackout .terminal-main[data-terminal-size] .terminal-blackout-surface #terminal-words{font-size:clamp(40px,10vw,82px);color:var(--blackout-text,var(--text));background:none!important;text-shadow:none!important;filter:none!important}
+body.reading-blackout .terminal-blackout-surface .terminal-word{background:none!important;text-shadow:none!important;filter:none!important}
+body.reading-blackout .terminal-blackout-surface .terminal-word b{text-shadow:none!important;filter:none!important}
+body.reading-blackout .terminal-blackout-surface .press-wave{display:none}
+
+body.reading-blackout :is(.terminal-main,.terminal-stage,#terminal-words,.terminal-word)::before,body.reading-blackout :is(.terminal-main,.terminal-stage,#terminal-words,.terminal-word)::after{display:none!important}

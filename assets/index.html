@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#000000"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; worker-src 'self'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'none'"><title>Nightwire · Markdown reader</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="desk.css"><link rel="stylesheet" href="reader.css"><link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="terminal.css"><link rel="stylesheet" href="terminal-screen.css"><link rel="stylesheet" href="read-styles.css"><link rel="stylesheet" href="read-themes/classic.css"><link rel="stylesheet" href="read-themes/cyberdeck.css"><link rel="stylesheet" href="read-themes/phosphor.css"><link rel="stylesheet" href="read-themes/mixtape.css"><link rel="stylesheet" href="read-themes/orbital.css"><link rel="stylesheet" href="read-themes/nocturne.css"><link rel="stylesheet" href="nav-dock.css"><link rel="stylesheet" href="graph-board.css"><link rel="stylesheet" href="font-rack.css"><link rel="stylesheet" href="terminal-blackout.css"><link rel="stylesheet" href="terminal-anchor.css"></head>
+<body>
+<div class="shell">
+ <aside class="sidebar" aria-label="Main navigation">
+  <a class="brand" href="#home" data-action="home" aria-label="Nightwire home"><span class="brand-icon">N<span>_</span></span><div>NIGHTWIRE<small>MARKDOWN READER</small></div></a>
+  <div class="sidebar-section-label">LIBRARY</div>
+  <nav class="desktop-nav"><button data-action="home"><i data-lucide="layout-dashboard"></i>Reading desk</button><button data-action="library"><i data-lucide="files"></i>Recent files<span id="nav-count" class="badge">0</span></button><button data-action="graph"><i data-lucide="network"></i>Graph view</button><button data-action="terminal"><i data-lucide="scan-line"></i>Terminal reading</button><button data-action="starred"><i data-lucide="bookmark"></i>Bookmarked</button></nav>
+  <button class="quick-search" data-action="search"><i data-lucide="search"></i>Search everything<kbd>⌘ K</kbd></button>
+  <div class="sidebar-section-label">RECENT FILES<button class="icon-btn small" data-action="import" aria-label="Open Markdown files"><i data-lucide="plus"></i></button></div>
+  <div id="sidebar-recents" class="sidebar-recents"></div>
+  <div class="sidebar-footer"><div class="connection"><span class="status-dot"></span>LOCAL / OFFLINE</div><button data-action="settings" class="settings-button"><i data-lucide="sliders-horizontal"></i>Reading preferences<i data-lucide="chevron-right"></i></button><div class="sidebar-version mono">NW / v0.9 <span>NO VAULT REQUIRED</span></div></div>
+ </aside>
+ <div class="main-column">
+  <header class="topbar"><div class="breadcrumb"><span class="mobile-wordmark">NIGHTWIRE<span class="accent">_</span></span><span class="desktop-breadcrumb mono">WORKSPACE <span>/</span> <b id="breadcrumb-label">OVERVIEW</b></span></div><div class="top-actions"><span class="top-status mono"><span class="status-dot"></span>ON DEVICE</span><button class="icon-btn" data-action="search" aria-label="Search all files"><i data-lucide="search"></i></button><button class="icon-btn" data-action="settings" aria-label="Reading preferences"><i data-lucide="sliders-horizontal"></i></button><button class="button primary compact desktop-open" data-action="import"><i data-lucide="plus"></i>Open file</button></div></header>
+  <main id="content" tabindex="-1"></main>
+  <nav class="mobile-nav" aria-label="Main navigation">
+   <div class="nav-switchboard">
+    <div class="nav-register"><span class="nav-register-mark" aria-hidden="true">↳</span><span id="dock-context">No file open</span><span id="dock-count" aria-label="0 files">00<span aria-hidden="true"> FILES</span></span></div>
+    <div class="nav-routes">
+     <button class="nav-key" data-action="home" aria-label="Home" title="Home"><span class="nav-key-number" aria-hidden="true">01</span><i data-lucide="layout-dashboard"></i><span class="nav-key-name">Home</span></button>
+     <button class="nav-key" data-action="library" aria-label="Files" title="Files"><span class="nav-key-number" aria-hidden="true">02</span><i data-lucide="files"></i><span class="nav-key-name">Files</span></button>
+     <button class="nav-key" data-action="graph" aria-label="Graph" title="Graph"><span class="nav-key-number" aria-hidden="true">03</span><i data-lucide="network"></i><span class="nav-key-name">Graph</span></button>
+     <button class="nav-key" data-action="terminal" aria-label="Read" title="Read"><span class="nav-key-number" aria-hidden="true">04</span><i data-lucide="scan-line"></i><span class="nav-key-name">Read</span></button>
+     <button class="nav-key nav-search" data-action="search" aria-label="Search" title="Search" aria-controls="search-dialog" aria-expanded="false"><span class="nav-key-number" aria-hidden="true">05</span><i data-lucide="search"></i><span class="nav-key-name">Search</span></button>
+    </div>
+    <button class="mobile-import nav-load" data-action="import" aria-label="Open Markdown files" title="Open Markdown files"><span class="nav-load-grip" aria-hidden="true"></span><i data-lucide="arrow-up-to-line"></i><span aria-hidden="true">.md</span></button>
+   </div>
+  </nav>
+ </div>
+</div>
+<input id="file-input" type="file" accept=".md,.markdown,.txt,text/markdown,text/plain" multiple hidden>
+<dialog id="search-dialog" class="search-dialog"><div class="search-field"><i data-lucide="search"></i><input id="search-input" placeholder="Search words, filenames, or #tags" aria-label="Search all files" autocomplete="off"><button class="icon-btn" data-close aria-label="Close search"><i data-lucide="x"></i></button></div><div class="search-meta mono" id="search-meta">FULL-TEXT SEARCH · ON DEVICE</div><div id="search-results" class="search-results"></div><div class="dialog-footer mono"><span>FUZZY + PREFIX MATCHING</span><kbd>ESC</kbd></div></dialog>
+<dialog id="panel-dialog" class="panel-dialog"><header class="dialog-title"><div><span class="eyebrow mono" id="panel-eyebrow">DOCUMENT TOOLS</span><h2 id="panel-title"></h2></div><button class="icon-btn" data-close aria-label="Close panel"><i data-lucide="x"></i></button></header><div id="panel-content"></div></dialog>
+<div id="toast" role="status" aria-live="polite"></div>
+<script src="vendor/markdown-it.js"></script><script src="vendor/purify.js"></script><script src="vendor/highlight.js"></script><script src="vendor/force-graph.js"></script><script src="vendor/lucide.js"></script><script src="vendor/anime.js"></script><script src="core.js"></script><script type="module" src="app.js"></script>
+</body></html>

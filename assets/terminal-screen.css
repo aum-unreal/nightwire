@@ -1,0 +1,119 @@
+/* Read tabs size their controls to the WebView viewport, after the navigation dock. */
+body[data-view=terminal][data-terminal-presentation] .topbar{display:none}
+body[data-view=terminal][data-terminal-presentation] .main-column{height:100dvh;min-height:0}
+.terminal-main[data-terminal-size]{height:var(--terminal-height);min-height:0;padding:12px 18px;box-sizing:border-box}
+.terminal-main[data-terminal-size] .terminal-deck{height:100%;min-height:0;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto minmax(0,1fr) auto auto auto;grid-template-areas:"header" "file" "monitor" "transport" "speed" "options";gap:9px;max-width:760px}
+.terminal-main[data-terminal-size] .terminal-header,.terminal-main[data-terminal-size] .deck-header{grid-area:header;margin:0;min-width:0}
+.terminal-header-tools{display:flex;align-items:center;gap:4px}.terminal-header-tools>.icon-btn{width:38px;min-width:38px;height:38px}
+.terminal-main[data-terminal-size] .terminal-header h1{font-size:26px;margin:3px 0 0}
+.terminal-main[data-terminal-size] .terminal-header .terminal-label{font-size:8px}
+.terminal-main[data-terminal-size] .terminal-header .button{min-height:38px;padding:8px 11px;gap:7px;font-size:11px}
+.terminal-main[data-terminal-size] .terminal-header .button svg:last-child{display:none}
+.terminal-main[data-terminal-size] .terminal-file{grid-area:file;margin:0;min-height:40px;padding-block:4px}
+.terminal-main[data-terminal-size] .terminal-monitor{grid-area:monitor;display:flex;flex-direction:column;min-height:0;margin:0;padding:12px 14px 9px}
+.terminal-main[data-terminal-size] .terminal-stage{flex:1;min-height:0;height:auto}
+.terminal-main[data-terminal-size] .terminal-stage #terminal-words{font-size:clamp(36px,9vw,62px)}
+.terminal-main[data-terminal-size] .terminal-sight{flex:none;margin-top:12px}.terminal-main[data-terminal-size] .terminal-sight.bottom{margin:0 0 8px}
+.terminal-main[data-terminal-size] .terminal-section{flex:none;margin:0 5px 6px;font-size:8px}
+.terminal-main[data-terminal-size] .terminal-seek{flex:none;height:24px}
+.terminal-main[data-terminal-size] .terminal-monitor-top,.terminal-main[data-terminal-size] .terminal-monitor-bottom{flex:none;font-size:9px}
+.terminal-main[data-terminal-size] .terminal-transport{grid-area:transport;margin:0;gap:9px}
+.terminal-main[data-terminal-size] .terminal-transport>.icon-btn{height:44px;width:44px;min-width:44px}
+.terminal-main[data-terminal-size] .terminal-play.button{min-height:44px;max-width:none;min-width:0;flex:1}
+.terminal-main[data-terminal-size] .terminal-speed{grid-area:speed;margin:0;width:100%;max-width:none;padding:10px 14px 7px;min-width:0}
+.terminal-main[data-terminal-size] .terminal-speed-value{position:static;inset:auto;margin:8px 0 5px;gap:20px;min-width:0;display:flex}
+.terminal-main[data-terminal-size] .terminal-speed-value>div{min-width:0;flex:1}
+.terminal-main[data-terminal-size] .terminal-speed-value output{font-size:38px}
+.terminal-main[data-terminal-size] .terminal-ruler{height:32px;margin:0 4px}
+.terminal-main[data-terminal-size] .terminal-ruler input{height:32px}
+.terminal-main[data-terminal-size] .terminal-needle{top:0}
+.terminal-main[data-terminal-size] .terminal-presets{margin-top:2px;padding-top:4px;gap:4px}
+.terminal-main[data-terminal-size] .terminal-presets button{flex:1;min-height:32px;padding:6px;font-size:10px}
+.terminal-main[data-terminal-size] .terminal-options{grid-area:options;margin:0;max-width:none;width:100%;gap:12px;min-width:0}
+.terminal-main[data-terminal-size] .terminal-options legend{margin-bottom:5px;font-size:10px}
+.terminal-main[data-terminal-size] .terminal-group button{min-height:34px}
+.terminal-main[data-terminal-size] .terminal-bionic{min-height:44px}
+.terminal-main[data-terminal-size] .terminal-help{display:none}
+.terminal-main[data-terminal-size] .terminal-empty-help{display:block;grid-area:monitor;align-self:end;margin:0 12px 5px;z-index:3;padding:4px;font-size:9px;text-align:center;background:var(--surface)}
+/* Cyberdeck: one header plate and a compact speed instrument, with the reading screen taking remaining space. */
+.cyberdeck-root[data-terminal-size]{background:#030607;padding:9px 12px}
+.cyberdeck-root[data-terminal-size] .deck-hardware{padding:19px 15px 18px;max-width:740px;gap:9px}
+.cyberdeck-root[data-terminal-size] .deck-top-rail,.cyberdeck-root[data-terminal-size] .deck-bottom-rail{position:absolute;left:15px;right:15px;margin:0;font-size:6px}
+.cyberdeck-root[data-terminal-size] .deck-top-rail{top:6px}.cyberdeck-root[data-terminal-size] .deck-bottom-rail{bottom:6px}
+.cyberdeck-root[data-terminal-size] .deck-header{padding:0 0 7px;gap:8px;min-width:0}
+.cyberdeck-root[data-terminal-size] .deck-maker{letter-spacing:0;min-width:0}
+.cyberdeck-root[data-terminal-size] .deck-maker>span{font-size:6px;letter-spacing:.1em;margin:0 0 3px;white-space:nowrap}
+.cyberdeck-root[data-terminal-size] .deck-maker h1{margin:0;color:var(--deck-yellow);font:900 italic clamp(23px,6vw,32px)/.95 "NW Source Sans 3",var(--sans);letter-spacing:-.04em}
+.cyberdeck-root[data-terminal-size] .deck-maker h1>span{color:#dfe9e5}
+.cyberdeck-root[data-terminal-size] .deck-system-keys .icon-btn{height:36px;width:36px;min-width:36px}
+.cyberdeck-root[data-terminal-size] .deck-cartridge{padding:0;min-height:44px}
+.cyberdeck-root[data-terminal-size] .deck-file-copy{gap:4px;padding-block:5px}
+.cyberdeck-root[data-terminal-size] .deck-screen-content{display:flex;flex-direction:column;flex:1;min-height:0;margin-top:8px}
+.cyberdeck-root[data-terminal-size] .deck-screen-footer{flex:none;padding-top:7px}
+.cyberdeck-root[data-terminal-size] .deck-keys>.icon-btn{height:44px}
+.cyberdeck-root[data-terminal-size] .deck-speed-module{padding:8px 12px 6px}
+.cyberdeck-root[data-terminal-size] .terminal-speed-head{padding-bottom:6px}
+.cyberdeck-root[data-terminal-size] .terminal-speed-value{align-items:center;margin:5px 0 2px;gap:14px}
+.cyberdeck-root[data-terminal-size] .terminal-speed-value>.deck-dial{flex:none;position:relative;min-width:0;width:130px;height:70px;transform:none;margin:0;padding-top:29px;display:flex;align-items:center;justify-content:center;gap:1px}
+.cyberdeck-root[data-terminal-size] .deck-dial svg{left:0;top:0;width:130px;height:69px}
+.cyberdeck-root[data-terminal-size] .deck-dial-pointer{left:64px;top:12px;height:51px}
+.cyberdeck-root[data-terminal-size] .deck-dial output{font-size:33px;line-height:1;letter-spacing:-.06em}
+.cyberdeck-root[data-terminal-size] .deck-dial>span{font-size:6px;margin:0}
+.cyberdeck-root[data-terminal-size] .terminal-speed-value>.speed-step{width:40px;min-width:40px;height:40px}
+.cyberdeck-root[data-terminal-size] .deck-trim{height:28px}.cyberdeck-root[data-terminal-size] .deck-trim input{height:28px}
+.cyberdeck-root[data-terminal-size] .deck-switchbank legend{font-size:8px}.cyberdeck-root[data-terminal-size] .deck-switchbank .terminal-group button{font-size:9px}
+/* Short portrait displays place speed and reading options beside one another. */
+.terminal-main[data-terminal-size=compact]{padding:9px 12px}
+.terminal-main[data-terminal-size=compact] .terminal-deck{grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);grid-template-rows:auto auto minmax(0,1fr) auto auto;grid-template-areas:"header header" "file file" "monitor monitor" "transport transport" "speed options";gap:7px}
+.terminal-main[data-terminal-size=compact] .terminal-header h1{font-size:23px}.terminal-main[data-terminal-size=compact] .terminal-header .terminal-label{display:none}
+.terminal-main[data-terminal-size=compact] .terminal-file{min-height:36px}
+.terminal-main[data-terminal-size=compact] .terminal-monitor{padding:9px 12px 6px}
+.terminal-main[data-terminal-size=compact] .terminal-sight{margin-top:7px;height:6px}.terminal-main[data-terminal-size=compact] .terminal-sight.bottom{margin-bottom:4px}
+.terminal-main[data-terminal-size=compact] .terminal-section{font-size:7px;margin-bottom:3px}
+.terminal-main[data-terminal-size=compact] .terminal-speed{padding:8px 8px 5px}
+.terminal-main[data-terminal-size=compact] .terminal-speed-head .terminal-label,.terminal-main[data-terminal-size=compact] .deck-speed-limits{display:none}
+.terminal-main[data-terminal-size=compact] .terminal-speed-value{gap:6px;margin:7px 0 4px}
+.terminal-main[data-terminal-size=compact] .terminal-speed-value>div{gap:3px;flex-direction:column}
+.terminal-main[data-terminal-size=compact] .terminal-speed-value output{font-size:30px}
+.terminal-main[data-terminal-size=compact] .speed-step.icon-btn{width:32px;min-width:32px;height:38px;font-size:18px}
+.terminal-main[data-terminal-size=compact] .terminal-speed-value span{font-size:6px;letter-spacing:.04em}
+.terminal-main[data-terminal-size=compact] .terminal-presets button{min-height:30px;padding:4px 2px;font-size:8px}
+.terminal-main[data-terminal-size=compact] .terminal-options{flex-direction:column;gap:7px;justify-content:space-between}
+.terminal-main[data-terminal-size=compact] .terminal-options fieldset{flex:none}
+.terminal-main[data-terminal-size=compact] .terminal-options legend{font-size:9px}
+.terminal-main[data-terminal-size=compact] .terminal-group.segmented{gap:2px;padding:2px}
+.terminal-main[data-terminal-size=compact] .terminal-group button{font-size:9px;padding:6px 2px;min-height:32px}
+.terminal-main[data-terminal-size=compact] .terminal-bionic{width:100%;padding:9px 10px;column-gap:5px}
+.cyberdeck-root[data-terminal-size=compact] .deck-hardware{padding:17px 12px 16px}
+.cyberdeck-root[data-terminal-size=compact] .deck-cartridge{min-height:40px}
+.cyberdeck-root[data-terminal-size=compact] .terminal-speed-value>.deck-dial{width:auto;flex:1;height:38px;padding-top:0}
+.cyberdeck-root[data-terminal-size=compact] .deck-dial svg,.cyberdeck-root[data-terminal-size=compact] .deck-dial-pointer{display:none}
+.cyberdeck-root[data-terminal-size=compact] .terminal-speed-value>.speed-step{height:36px;width:30px;min-width:30px}
+.cyberdeck-root[data-terminal-size=compact] .terminal-speed-title{font-size:8px;letter-spacing:.04em}
+.cyberdeck-root[data-terminal-size=compact] .deck-switchbank legend{font-size:7px;gap:4px}
+.cyberdeck-root[data-terminal-size=compact] .deck-switchbank .terminal-group button{font-size:7px}.cyberdeck-root[data-terminal-size=compact] .terminal-group button>span{display:none}
+.cyberdeck-root[data-terminal-size=compact] .terminal-bionic>span{font-size:11px}
+/* Landscape uses reading and instrument columns rather than shrinking the entire device. */
+.terminal-main[data-terminal-landscape=true] .terminal-deck{grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto;grid-template-areas:"header file" "monitor speed" "transport options";gap:7px}
+.terminal-main[data-terminal-landscape=true] .terminal-options{flex-direction:row;gap:7px}
+.terminal-main[data-terminal-landscape=true] .terminal-options fieldset{flex:1}
+.terminal-main[data-terminal-landscape=true] .terminal-bionic{width:43%;padding:7px}
+.terminal-main[data-terminal-landscape=true] .terminal-speed{align-self:stretch;display:flex;flex-direction:column;justify-content:center}
+.terminal-main[data-terminal-landscape=true] .terminal-speed-value{gap:8px}
+.terminal-main[data-terminal-landscape=true] .terminal-stage #terminal-words{font-size:36px}
+.terminal-main[data-terminal-landscape=true] .terminal-section{display:none}
+.terminal-main[data-terminal-landscape=true] .terminal-sight{display:none}
+@media(max-width:360px){.terminal-main[data-terminal-size] .terminal-header-tools{gap:0}.terminal-main[data-terminal-size] .terminal-header-tools>.icon-btn{width:32px;min-width:32px}.terminal-main[data-terminal-size] .terminal-header .button{padding-inline:8px}.cyberdeck-root[data-terminal-size] .deck-system-keys .icon-btn{width:32px;min-width:32px}}
+
+.terminal-main[data-terminal-landscape=true] .terminal-speed{min-height:0;padding-block:6px}
+.terminal-main[data-terminal-landscape=true] .terminal-ruler,.terminal-main[data-terminal-landscape=true] .terminal-ruler input{height:28px}
+
+.cyberdeck-root[data-terminal-size=compact] .deck-dial output{font-size:clamp(24px,7.5vw,30px)}
+/* Give the words priority on compact hardware without shrinking the whole UI. */
+.cyberdeck-root[data-terminal-size=compact] .deck-hardware{padding-block:14px 12px}
+.cyberdeck-root[data-terminal-size=compact] .deck-header{padding-bottom:4px}
+.cyberdeck-root[data-terminal-size=compact] .terminal-play.button{padding-block:8px}
+.cyberdeck-root[data-terminal-size=compact] .terminal-speed-head>.deck-module-number{display:none}
+.cyberdeck-root[data-terminal-size=compact] .terminal-speed-head{padding-bottom:4px}
+.cyberdeck-root[data-terminal-size=compact] .terminal-speed-value{margin-block:5px 3px}
+.cyberdeck-root[data-terminal-landscape=true] .deck-readout-labels{display:none}

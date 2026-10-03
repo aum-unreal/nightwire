@@ -1,0 +1,125 @@
+/* MIXTAPE — enamel keys, oxide reels, printed cassette label and an amber tape counter. */
+.terminal-main.theme-mixtape[data-terminal-size]{--tape-cream:#e5d6b8;--tape-amber:#ffc780;--tape-oxide:#c76242;--accent:#ffc780;--accent-rgb:255,199,128;--accent-border:#987546;--accent-soft:#2a2114;--muted:#b7aa92;--subtle:#867a65;--text:#e5d6b8;--read-text:#f3deb6;--surface:#12110e;--raised:#201d17;--line:#4b4435;background:#000;padding:10px 12px;font-family:var(--mono)}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-deck{max-width:760px;gap:0;padding:8px;background:#14130f;border:1px solid #70604b;border-radius:13px 13px 7px 7px;box-shadow:inset 0 0 0 3px #090906,inset 0 0 0 4px #29261e;position:relative}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-header{min-height:44px;padding:0 5px 6px;gap:8px;border-bottom:1px solid #454035}
+.terminal-main.theme-mixtape[data-terminal-size] .mixtape-brand{min-width:0}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-header .terminal-label{font:6px var(--mono);letter-spacing:.14em;color:#a59880;white-space:nowrap}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-header h1{font:900 italic 27px/.95 "NW Source Sans 3",var(--sans);letter-spacing:-.055em;margin:3px 0 0;color:var(--tape-cream)}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-header h1>span{color:var(--tape-oxide);font-size:9px;margin-left:6px;vertical-align:middle}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-header-tools{gap:4px}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-header-tools>.icon-btn{height:32px;width:32px;min-width:32px;border:1px solid #645741;background:linear-gradient(#2b281f,#161510);color:var(--tape-cream);border-radius:50%;box-shadow:inset 0 1px 0 #ffffff0e,0 2px 0 #050503}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-header-tools svg{height:15px;width:15px}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-file{min-height:47px;background:#daceb4;border:0;border-radius:4px 4px 0 0;color:#2b261b;padding:5px 9px;gap:8px;margin-top:7px}
+.terminal-main.theme-mixtape[data-terminal-size] .mixtape-side{font:800 28px/1 "NW Source Sans 3",var(--sans);border-right:1px solid #807057;padding-right:9px}
+.terminal-main.theme-mixtape[data-terminal-size] .mixtape-source{min-width:0;flex:1;display:flex;flex-direction:column;gap:1px}
+.terminal-main.theme-mixtape[data-terminal-size] .mixtape-source small{font:6px var(--mono);letter-spacing:.12em;color:#65563f}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-filename{display:block;flex:none;font:600 11px/1.5 "NW Source Sans 3",var(--sans);color:#2b261b;border-bottom:1px solid #a7977c}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-file>svg{color:#65563f}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-monitor{border:1px solid #6b5c44;border-top:3px solid #917d5c;border-radius:0 0 8px 8px;background:#000;padding:9px 12px 7px;box-shadow:inset 0 0 0 3px #100f0b;isolation:isolate}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-monitor::after{content:'';inset:auto 18% -1px;width:auto;height:7px;background:#29261c;border:1px solid #65573f;clip-path:polygon(7% 0,93% 0,100% 100%,0 100%);border-radius:0;pointer-events:none;z-index:-1}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-monitor-top{font-size:8px;letter-spacing:.03em;color:#b19976;gap:6px}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-led{border-radius:1px;width:6px;height:4px;background:#725838}
+.terminal-main.theme-mixtape[data-terminal-size] .streaming .terminal-led{background:var(--tape-oxide);box-shadow:0 0 6px #c762423b}
+.terminal-main.theme-mixtape[data-terminal-size] .mixtape-mechanism{display:flex;align-items:center;gap:12px;justify-content:center;flex:none;height:70px;max-width:350px;width:100%;margin:8px auto 0}
+.terminal-main.theme-mixtape[data-terminal-size] .mixtape-reel{flex:none;width:62px;height:62px;display:block}
+.terminal-main.theme-mixtape[data-terminal-size] .mixtape-reel svg{display:block;width:100%;height:100%}
+.terminal-main.theme-mixtape[data-terminal-size] .tape-reel-rim{fill:#16130e;stroke:#75654c;stroke-width:2}
+.terminal-main.theme-mixtape[data-terminal-size] .tape-reel-tape{fill:#51321f;stroke:#754d30;stroke-width:2}
+.terminal-main.theme-mixtape[data-terminal-size] .tape-hub{transform-origin:32px 32px;transform:rotate(var(--reel-turn,0deg));fill:#dfccaa;stroke:#14110b;stroke-width:1}
+.terminal-main.theme-mixtape[data-terminal-size] .tape-hub circle:first-child{fill:#e8d9bd;stroke:#967f5a}
+.terminal-main.theme-mixtape[data-terminal-size] .tape-hub circle:nth-child(2){fill:#11110b;stroke:#ab9570}
+.terminal-main.theme-mixtape[data-terminal-size] .mixtape-tape-path{flex:1;min-width:0;height:44px;display:flex;flex-direction:column;justify-content:space-between;text-align:center;padding-block:6px}
+.terminal-main.theme-mixtape[data-terminal-size] .mixtape-tape-path>span{font:6px var(--mono);letter-spacing:.14em;white-space:nowrap;color:#aa9677}
+.terminal-main.theme-mixtape[data-terminal-size] .mixtape-tape-path>i{display:block;height:5px;border-top:1px solid #704a2d;border-bottom:1px solid #704a2d;background:#352015;position:relative}
+.terminal-main.theme-mixtape[data-terminal-size] .mixtape-tape-path>i::before,.terminal-main.theme-mixtape[data-terminal-size] .mixtape-tape-path>i::after{content:'';position:absolute;top:-3px;width:7px;height:9px;background:#242118;border:1px solid #776447;border-radius:1px}
+.terminal-main.theme-mixtape[data-terminal-size] .mixtape-tape-path>i::before{left:14%}.terminal-main.theme-mixtape[data-terminal-size] .mixtape-tape-path>i::after{right:14%}
+.terminal-main.theme-mixtape[data-terminal-size] #terminal-words{font-family:var(--reading-font);color:#f3deb6}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-word b{color:var(--tape-amber)}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-section{font-size:8px;margin:0 0 2px;color:#9a8a70}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-seek{height:24px}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-seek::-webkit-slider-runnable-track{height:3px;background:linear-gradient(to right,#b78e53 0 var(--position,0%),#30261a var(--position,0%) 100%)}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-seek::-webkit-slider-thumb{width:9px;height:12px;margin-top:-5px;border:1px solid #ffc780;border-radius:1px;background:#b58a50;box-shadow:0 0 0 2px #000}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-monitor-bottom{font-size:8px;color:#a49478;padding:0 0 3px;gap:4px}
+.terminal-main.theme-mixtape[data-terminal-size] #terminal-position{background:#151108;color:#e8bd7b;border:1px solid #655238;padding:3px 5px;letter-spacing:.04em;white-space:nowrap}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-transport{padding:8px 1px;gap:3px;align-items:stretch;border-bottom:1px solid #514736}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-transport>.icon-btn{width:48px;min-width:48px;height:47px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border:1px solid #a29378;border-bottom:4px solid #84765d;border-radius:2px;background:linear-gradient(#e5d8bd,#c8b99c);color:#372f22;box-shadow:inset 0 1px 0 #fff8,0 2px 1px #000;font:6px var(--mono)}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-transport>.icon-btn svg{width:16px;height:16px}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-play.button{min-height:47px;height:47px;min-width:0;padding:6px 8px;background:linear-gradient(#cf7957,#a84e34);border:1px solid #c37c5b;border-bottom:4px solid #703b28;border-radius:2px;color:#fff1d4;box-shadow:inset 0 1px 0 #ffe8ca45,0 2px 1px #000;font:700 11px "NW Source Sans 3",var(--sans);letter-spacing:.04em;text-transform:uppercase;gap:6px}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-speed{border:0;border-radius:0;padding:8px 9px 6px;background:#14130f;box-shadow:none;border-bottom:1px solid #4b4435}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-speed-title{font:7px var(--mono);letter-spacing:.12em;color:#c1b190}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-speed-head .terminal-label{font-size:7px;letter-spacing:0}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-speed-value{gap:13px;margin:6px 0 3px}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-speed-value>div{gap:6px;background:#020201;border:1px solid #645134;border-radius:2px;padding:3px 9px;max-width:160px;min-width:0;flex:1}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-speed-value output{font:500 31px/1 var(--mono);letter-spacing:-.06em;color:var(--tape-amber)}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-speed-value span{font-size:6px;letter-spacing:.06em;color:#b99a69}
+.terminal-main.theme-mixtape[data-terminal-size] .speed-step.icon-btn{width:34px;min-width:34px;height:34px;border:2px solid #514737;border-radius:50%;background:repeating-conic-gradient(#29261e 0 8deg,#444033 8deg 11deg);color:#e2d1ab;box-shadow:inset 0 0 0 3px #191711,0 2px 0 #000;font-size:19px}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-ruler{height:28px;margin-inline:6px;background:repeating-linear-gradient(90deg,#b9a076 0 1px,transparent 1px calc(100% / 46));background-size:100% 6px;background-repeat:no-repeat;background-position:center}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-ruler::after{opacity:.3;inset:8px 0}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-ruler input{height:28px}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-ruler input::-webkit-slider-thumb{width:22px;height:24px;border-radius:1px;border:1px solid #b3a080;background:repeating-linear-gradient(90deg,#e2d4b7 0 3px,#b1a080 3px 4px);box-shadow:0 2px 0 #000,inset 0 1px 0 #fff4}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-needle{background:var(--tape-oxide);height:4px}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-presets{padding-top:4px;margin-top:0;border-top:1px solid #403b30;gap:4px}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-presets button{font:9px var(--mono);min-height:29px;padding:4px 6px;border:1px solid #70604a;border-radius:2px;background:#28241c;color:#d8c8a7;box-shadow:inset 0 1px 0 #ffffff09,0 2px 0 #050504}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-presets button[aria-pressed=true]{color:#251b0c;background:#c2a476;border-color:#e6c890;box-shadow:inset 0 1px 0 #fff4}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-options{padding:7px 9px 3px;gap:10px;background:#14130f}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-options legend{font:7px var(--mono);letter-spacing:.12em;color:#baa98a;margin-bottom:4px}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-group.segmented{background:#050504;border:1px solid #665a45;padding:2px;gap:2px;border-radius:2px}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-group button{font:9px var(--mono);min-height:31px;padding:5px 3px;border-radius:1px;color:#9f927a}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-group button[aria-pressed=true]{background:#d8c8a7;color:#2c2419;box-shadow:inset 0 1px 0 #fff5,0 1px 0 #000}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-bionic{background:none;border:0;border-radius:0;padding:4px 0 4px 7px;min-height:46px;box-shadow:none;column-gap:6px;row-gap:3px;color:#c6b89b}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-bionic>span{font:13px "NW Source Sans 3",var(--sans)}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-bionic small{font:6px var(--mono);letter-spacing:.1em;color:#a99a7e}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-switch{width:23px;height:13px;border:1px solid #78694f;border-radius:1px;background:#020201;box-shadow:inset 0 1px 3px #000}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-switch::after{width:8px;height:9px;top:1px;left:1px;border-radius:0;background:#9d8a67;box-shadow:inset 1px 0 0 #d7c8a4}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-bionic[aria-pressed=true] .terminal-switch{background:#23170a}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-bionic[aria-pressed=true] .terminal-switch::after{transform:translateX(11px);background:#dfb670}
+.terminal-main.theme-mixtape[data-terminal-size] button:active{transform:translateY(1px);box-shadow:none}
+.terminal-main.theme-mixtape[data-terminal-size] button:focus-visible{outline:2px solid #ffc780;outline-offset:2px}
+.terminal-main.theme-mixtape[data-terminal-size=compact] .terminal-deck{padding:7px}
+.terminal-main.theme-mixtape[data-terminal-size=compact] .terminal-header{min-height:35px;padding-bottom:4px}
+.terminal-main.theme-mixtape[data-terminal-size=compact] .terminal-header h1{font-size:24px}
+.terminal-main.theme-mixtape[data-terminal-size=compact] .terminal-file{min-height:38px;margin-top:5px}
+.terminal-main.theme-mixtape[data-terminal-size=compact] .mixtape-side{font-size:23px}
+.terminal-main.theme-mixtape[data-terminal-size=compact] .mixtape-source small{font-size:5px}
+.terminal-main.theme-mixtape[data-terminal-size=compact] .mixtape-mechanism{height:37px;margin-top:3px;gap:8px}
+.terminal-main.theme-mixtape[data-terminal-size=compact] .mixtape-reel{width:36px;height:36px}
+.terminal-main.theme-mixtape[data-terminal-size=compact] .mixtape-tape-path{height:27px;padding-block:3px}
+.terminal-main.theme-mixtape[data-terminal-size=compact] .mixtape-tape-path>span{font-size:5px}
+.terminal-main.theme-mixtape[data-terminal-size=compact] .terminal-monitor{padding:7px 10px 5px}
+.terminal-main.theme-mixtape[data-terminal-size=compact] .terminal-monitor-bottom{font-size:7px}
+.terminal-main.theme-mixtape[data-terminal-size=compact] #terminal-position{padding:2px 3px}
+.terminal-main.theme-mixtape[data-terminal-size=compact] .terminal-transport{padding-block:6px}
+.terminal-main.theme-mixtape[data-terminal-size=compact] .terminal-transport>.icon-btn{width:43px;min-width:43px;height:44px}
+.terminal-main.theme-mixtape[data-terminal-size=compact] .terminal-play.button{height:44px;min-height:44px}
+.terminal-main.theme-mixtape[data-terminal-size=compact] .terminal-speed{padding:7px 6px 4px;border-bottom:0;border-right:1px solid #4b4435}
+.terminal-main.theme-mixtape[data-terminal-size=compact] .terminal-speed-value{margin:5px 0 2px;gap:4px}
+.terminal-main.theme-mixtape[data-terminal-size=compact] .terminal-speed-value>div{padding:2px 3px;gap:2px;flex-direction:column}
+.terminal-main.theme-mixtape[data-terminal-size=compact] .terminal-speed-value output{font-size:25px}
+.terminal-main.theme-mixtape[data-terminal-size=compact] .speed-step.icon-btn{width:28px;min-width:28px;height:28px}
+.terminal-main.theme-mixtape[data-terminal-size=compact] .terminal-speed-title{font-size:6px;letter-spacing:.04em}
+.terminal-main.theme-mixtape[data-terminal-size=compact] .terminal-presets button{padding:3px 2px;font-size:8px}
+.terminal-main.theme-mixtape[data-terminal-size=compact] .terminal-options{padding:7px 6px 4px;gap:5px}
+.terminal-main.theme-mixtape[data-terminal-size=compact] .terminal-options legend{font-size:6px;letter-spacing:.03em}
+.terminal-main.theme-mixtape[data-terminal-landscape=true] .terminal-header{min-height:38px;padding:0 5px 4px}
+.terminal-main.theme-mixtape[data-terminal-landscape=true] .terminal-header .terminal-label{display:none}
+.terminal-main.theme-mixtape[data-terminal-landscape=true] .terminal-header h1{font-size:24px}
+.terminal-main.theme-mixtape[data-terminal-landscape=true] .terminal-file{min-height:38px;margin:0;border-radius:4px 4px 0 0;padding-block:3px}
+.terminal-main.theme-mixtape[data-terminal-landscape=true] .terminal-monitor{border-radius:5px;padding-top:7px}
+.terminal-main.theme-mixtape[data-terminal-landscape=true] .mixtape-mechanism{height:38px;margin-top:3px}
+.terminal-main.theme-mixtape[data-terminal-landscape=true] .mixtape-reel{height:36px;width:36px}
+.terminal-main.theme-mixtape[data-terminal-landscape=true] .mixtape-tape-path{height:27px;padding-block:3px}
+.terminal-main.theme-mixtape[data-terminal-landscape=true] .terminal-speed{border:0;border-left:1px solid #4b4435;justify-content:center;padding:8px 9px}
+.terminal-main.theme-mixtape[data-terminal-landscape=true] .terminal-transport{padding:5px 1px 1px;border-bottom:0}
+.terminal-main.theme-mixtape[data-terminal-landscape=true] .terminal-options{padding:5px 8px 1px;border-left:1px solid #4b4435}
+.terminal-main.theme-mixtape[data-terminal-landscape=true] .terminal-options legend{margin-bottom:2px;font-size:6px}
+.terminal-main.theme-mixtape[data-terminal-landscape=true] .terminal-bionic{width:43%;min-height:43px}
+/* A recognisable cassette and piano keys in the style chooser. */
+.mini-mixtape{border:1px solid #8c7654!important;background:#16130e!important;border-radius:7px!important;display:flex!important;flex-direction:column!important;padding:6px!important;gap:4px!important;overflow:hidden}
+.mini-mixtape .mixtape-preview-label{display:flex;justify-content:space-between;padding:3px 5px;background:#daceb4;color:#2b261b;font:700 7px var(--mono);border-radius:2px 2px 0 0}
+.mini-mixtape .mixtape-preview-label>i{position:static!important;width:auto!important;height:auto!important;border:0!important;background:none!important;font:900 italic 8px "NW Source Sans 3",var(--sans);color:#2b261b;transform:none!important}
+.mini-mixtape .mixtape-preview-cassette{display:flex;align-items:center;justify-content:space-between;gap:3px;background:#000;border:1px solid #645238;padding:5px 4px;flex:1}
+.mini-mixtape .mixtape-preview-cassette>b{position:static!important;font:10px var(--reading-font)!important;line-height:1!important;color:#ffc780!important}
+.mini-mixtape .mixtape-preview-cassette>i{position:static!important;flex:none;width:12px!important;height:12px!important;border:2px solid #9d825a!important;border-radius:50%!important;background:#332014!important;box-shadow:inset 0 0 0 2px #000;transform:none!important}
+.mini-mixtape .mixtape-preview-piano{display:flex;gap:2px;height:9px}
+.mini-mixtape .mixtape-preview-piano>i{position:static!important;width:auto!important;height:9px!important;flex:1;background:#daceb4!important;border:0!important;border-radius:1px!important;transform:none!important}
+.mini-mixtape .mixtape-preview-piano>i:nth-child(3){flex:2;background:#bb6343!important}

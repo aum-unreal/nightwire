@@ -1,0 +1,10 @@
+/* Settings previews show each instrument's silhouette before switching. */
+.read-style-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:13px 0 22px}
+.read-style-card{display:flex;flex-direction:column;gap:11px;padding:10px;text-align:left;border:1px solid var(--line);border-radius:8px;background:#050706;min-width:0;position:relative}
+.read-style-card[aria-pressed=true]{border-color:var(--accent);background:var(--accent-soft)}
+.read-style-card>span:last-child{display:block}.read-style-card strong{display:block;color:var(--text);font-size:12px;font-weight:550}.read-style-card small{display:block;color:var(--muted);font-size:10px;line-height:1.5;margin-top:5px}
+ .read-style-mini{display:block;position:relative;width:100%;height:106px;border:0;border-radius:0;background:#000;overflow:hidden;pointer-events:none;isolation:isolate}
+@media(max-width:360px){.read-style-gallery{gap:7px}.read-style-card{padding:8px}.read-style-card small{font-size:9px}.read-style-mini{height:96px}}
+
+/* The active instrument owns Read navigation; the saved application palette is unchanged. */
+body[data-terminal-presentation] :is(.mobile-nav,.sidebar){--accent:var(--terminal-accent);--accent-rgb:var(--terminal-accent-rgb);--accent-soft:var(--terminal-accent-soft);--accent-border:var(--terminal-accent-border);--accent-ink:var(--terminal-accent-ink);--line:var(--terminal-line);--muted:var(--terminal-muted);--subtle:var(--terminal-subtle);--text:var(--terminal-text)}

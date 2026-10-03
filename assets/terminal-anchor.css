@@ -1,0 +1,6 @@
+/* Fixed origins and a reserved baseline keep each word slot steady during playback. */
+.terminal-main[data-terminal-size] .terminal-stage #terminal-words{width:calc(100% - 16px);height:1.5em;min-width:0;gap:12px;justify-content:flex-start;align-items:stretch;text-align:left;flex:none}
+.terminal-word-slot{display:flex;align-items:baseline;flex:1 1 0;min-width:0}
+.terminal-baseline{display:block;flex:none;width:0;height:1.15em;pointer-events:none}
+.terminal-word{display:block;flex:none;font-size:var(--frame-font-size,1em);line-height:1;white-space:nowrap}
+.terminal-main[data-terminal-size] .terminal-stage .terminal-no-prose{align-self:center;font-size:18px}

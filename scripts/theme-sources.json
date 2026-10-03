@@ -1,0 +1,45 @@
+[
+  {
+    "id": "minimal",
+    "name": "Minimal",
+    "url": "https://github.com/kepano/obsidian-minimal",
+    "repo": "kepano/obsidian-minimal",
+    "license": "minimal.txt",
+    "licenseBlob": "d0b111669d7518eedf012826386f4e6f12d4775b"
+  },
+  {
+    "id": "catppuccin",
+    "name": "Catppuccin palette",
+    "url": "https://github.com/catppuccin/palette",
+    "repo": "catppuccin/palette",
+    "license": "catppuccin.txt",
+    "licenseBlob": "006383b861d7a9b11ebbaf84ec679b0e3c189bac"
+  },
+  {
+    "id": "tokyo",
+    "name": "Tokyo Night for Obsidian",
+    "url": "https://github.com/tcmmichaelb139/obsidian-tokyonight",
+    "repo": "tcmmichaelb139/obsidian-tokyonight",
+    "license": "tokyo.txt",
+    "licenseBlob": "d955182b0dcfd44ef9bdbf1a6884932cd1f9ff3d"
+  },
+  {
+    "id": "nord",
+    "name": "Nord palette",
+    "url": "https://github.com/nordtheme/nord",
+    "repo": "nordtheme/nord",
+    "license": "nord.txt",
+    "upstreamFile": "license",
+    "licenseBlob": "996f8fb61226844c6bbd2167a8b1a118be10609f"
+  },
+  {
+    "id": "gruvbox",
+    "name": "Gruvbox palette",
+    "url": "https://github.com/morhetz/gruvbox",
+    "repo": "morhetz/gruvbox",
+    "license": "gruvbox.txt",
+    "upstreamFile": "colors/gruvbox.vim",
+    "licenseBlob": "66246fba24fd49eeb50dd833094d272f0bbab640",
+    "readmeLicenseBlob": "008de69c071f2b783b8822739e0d6258dbde18c4"
+  }
+]

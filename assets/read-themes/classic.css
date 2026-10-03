@@ -1,0 +1,102 @@
+/* Classic / Index. A filed reading card and an engraved pace rule. */
+.terminal-main.theme-classic{--accent:var(--index-accent);--accent-rgb:var(--index-accent-rgb);--accent-soft:var(--index-accent-soft);--accent-border:var(--index-accent-border);--accent-ink:var(--index-accent-ink);--text:var(--read-text);--muted:var(--read-muted);--subtle:var(--read-muted);--line:var(--index-rule);--surface:var(--index-panel);--raised:var(--index-shelf);--mono:"NW Plex Mono",monospace;background:var(--index-paper);color:var(--text)}
+.terminal-main.theme-classic[data-terminal-size]{padding:14px 20px 12px}
+.terminal-main.theme-classic[data-terminal-size] .terminal-deck{gap:8px;max-width:760px}
+.theme-classic[data-terminal-size] .terminal-header{gap:8px;align-items:center;padding:0 0 5px;border-bottom:1px solid var(--line)}
+.theme-classic .archive-title{flex:1;min-width:0}
+.theme-classic[data-terminal-size] .terminal-header h1{font:500 30px/.95 "NW Literata",Georgia,serif;letter-spacing:-.065em;color:var(--text);margin:4px 0 0}
+.theme-classic .terminal-header h1>span{color:var(--accent)}
+.theme-classic[data-terminal-size] .terminal-header .terminal-label{font:7px var(--mono);letter-spacing:.17em;color:var(--muted)}
+.theme-classic .terminal-header-tools{gap:3px;flex:none}
+.theme-classic .terminal-header-tools .icon-btn{border-radius:0;border-bottom:1px solid transparent;color:var(--muted)}
+.theme-classic .terminal-header-tools .icon-btn:hover{background:var(--index-shelf);border-bottom-color:var(--accent);color:var(--accent)}
+.theme-classic[data-terminal-size] .terminal-header .button{border:1px solid var(--line);border-radius:2px;background:var(--index-panel);color:var(--text);font:10px var(--mono);padding-inline:10px;gap:6px}
+.theme-classic[data-terminal-size] .terminal-file{min-height:37px;padding:3px 10px 3px 0;gap:10px;border:0;border-bottom:1px solid var(--accent-border);position:relative;background:linear-gradient(90deg,var(--index-shelf) 0 46px,var(--index-panel) 46px);border-radius:5px 5px 0 0}
+.theme-classic .terminal-file::before{content:"";position:absolute;right:0;top:0;width:12px;height:12px;background:var(--index-paper);clip-path:polygon(0 0,100% 0,100% 100%);pointer-events:none}
+.theme-classic .terminal-file-glyph{width:46px;height:30px;color:var(--accent);border:0;border-right:1px solid var(--line);border-radius:0;background:none;font-size:10px}
+.theme-classic .terminal-filename{font:10px/1.4 var(--mono);color:var(--read-text)}
+.theme-classic[data-terminal-size] .terminal-monitor{padding:11px 17px 9px;border:1px solid var(--index-rule);border-top:0;border-radius:0 0 3px 3px;background:var(--index-paper);box-shadow:3px 3px 0 var(--index-panel),5px 5px 0 var(--index-paper),6px 6px 0 var(--index-rule)}
+.theme-classic .terminal-monitor::after{display:none}
+.theme-classic .terminal-monitor-top{letter-spacing:.02em;color:var(--read-muted);border-bottom:1px solid var(--index-rule);padding-bottom:8px}
+.theme-classic .terminal-monitor-top>span:first-child{color:var(--read-muted)}
+.theme-classic .terminal-led{height:5px;width:5px;border-radius:0;background:var(--index-metal)}
+.theme-classic .streaming .terminal-led{background:var(--accent);box-shadow:none}
+.theme-classic .archive-registration{pointer-events:none;position:absolute;inset:46px 13px 69px;display:block}
+.theme-classic .archive-registration i{position:absolute;width:9px;height:9px;border-left:1px solid var(--index-registration);border-top:1px solid var(--index-registration)}
+.theme-classic .archive-registration i:nth-child(2){right:0;transform:rotate(90deg)}
+.theme-classic .archive-registration i:nth-child(3){bottom:0;transform:rotate(-90deg)}
+.theme-classic .archive-registration i:nth-child(4){right:0;bottom:0;transform:rotate(180deg)}
+.theme-classic[data-terminal-size] .terminal-stage #terminal-words{color:var(--read-text);font-family:var(--reading-font);font-size:clamp(38px,9vw,66px);letter-spacing:-.025em}
+.theme-classic .terminal-word b{color:var(--read-bold)}
+.theme-classic[data-terminal-size] .terminal-section{margin:0 7px 3px;justify-content:flex-start;font:8px/1.4 var(--mono);color:var(--read-muted);border-top:1px solid var(--index-rule);padding-top:6px}
+.theme-classic .terminal-section>span:first-child{color:var(--accent);font:14px/1 "NW Literata",Georgia,serif}
+.theme-classic .terminal-monitor-bottom{color:var(--read-muted);font-size:8px;padding-top:0}
+.theme-classic .terminal-seek::-webkit-slider-runnable-track{height:1px;border-radius:0}
+.theme-classic .terminal-seek::-webkit-slider-thumb{width:8px;height:15px;border-radius:0;border:1px solid var(--accent);margin-top:-7px;background:var(--index-accent);box-shadow:0 0 0 3px var(--index-paper)}
+.theme-classic[data-terminal-size] .terminal-transport{gap:5px;padding-top:3px}
+.theme-classic[data-terminal-size] .terminal-transport>.icon-btn{background:var(--index-panel);border:1px solid var(--index-rule);border-radius:2px;box-shadow:inset 0 1px 0 #ffffff0d,0 2px 0 var(--index-key-shadow);color:var(--read-muted)}
+.theme-classic[data-terminal-size] .terminal-play.button{background:var(--index-key);color:var(--index-key-ink);border:1px solid var(--index-key-edge);border-radius:2px;box-shadow:inset 0 1px 0 #ffffff4d,0 2px 0 var(--index-key-shadow);font:500 12px var(--mono);letter-spacing:.02em;padding-block:9px}
+.theme-classic .terminal-transport button:active,.theme-classic .terminal-transport button.is-pressed{transform:translateY(1px);box-shadow:inset 0 2px 5px #0004}
+.theme-classic[data-terminal-size] .terminal-speed{border:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);border-radius:0;background:var(--index-panel);box-shadow:none;padding:8px 10px 5px}
+.theme-classic .terminal-speed-title{font:italic 13px "NW Literata",Georgia,serif;letter-spacing:-.02em;color:var(--text)}
+.theme-classic .terminal-speed-head .terminal-label{font:7px var(--mono);letter-spacing:.06em}
+.theme-classic[data-terminal-size] .terminal-speed-value{margin:7px 0 3px;gap:16px}
+.theme-classic[data-terminal-size] .terminal-speed-value output{font:500 35px/.95 "NW Literata",Georgia,serif;font-variant-numeric:tabular-nums;letter-spacing:-.06em;color:var(--index-highlight)}
+.theme-classic .terminal-speed-value span{font:7px var(--mono);letter-spacing:.04em;color:var(--read-muted)}
+.theme-classic[data-terminal-size] .speed-step.icon-btn{height:36px;width:36px;min-width:36px;border-radius:50%;border:1px solid var(--index-rule);background:var(--index-shelf);color:var(--accent);box-shadow:inset 0 1px 0 #ffffff10;font:20px var(--mono)}
+.theme-classic[data-terminal-size] .terminal-ruler{height:30px;margin-inline:4px;background:repeating-linear-gradient(90deg,var(--index-metal) 0 1px,transparent 1px calc(100% / 46));background-size:100% 7px;background-repeat:no-repeat;background-position:center 8px;border-bottom:1px solid var(--index-rule)}
+.theme-classic .terminal-ruler::after{inset:5px 0 13px;background:repeating-linear-gradient(90deg,var(--index-metal-edge) 0 1px,transparent 1px calc(100% / 9.2));opacity:.65}
+.theme-classic[data-terminal-size] .terminal-ruler input{height:30px}
+.theme-classic .terminal-ruler input::-webkit-slider-thumb{width:24px;height:24px;border-radius:2px;border:1px solid var(--index-metal-edge);border-top-color:var(--index-key-edge);background:repeating-linear-gradient(90deg,transparent 0 4px,#0006 4px 5px),var(--index-metal);box-shadow:inset 0 1px 0 #ffffff33,0 2px 3px #000}
+.theme-classic .terminal-needle{background:var(--index-highlight)}
+.theme-classic[data-terminal-size] .terminal-presets{border:0;margin-top:2px;padding-top:0;gap:4px}
+.theme-classic[data-terminal-size] .terminal-presets button{font:9px var(--mono);min-height:30px;border-radius:0;color:var(--read-muted);border-bottom:2px solid transparent}
+.theme-classic .terminal-presets button[aria-pressed=true]{background:var(--index-shelf);color:var(--index-highlight);border-bottom-color:var(--index-accent);box-shadow:none}
+.theme-classic[data-terminal-size] .terminal-options{gap:11px;align-items:stretch}
+.theme-classic .terminal-options legend{font:8px var(--mono);color:var(--read-muted);letter-spacing:.04em}
+.theme-classic .terminal-group.segmented{background:var(--index-panel);border:1px solid var(--index-rule);border-radius:2px;padding:2px;gap:2px}
+.theme-classic[data-terminal-size] .terminal-group button{border-radius:0;font:10px var(--mono);min-height:32px;color:var(--read-muted)}
+.theme-classic .terminal-group button[aria-pressed=true]{background:var(--index-shelf);color:var(--index-highlight);box-shadow:inset 0 -2px 0 var(--index-metal)}
+.theme-classic[data-terminal-size] .terminal-bionic{border:1px solid var(--index-rule);background:var(--index-panel);border-radius:2px;padding:8px 10px;box-shadow:none;gap:2px 8px}
+.theme-classic .terminal-bionic>span{font:14px "NW Literata",Georgia,serif}
+.theme-classic .terminal-bionic small{font:7px var(--mono);color:var(--read-muted)}
+.theme-classic .terminal-switch{border-radius:0;width:23px;height:14px;border-color:var(--index-rule)}
+.theme-classic .terminal-switch::after{border-radius:0;background:var(--index-metal)}
+.theme-classic .terminal-bionic[aria-pressed=true]{border-color:var(--index-accent-border);color:var(--read-text)}
+.theme-classic .terminal-bionic[aria-pressed=true] b{color:var(--read-bold)}
+.theme-classic button:focus-visible,.theme-classic input:focus-visible{outline-color:var(--index-highlight)}
+.theme-classic[data-terminal-size=compact]{padding:9px 12px}
+.theme-classic[data-terminal-size=compact] .terminal-deck{gap:7px}
+.theme-classic[data-terminal-size=compact] .terminal-header{padding-bottom:4px}
+.theme-classic[data-terminal-size=compact] .terminal-header h1{font-size:25px;margin:0}
+.theme-classic[data-terminal-size=compact] .terminal-file{min-height:34px}
+.theme-classic[data-terminal-size=compact] .terminal-monitor{padding:9px 12px 6px}
+.theme-classic[data-terminal-size=compact] .terminal-monitor-top{padding-bottom:6px;font-size:8px}
+.theme-classic[data-terminal-size=compact] .archive-registration{inset:36px 9px 60px}
+.theme-classic[data-terminal-size=compact] .terminal-section{font-size:7px;padding-top:4px}
+.theme-classic[data-terminal-size=compact] .terminal-speed{padding:7px 7px 4px}
+.theme-classic[data-terminal-size=compact] .terminal-speed-title{font-size:11px}
+.theme-classic[data-terminal-size=compact] .terminal-speed-value{gap:4px;margin:6px 0 3px}
+.theme-classic[data-terminal-size=compact] .terminal-speed-value output{font-size:29px}
+.theme-classic[data-terminal-size=compact] .speed-step.icon-btn{width:29px;min-width:29px;height:32px}
+.theme-classic[data-terminal-size=compact] .terminal-group button{font-size:9px;padding-inline:2px}
+.theme-classic[data-terminal-size=compact] .terminal-bionic{padding:8px;min-height:46px}
+.theme-classic[data-terminal-landscape=true] .terminal-header{padding-bottom:0;border:0}
+.theme-classic[data-terminal-landscape=true] .terminal-header h1{font-size:25px}
+.theme-classic[data-terminal-landscape=true] .terminal-options{gap:7px}
+.theme-classic[data-terminal-landscape=true] .terminal-options legend{display:none}
+.theme-classic[data-terminal-landscape=true] .terminal-bionic{width:43%;min-height:44px;padding:6px}
+.theme-classic[data-terminal-landscape=true] .terminal-monitor{padding-top:8px}
+.theme-classic[data-terminal-landscape=true] .archive-registration{inset:35px 9px 47px}
+.theme-classic[data-terminal-landscape=true] .terminal-speed-head .terminal-label{display:none}
+.theme-classic[data-terminal-landscape=true] .terminal-speed-value{margin:5px 0 2px}
+/* The settings thumbnail repeats the file tab, registration and measured rule. */
+.classic-preview{height:100%;min-height:90px;padding:9px 12px;background:var(--index-paper);color:var(--read-text);position:relative;font-family:"NW Literata",Georgia,serif}
+.classic-preview-tab{display:block;width:80%;padding:4px 7px;background:var(--index-shelf);border-radius:3px 7px 0 0;color:var(--index-accent);font:5px "NW Plex Mono",monospace;letter-spacing:.08em}
+.classic-preview-sheet{position:relative;min-height:49px;border:1px solid var(--index-rule);background:var(--index-paper);box-shadow:2px 2px 0 var(--index-panel);display:grid;place-items:center}
+.classic-preview-sheet b{font-size:24px;font-weight:500;letter-spacing:-.065em}
+.classic-preview-index{position:absolute;left:8px;bottom:4px;color:var(--read-muted);font-size:10px}
+.classic-preview-sheet>i{position:absolute;inset:7px;border-left:1px solid var(--index-registration);border-right:1px solid var(--index-registration);pointer-events:none}
+.classic-preview-line{position:absolute;bottom:7px;left:23px;right:8px;height:1px;background:var(--index-registration)}
+.classic-preview-measure{height:9px;margin-top:8px;border-bottom:1px solid var(--index-rule);background:repeating-linear-gradient(90deg,var(--index-metal) 0 1px,transparent 1px 5px);background-size:100% 5px;background-repeat:no-repeat;position:relative}
+.classic-preview-measure i{position:absolute;width:9px;height:8px;left:34%;top:0;background:var(--index-metal);border:1px solid var(--index-key-edge)}

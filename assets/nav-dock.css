@@ -1,0 +1,60 @@
+/* A switchboard: a document register, five route keys, a separate loading tab. */
+@media(max-width:800px){
+ .mobile-nav{--dock-key:var(--surface);--dock-selected:var(--accent-soft);--dock-selected-ink:var(--accent);--dock-load:var(--accent);--dock-load-ink:var(--accent-ink);display:flex;align-items:stretch;justify-content:center;height:calc(84px + env(safe-area-inset-bottom));padding:7px 10px calc(9px + env(safe-area-inset-bottom));background:#000;border:0;box-shadow:none;isolation:isolate}
+ .mobile-nav::before{content:"";position:absolute;inset:0 0 auto;height:1px;background:linear-gradient(90deg,transparent,var(--accent-border) 20% 80%,transparent);pointer-events:none}
+ .nav-switchboard{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 46px;grid-template-rows:16px 46px;gap:5px 9px;width:100%;max-width:540px;min-width:0}
+ .nav-register{display:flex;align-items:center;gap:7px;min-width:0;padding:0 3px;color:var(--muted);font:8px/1 var(--mono);letter-spacing:.025em}
+ .nav-register-mark{color:var(--accent);font-size:11px}
+ #dock-context{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;flex:1}
+ #dock-count{flex:none;font-size:8px;letter-spacing:.035em;color:var(--accent)}
+ #dock-count>span{font-size:6px;color:var(--subtle);letter-spacing:.08em}
+ .nav-routes{grid-column:1;grid-row:2;display:flex;gap:3px;min-width:0;position:relative}
+ .mobile-nav .nav-key{position:relative;min-width:44px;min-height:46px;height:46px;flex:1;display:flex;flex-direction:row;align-items:center;justify-content:center;gap:5px;padding:7px 5px 0;border:1px solid var(--line);border-radius:2px 2px 8px 2px;background:var(--dock-key);color:var(--muted);box-shadow:inset 0 1px 0 #ffffff0b,0 2px 0 #000;transition:flex 220ms cubic-bezier(.16,.8,.3,1),color 160ms,border-color 160ms,background-color 160ms,transform var(--press-speed)}
+ .mobile-nav .nav-key svg{width:17px;height:17px;stroke-width:1.5}
+ .nav-key-number{position:absolute;left:5px;top:4px;font:6px/1 var(--mono);letter-spacing:.06em;color:var(--subtle)}
+ .mobile-nav .nav-key-name{display:none;white-space:nowrap;font:10px/1 var(--mono);letter-spacing:-.035em}
+ .mobile-nav .nav-key.active{flex:1.85;background:var(--dock-selected);border-color:var(--accent-border);color:var(--dock-selected-ink);box-shadow:inset 0 1px 0 #ffffff12,0 2px 0 var(--accent-border)}
+ .mobile-nav .nav-key.active .nav-key-name{display:block}
+ .mobile-nav .nav-key.active .nav-key-number{color:var(--dock-selected-ink)}
+ .mobile-nav .nav-key.active::after{content:"";position:absolute;top:-1px;bottom:auto;left:auto;right:6px;width:13px;height:4px;background:var(--accent);border-radius:0;clip-path:polygon(0 0,100% 0,70% 100%,0 100%)}
+ .mobile-nav .nav-key[aria-expanded=true]{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+ .mobile-nav .nav-load{grid-column:2;grid-row:1 / 3;align-self:stretch;display:flex;flex-direction:column;justify-content:center;gap:5px;min-width:46px;width:46px;min-height:67px;height:67px;margin:0;padding:8px 0 3px;border:1px solid var(--accent-border);border-radius:2px 10px 2px 2px;background:var(--dock-load);color:var(--dock-load-ink);box-shadow:inset 0 1px 0 #ffffff55,inset 0 -3px 0 #0003,2px 2px 0 #000;position:relative}
+ .mobile-nav .nav-load svg{width:19px;height:19px;stroke-width:1.8}
+ .nav-load>span:last-child{font:8px/1 var(--mono);letter-spacing:.015em}
+ .nav-load-grip{position:absolute;top:5px;left:9px;right:9px;height:4px;background:repeating-linear-gradient(90deg,currentColor 0 1px,transparent 1px 4px);opacity:.35;pointer-events:none}
+ .mobile-nav .nav-key:focus-visible,.mobile-nav .nav-load:focus-visible{outline:2px solid var(--accent);outline-offset:2px;z-index:2}
+ body:not([data-view=terminal]) main{padding-bottom:calc(118px + env(safe-area-inset-bottom))}
+ .document-container{padding-bottom:calc(118px + env(safe-area-inset-bottom))}
+ #toast{bottom:calc(98px + env(safe-area-inset-bottom))}
+ .focus-mode .mobile-nav{display:none}
+ .focus-mode .document-container{padding-bottom:65px}
+ .focus-mode #toast{bottom:20px}
+ /* The switchboard's materials follow each instrument without moving its keys. */
+ body[data-terminal-presentation=classic] .mobile-nav{--dock-key:var(--index-panel);--dock-selected:var(--index-key);--dock-selected-ink:var(--index-key-ink)}
+ body[data-terminal-presentation=classic] .nav-key{border-radius:1px;box-shadow:inset 0 1px 0 #ffffff0d,0 2px 0 var(--index-rule)}
+ body[data-terminal-presentation=classic] .nav-key.active{border-color:var(--index-key-edge)}
+ body[data-terminal-presentation=classic] .nav-load{border-radius:1px 8px 1px 1px}
+ body[data-terminal-presentation=cyberdeck] .mobile-nav{--dock-key:#10170d;--dock-load:#f4df35;--dock-load-ink:#171b09}
+ body[data-terminal-presentation=cyberdeck] .nav-key{border-radius:3px 3px 9px 3px;border-bottom-width:2px}
+ body[data-terminal-presentation=cyberdeck] .nav-load{border-color:#776c20;box-shadow:inset 0 1px 0 #fff7,inset 0 -4px 0 #716412,2px 2px 0 #000}
+ body[data-terminal-presentation=phosphor] .nav-key,body[data-terminal-presentation=phosphor] .nav-load{border-radius:0;box-shadow:none}
+ body[data-terminal-presentation=phosphor] .nav-register-mark{font-size:0}
+ body[data-terminal-presentation=phosphor] .nav-register-mark::after{content:">_";font-size:8px}
+ body[data-terminal-presentation=phosphor] .nav-key.active::after{clip-path:none;width:8px;height:3px}
+ body[data-terminal-presentation=mixtape] .mobile-nav{--dock-key:#1c1911;--dock-selected:#dacead;--dock-selected-ink:#2c2719;--dock-load:#be704f;--dock-load-ink:#fff0d8}
+ body[data-terminal-presentation=mixtape] .nav-key{border-radius:2px;border-bottom-width:3px}
+ body[data-terminal-presentation=mixtape] .nav-key.active{border-color:#8e8162;box-shadow:inset 0 1px 0 #fff6,0 2px 0 #52462c}
+ body[data-terminal-presentation=mixtape] .nav-load{border-color:#845237;border-radius:2px 9px 2px 2px}
+ body[data-terminal-presentation=orbital] .nav-key{border-radius:0 0 9px 0;background:#071116}
+ body[data-terminal-presentation=orbital] .nav-key.active{background:var(--accent);color:#0b1820;border-color:var(--accent)}
+ body[data-terminal-presentation=orbital] .nav-key.active::after{background:#142d38}
+ body[data-terminal-presentation=orbital] .nav-load{border-radius:0 12px 0 0}
+ body[data-terminal-presentation=nocturne] .mobile-nav{--dock-key:#0c070f;--dock-selected:#211529;--dock-load:#211529;--dock-load-ink:var(--accent)}
+ body[data-terminal-presentation=nocturne] .nav-key{border-radius:0;border-width:0 0 1px;box-shadow:none}
+ body[data-terminal-presentation=nocturne] .nav-key-name{font:italic 12px "NW Literata",Georgia,serif}
+ body[data-terminal-presentation=nocturne] .nav-key.active{border-bottom-color:var(--accent);box-shadow:none}
+ body[data-terminal-presentation=nocturne] .nav-key.active::after{width:4px;height:4px;clip-path:none;transform:rotate(45deg);top:3px;right:5px}
+ body[data-terminal-presentation=nocturne] .nav-load{border-radius:0;box-shadow:inset 3px 0 0 #000;border-width:1px 0 1px 1px}
+}
+@media(max-width:360px){.mobile-nav{padding-inline:7px}.nav-switchboard{column-gap:6px}.nav-routes{gap:2px}.mobile-nav .nav-key{padding-inline:3px;gap:4px}.mobile-nav .nav-key.active{flex:1.7}.mobile-nav .nav-key-name{font-size:9px}.nav-register{font-size:7px}}
+@media(prefers-reduced-motion:reduce){.mobile-nav .nav-key{transition:none}}

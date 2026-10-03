@@ -1,0 +1,51 @@
+if(process.platform==='android')Object.defineProperty(process,'platform',{value:'linux'});
+const fs=require('node:fs'),http=require('node:http'),path=require('node:path'),assert=require('node:assert/strict');
+const {chromium}=require('../../folio/node_modules/playwright'),launch=require('../../folio/tests/gpu-launch.cjs');
+const root=path.resolve(__dirname,'../assets');
+const server=http.createServer((req,res)=>{const file=path.join(root,req.url==='/'?'index.html':decodeURIComponent(req.url.split('?')[0]));if(!file.startsWith(root+path.sep)){res.writeHead(403).end();return;}fs.readFile(file,(err,data)=>{if(err){res.writeHead(404).end();return;}res.setHeader('Content-Type',file.endsWith('.js')?'application/javascript':file.endsWith('.css')?'text/css':file.endsWith('.html')?'text/html':file.endsWith('.ttf')?'font/ttf':file.endsWith('.woff2')?'font/woff2':'text/plain');res.end(data);});});
+(async()=>{
+ await new Promise(r=>server.listen(8792,'127.0.0.1',r));
+ const browser=await chromium.launch({...launch(),headless:true}),context=await browser.newContext({viewport:{width:412,height:915},hasTouch:true});
+ await context.addInitScript(()=>{if(!localStorage.getItem('settings'))localStorage.setItem('settings',JSON.stringify({font:'serif',fontSize:18,leading:'1.85',readerTheme:'catppuccin',readerBlack:true,accent:'glacier',motion:false}));});
+ const page=await context.newPage(),errors=[],external=[],fontResponses=[];
+ page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(!r.url().startsWith('http://127.0.0.1:8792/'))external.push(r.url());});page.on('response',r=>{if(/\.(ttf|woff2)$/.test(r.url()))fontResponses.push({url:r.url(),status:r.status(),type:r.headers()['content-type']});});
+ const prefs=()=>page.getByRole('button',{name:'Reading preferences',exact:true}),close=()=>page.getByRole('button',{name:'Close panel'});
+ try{
+  await page.goto('http://127.0.0.1:8792/');await page.waitForFunction(()=>!!window.Nightwire);
+  assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('settings')).font),'serif','Existing serif preference must survive migration');
+  const paragraph='Readable notes keep their details: Il1, O0, Aa Bb Gg, 0123456789.\n\n';
+  const text='# Typography notes\n\nA paragraph with **bold**, *italic*, and ***bold italic*** text. Café, résumé, Ελληνικά, Кириллица.\n\n'+paragraph.repeat(4)+'## A longer section\n\n'+paragraph.repeat(12)+'```js\nconst answer = 42;\n```\n';
+  await page.locator('#file-input').setInputFiles({name:'Font-check.md',mimeType:'text/markdown',buffer:Buffer.from(text)});await page.locator('#markdown h1').waitFor();
+  const input=await page.evaluate(()=>Nightwire.classifierInput()),sourceCodeFont=await page.locator('#markdown pre code').evaluate(el=>getComputedStyle(el).fontFamily);
+  await prefs().click();assert.equal(await page.getByRole('combobox',{name:'Reading typeface'}).inputValue(),'serif');assert.equal(await page.getByRole('combobox',{name:'Reading typeface'}).locator('option').count(),20);await close().click();
+  const faces=[['source','Source Sans 3','NW Source Sans 3'],['literata','Literata','NW Literata'],['atkinson','Atkinson Hyperlegible Next','NW Atkinson Next'],['plex','IBM Plex Mono','NW Plex Mono'],['inter','Inter','NW Inter'],['dm','DM Sans','NW DM Sans'],['work','Work Sans','NW Work Sans'],['nunito','Nunito Sans','NW Nunito Sans'],['lora','Lora','NW Lora'],['newsreader','Newsreader','NW Newsreader'],['alegreya','Alegreya','NW Alegreya'],['crimson','Crimson Pro','NW Crimson Pro'],['fraunces','Fraunces','NW Fraunces'],['jetbrains','JetBrains Mono','NW JetBrains Mono'],['space','Space Mono','NW Space Mono'],['opendyslexic','OpenDyslexic','NW OpenDyslexic'],['lexend','Lexend','NW Lexend'],['roboto','Roboto Mono','NW Roboto Mono']];
+  for(const [id,name,family]of faces){
+   await prefs().click();await page.getByRole('combobox',{name:'Reading typeface'}).selectOption(id);
+   const loaded=await page.evaluate(async family=>{const faces=[];for(const style of ['400','650','italic 400','italic 650'])faces.push(...await document.fonts.load(style+' 18px "'+family+'"','Typography'));await document.fonts.ready;return faces.map(face=>({family:face.family,status:face.status,style:face.style,weight:face.weight}));},family);
+   assert(loaded.length>=4&&loaded.every(face=>face.status==='loaded'&&face.family.replaceAll('"','')===family),name+' must load real normal/bold/italic font faces');
+   if(id!=='lexend')assert(loaded.some(face=>face.style==='italic'),name+' has a real italic face');else assert(loaded.every(face=>face.style==='normal'),'Lexend uses its normal variable face for browser-slanted italics');
+   assert.equal(await page.locator('#reading-font-name').textContent(),name);
+   assert((await page.locator('#font-preview p').evaluate(el=>getComputedStyle(el).fontFamily)).includes(family));
+   assert.equal(await page.locator('#font-preview p').evaluate(el=>getComputedStyle(el).fontSize),'18px');
+   await page.locator('#font-preview').scrollIntoViewIfNeeded();await page.screenshot({path:path.join(__dirname,`font-preview-${id}.png`)});await close().click();
+   assert((await page.locator('#markdown').evaluate(el=>getComputedStyle(el).fontFamily)).includes(family));
+   assert.equal(await page.locator('#markdown pre code').evaluate(el=>getComputedStyle(el).fontFamily),sourceCodeFont,'Prose font must not change code font');
+   assert.equal(await page.evaluate(()=>document.documentElement.dataset.readerTheme),'catppuccin');assert.equal(await page.evaluate(()=>document.documentElement.dataset.readerBlack),'true');assert.equal(await page.evaluate(()=>document.documentElement.dataset.palette),'glacier');
+   assert.equal((await page.evaluate(()=>Nightwire.classifierInput())).contentRevision,input.contentRevision);
+   assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),name+' must not widen the reader');
+   const metrics=await page.evaluate(family=>{const ctx=document.createElement('canvas').getContext('2d');ctx.font='18px "'+family+'"';const selected=ctx.measureText('Hamburgefontsiv 001122').width;const glyphs=[...'iW0lO'].map(g=>ctx.measureText(g).width);ctx.font='18px sans-serif';return {selected,fallback:ctx.measureText('Hamburgefontsiv 001122').width,glyphs};},family);
+   assert.notEqual(metrics.selected,metrics.fallback,name+' must render with bundled metrics rather than fallback');if(['plex','jetbrains','space','roboto'].includes(id))assert(Math.max(...metrics.glyphs)-Math.min(...metrics.glyphs)<.01,'Plex must render equal-width glyphs');
+   await page.screenshot({path:path.join(__dirname,`reader-font-${id}.png`)});
+  }
+  await page.reload();await page.waitForFunction(()=>window.Nightwire&&document.querySelector('.resume-sheet h2')?.textContent==='Typography notes');await page.getByRole('button',{name:'Continue reading'}).click();await page.locator('#markdown h1').waitFor();await page.evaluate(()=>document.fonts.ready);
+  assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('settings')).font),'roboto');assert((await page.locator('#markdown').evaluate(el=>getComputedStyle(el).fontFamily)).includes('NW Roboto Mono'));
+  await page.getByRole('button',{name:'View Markdown source'}).click();assert(!(await page.locator('.source-view').evaluate(el=>getComputedStyle(el).fontFamily)).includes('NW Plex Mono'),'Source keeps its dedicated monospace');await page.getByRole('button',{name:'Read formatted Markdown'}).click();
+  await prefs().click();await page.getByRole('combobox',{name:'Reading typeface'}).selectOption('literata');
+  for(const width of [320,412,800,1280]){await page.setViewportSize({width,height:915});assert(await page.locator('#panel-content').evaluate(el=>el.scrollWidth<=el.clientWidth),`Typography panel overflows at ${width}px`);assert(await page.locator('#font-preview').evaluate(el=>el.scrollWidth<=el.clientWidth),`Specimen overflows at ${width}px`);}
+  await page.setViewportSize({width:320,height:915});await page.locator('#font-preview').scrollIntoViewIfNeeded();await page.screenshot({path:path.join(__dirname,'font-picker-320.png')});
+  await page.getByRole('button',{name:'Tokyo Night reading theme',exact:true}).click();assert.equal(await page.getByRole('combobox',{name:'Reading typeface'}).inputValue(),'literata');await page.getByRole('button',{name:'Increase text size'}).click();assert.equal(await page.locator('#font-preview p').evaluate(el=>getComputedStyle(el).fontSize),'19px');
+  await page.getByRole('combobox',{name:'Reading typeface'}).selectOption('sans');assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('settings')).font),'sans');await page.getByRole('combobox',{name:'Reading typeface'}).selectOption('serif');assert((await page.locator('#font-preview p').evaluate(el=>getComputedStyle(el).fontFamily)).includes('Georgia'));
+  assert(fontResponses.length>=41,'All bundled normal/italic/semibold faces must have been exercised');assert(fontResponses.every(r=>r.status===200&&r.type===(r.url.endsWith('.woff2')?'font/woff2':'font/ttf')),'Fonts must be served locally with correct MIME');assert.deepEqual(errors,[]);assert.deepEqual(external,[]);
+  console.log('PASS: 20 font choices, 41 real font faces and glyph metrics, normal/bold/italic rendering, mono character widths, live sample/text size, prose/source separation, migration and persistence, independent themes/accents, unchanged classifier revision, responsive picker, local font MIME and zero external requests.');
+ }finally{await browser.close();server.close();}
+})().catch(e=>{console.error(e);server.close();process.exitCode=1;});

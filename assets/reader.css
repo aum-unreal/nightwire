@@ -1,0 +1,68 @@
+/* Theme variables belong to the reading surface; interface accents remain independent. */
+.reader-main{background:var(--read-bg);min-height:calc(100dvh - 76px);color:var(--read-text)}
+.reader-toolbar{background:var(--read-bg);border-color:var(--read-line)}
+.reader-toolbar .reader-back{color:var(--read-muted)}
+.document-meta,.document-end,.source-number{color:var(--read-muted)}
+.document-meta .accent{color:var(--read-link)}
+.document-end,.frontmatter,.frontmatter dl{border-color:var(--read-line)}
+.frontmatter{color:var(--read-muted)}
+.frontmatter dd{color:var(--read-text)}
+.reader-main .tag{border-color:var(--read-line);color:var(--read-link);background:var(--read-panel)}
+.reader-outline{border-color:var(--read-line);background:var(--read-bg)}
+.reader-outline .eyebrow,.reader-outline button{color:var(--read-muted)}
+.reader-outline button:hover{color:var(--read-link);background:var(--read-panel)}
+.reader-main .markdown,.reader-main .source-view{color:var(--read-text)}
+.markdown h1{color:var(--read-h1)}.markdown h2{color:var(--read-h2);border-color:var(--read-line)}.markdown h3{color:var(--read-h3)}.markdown h4{color:var(--read-h4)}.markdown h5{color:var(--read-h5)}.markdown h6{color:var(--read-h6)}
+.markdown strong{color:var(--read-bold);font-weight:650}.markdown em{color:var(--read-italic)}
+.markdown a{color:var(--read-link);border-bottom-color:var(--read-line)}
+.markdown a:hover{color:var(--read-bold)}
+.markdown ul>li::marker,.markdown ol>li::marker{color:var(--read-h3)}
+.markdown hr{border-color:var(--read-line)}
+.markdown code{color:var(--read-link);background:var(--read-panel);border-color:var(--read-line)}
+.markdown pre{background:var(--read-panel);border-color:var(--read-line);box-shadow:none}
+.markdown pre code{color:var(--read-text);background:none}
+.markdown pre .code-label,.markdown pre .code-copy{color:var(--read-muted)}
+.markdown pre .hljs-keyword,.markdown pre .hljs-selector-tag,.markdown pre .hljs-built_in{color:var(--read-keyword)}
+.markdown pre .hljs-string,.markdown pre .hljs-attr{color:var(--read-string)}
+.markdown pre .hljs-number,.markdown pre .hljs-literal{color:var(--read-number)}
+.markdown pre .hljs-comment,.markdown pre .hljs-quote{color:var(--read-muted);font-style:italic}
+.markdown pre .hljs-title,.markdown pre .hljs-function{color:var(--read-link)}
+.markdown blockquote,.markdown blockquote.callout{background:var(--read-panel);border-color:var(--read-h3);color:var(--read-text);box-shadow:none}
+.markdown .callout-label{color:var(--read-link)}
+.markdown th{background:var(--read-panel);color:var(--read-bold)}
+.markdown th,.markdown td{border-color:var(--read-line)}
+.markdown .task-check{color:var(--read-link)}
+.markdown mark{background:var(--read-line);color:var(--read-text)}
+.markdown mark.current{background:var(--read-link);color:#111318}
+:root[data-reader-theme="minimal"] .markdown h2{border-top:0;padding-top:0;font-weight:600}
+:root[data-reader-theme="minimal"] .markdown h3{font-size:1.07em;font-weight:600}
+:root[data-reader-theme="minimal"] .markdown blockquote{background:none;border-radius:0;padding-block:3px}
+:root[data-reader-theme="catppuccin"] .markdown h2{border-top:0;padding-top:0}
+:root[data-reader-theme="catppuccin"] .markdown blockquote{border-radius:0 12px 12px 0}
+:root[data-reader-theme="tokyo"] .markdown h2{border-top:0;border-bottom:1px solid var(--read-line);padding:0 0 12px}
+:root[data-reader-theme="tokyo"] .markdown pre{border-radius:3px}
+:root[data-reader-theme="nord"] .markdown h2{border-top:0;padding-top:0;letter-spacing:-.015em}
+:root[data-reader-theme="nord"] .markdown blockquote{border-left-width:3px;border-radius:0}
+:root[data-reader-theme="gruvbox"] .markdown h2{border-top:0;padding-top:0}
+:root[data-reader-theme="gruvbox"] .markdown h3{font-size:1em;letter-spacing:0}
+:root[data-reader-theme="gruvbox"] .markdown pre,:root[data-reader-theme="gruvbox"] .markdown blockquote{border-radius:2px}
+/* A single live specimen makes theme differences easy to compare. */
+.reader-theme-section{margin-bottom:32px}
+.reader-theme-preview{background:var(--read-bg);color:var(--read-text);border:1px solid var(--read-line);padding:22px;border-radius:10px;margin-bottom:14px}
+.reader-theme-preview .specimen-caption{font:9px var(--mono);color:var(--read-muted);letter-spacing:.06em}
+.reader-theme-preview h3{color:var(--read-h1);font-size:26px;margin:17px 0 10px}
+.reader-theme-preview p{font-size:12px;margin-bottom:15px;line-height:1.65}
+.reader-theme-preview strong{color:var(--read-bold)}.reader-theme-preview .preview-link{color:var(--read-link);border-bottom:1px solid var(--read-line)}
+.reader-theme-preview code{color:var(--read-link);background:var(--read-panel);font:11px var(--mono);padding:2px 5px;border-radius:3px}
+.reader-theme-preview blockquote{color:var(--read-muted);border-left:2px solid var(--read-h3);margin:0;padding-left:10px;font-size:11px}
+.reader-theme-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.reader-theme-option{min-width:0;min-height:62px;border:1px solid var(--line);border-radius:6px;text-align:left;padding:10px 12px;display:grid;grid-template-columns:minmax(0,1fr) 16px;align-items:center;gap:8px;background:var(--surface)}
+.reader-theme-option strong{font-size:11px;font-weight:500;display:block;overflow-wrap:anywhere;margin-bottom:8px}
+.theme-ink{display:flex;gap:4px}.theme-ink b{width:19px;height:3px;border-radius:1px}
+.reader-theme-option>.lucide{width:15px;color:var(--accent);opacity:0}
+.reader-theme-option[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.reader-theme-option[aria-pressed="true"]>.lucide{opacity:1}
+.reader-theme-section .setting-row{border-bottom:0;padding-bottom:0}
+.theme-note{font-size:10px;color:var(--muted);line-height:1.6;margin-top:16px}
+@media(max-width:360px){.reader-theme-option{padding:10px}.reader-theme-option strong{font-size:10px}.reader-theme-preview{padding:18px}}
+@media(prefers-reduced-motion:reduce){.reader-theme-preview{transition:none}}

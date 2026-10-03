@@ -1,0 +1,455 @@
+[
+  {
+    "id": "source",
+    "name": "Source Sans 3",
+    "directory": "sourcesans3",
+    "url": "https://github.com/adobe-fonts/source-sans",
+    "files": [
+      [
+        "SourceSans3[wght].ttf",
+        "source-sans3.ttf",
+        "d259aa494fe7117141a2752a998a52c172bbd42b"
+      ],
+      [
+        "SourceSans3-Italic[wght].ttf",
+        "source-sans3-italic.ttf",
+        "ee54b36fd07749f63466845ae14d533be06f3c22"
+      ],
+      [
+        "OFL.txt",
+        "source-sans3.txt",
+        "50ee76cf00fbfe42fb7c74a9b95c9508dec5bb8f"
+      ]
+    ]
+  },
+  {
+    "id": "literata",
+    "name": "Literata",
+    "directory": "literata",
+    "url": "https://github.com/googlefonts/literata",
+    "files": [
+      [
+        "Literata[opsz,wght].ttf",
+        "literata.ttf",
+        "0a81b4984a4a4eb101e0ddc28babc85bb137efef"
+      ],
+      [
+        "Literata-Italic[opsz,wght].ttf",
+        "literata-italic.ttf",
+        "8690209cd1bb4d9be1c1a0e976ee2f740c94093b"
+      ],
+      [
+        "OFL.txt",
+        "literata.txt",
+        "9d3b4e3b1e9068fbda799f57833ff831d05cc271"
+      ]
+    ]
+  },
+  {
+    "id": "atkinson",
+    "name": "Atkinson Hyperlegible Next",
+    "directory": "atkinsonhyperlegiblenext",
+    "url": "https://github.com/google/fonts/tree/main/ofl/atkinsonhyperlegiblenext",
+    "files": [
+      [
+        "AtkinsonHyperlegibleNext[wght].ttf",
+        "atkinson-next.ttf",
+        "92a357554bdcca62a7e80d5e3724bf4eb8932e5e"
+      ],
+      [
+        "AtkinsonHyperlegibleNext-Italic[wght].ttf",
+        "atkinson-next-italic.ttf",
+        "a21e13bcbacc0a33e536bc107973cc458e85ef54"
+      ],
+      [
+        "OFL.txt",
+        "atkinson-next.txt",
+        "88955733b80000358ef3e5521f3369b276e066a9"
+      ]
+    ]
+  },
+  {
+    "id": "plex",
+    "name": "IBM Plex Mono",
+    "directory": "ibmplexmono",
+    "url": "https://github.com/IBM/plex",
+    "files": [
+      [
+        "IBMPlexMono-Regular.ttf",
+        "plex-mono.ttf",
+        "0c9770d5183ba60dc4350d3e011b782a320761ae"
+      ],
+      [
+        "IBMPlexMono-Italic.ttf",
+        "plex-mono-italic.ttf",
+        "d7f69134614ebdcaa10ebd36b0be1a44a035e157"
+      ],
+      [
+        "IBMPlexMono-SemiBold.ttf",
+        "plex-mono-semibold.ttf",
+        "8f8998a139d8f61d3b96bdd3b512fca501a1f6b9"
+      ],
+      [
+        "IBMPlexMono-SemiBoldItalic.ttf",
+        "plex-mono-semibold-italic.ttf",
+        "50e47fa895a99c816061ad3b2bf433850a5f713b"
+      ],
+      [
+        "OFL.txt",
+        "plex-mono.txt",
+        "c35c4c618fab33da8695177b3a6cefe0810b7b28"
+      ]
+    ]
+  },
+  {
+    "id": "inter",
+    "name": "Inter",
+    "directory": "inter",
+    "url": "https://github.com/google/fonts/tree/main/ofl/inter",
+    "revision": "9710da1eacb3be272583c3224dcb70f9da6eadbb",
+    "files": [
+      [
+        "Inter-Italic[opsz,wght].ttf",
+        "inter-italic.ttf",
+        "c177578428248f08eedcc60e292acc6f414c2167"
+      ],
+      [
+        "Inter[opsz,wght].ttf",
+        "inter.ttf",
+        "047c92f6e2212473dc436020afed689527076d44"
+      ],
+      [
+        "OFL.txt",
+        "inter.txt",
+        "21f6aff961064c2e429f570995e446bcdd555422"
+      ]
+    ]
+  },
+  {
+    "id": "dm",
+    "name": "DM Sans",
+    "directory": "dmsans",
+    "url": "https://github.com/google/fonts/tree/main/ofl/dmsans",
+    "revision": "9710da1eacb3be272583c3224dcb70f9da6eadbb",
+    "files": [
+      [
+        "DMSans-Italic[opsz,wght].ttf",
+        "dm-italic.ttf",
+        "bf6819b0f811026ecf98d66183509b7302c0bf61"
+      ],
+      [
+        "DMSans[opsz,wght].ttf",
+        "dm.ttf",
+        "c672f98060af9b2c85fca704ebd5ad9a8717c1df"
+      ],
+      [
+        "OFL.txt",
+        "dm.txt",
+        "4430b85ac62998e2edb914360f9ebdfe43f4deaa"
+      ]
+    ]
+  },
+  {
+    "id": "work",
+    "name": "Work Sans",
+    "directory": "worksans",
+    "url": "https://github.com/google/fonts/tree/main/ofl/worksans",
+    "revision": "9710da1eacb3be272583c3224dcb70f9da6eadbb",
+    "files": [
+      [
+        "OFL.txt",
+        "work.txt",
+        "d3a046cf574819c79d216914d71d987d6a2be34b"
+      ],
+      [
+        "WorkSans-Italic[wght].ttf",
+        "work-italic.ttf",
+        "b114392cc4f8ac63324aee656c2a869cd853abbe"
+      ],
+      [
+        "WorkSans[wght].ttf",
+        "work.ttf",
+        "588dc07e6904ba80deeefb88ecc41d139d56ebfb"
+      ]
+    ]
+  },
+  {
+    "id": "nunito",
+    "name": "Nunito Sans",
+    "directory": "nunitosans",
+    "url": "https://github.com/google/fonts/tree/main/ofl/nunitosans",
+    "revision": "9710da1eacb3be272583c3224dcb70f9da6eadbb",
+    "files": [
+      [
+        "NunitoSans-Italic[YTLC,opsz,wdth,wght].ttf",
+        "nunito-italic.ttf",
+        "5b325adf55fe1e0e99b10a4ef74a205b322e3cd5"
+      ],
+      [
+        "NunitoSans[YTLC,opsz,wdth,wght].ttf",
+        "nunito.ttf",
+        "ccc8565733e7d037ede2c9cc971ceb6375e28733"
+      ],
+      [
+        "OFL.txt",
+        "nunito.txt",
+        "2ae17359801c71b7b568854b98f73969ad822474"
+      ]
+    ]
+  },
+  {
+    "id": "lora",
+    "name": "Lora",
+    "directory": "lora",
+    "url": "https://github.com/google/fonts/tree/main/ofl/lora",
+    "revision": "9710da1eacb3be272583c3224dcb70f9da6eadbb",
+    "files": [
+      [
+        "Lora-Italic[wght].ttf",
+        "lora-italic.ttf",
+        "e973ccf7e5c69a831090c729a0dc2c592f42f4cc"
+      ],
+      [
+        "Lora[wght].ttf",
+        "lora.ttf",
+        "ee1914c3746140523de2940d267ec2215bd85d5b"
+      ],
+      [
+        "OFL.txt",
+        "lora.txt",
+        "d0ce7fe062e60eaa92c4af3ee1bebe81c5141b4e"
+      ]
+    ]
+  },
+  {
+    "id": "newsreader",
+    "name": "Newsreader",
+    "directory": "newsreader",
+    "url": "https://github.com/google/fonts/tree/main/ofl/newsreader",
+    "revision": "9710da1eacb3be272583c3224dcb70f9da6eadbb",
+    "files": [
+      [
+        "Newsreader-Italic[opsz,wght].ttf",
+        "newsreader-italic.ttf",
+        "d25879656a601d44c49836f9e773d100190c62e1"
+      ],
+      [
+        "Newsreader[opsz,wght].ttf",
+        "newsreader.ttf",
+        "ad4a9a8c44ec328c80b61c773f1ba02f6b5ed292"
+      ],
+      [
+        "OFL.txt",
+        "newsreader.txt",
+        "d2d4f407109e9c74b8ab502fc79b912408ab8e41"
+      ]
+    ]
+  },
+  {
+    "id": "alegreya",
+    "name": "Alegreya",
+    "directory": "alegreya",
+    "url": "https://github.com/google/fonts/tree/main/ofl/alegreya",
+    "revision": "9710da1eacb3be272583c3224dcb70f9da6eadbb",
+    "files": [
+      [
+        "Alegreya-Italic[wght].ttf",
+        "alegreya-italic.ttf",
+        "890f8f127bf3ea38676272dc589df02fd3072397"
+      ],
+      [
+        "Alegreya[wght].ttf",
+        "alegreya.ttf",
+        "af2b22024311daaa15ec4ab879bd67f790abb9f1"
+      ],
+      [
+        "OFL.txt",
+        "alegreya.txt",
+        "1a25b6d8a7f84147962200321d2ffa75b960b9af"
+      ]
+    ]
+  },
+  {
+    "id": "crimson",
+    "name": "Crimson Pro",
+    "directory": "crimsonpro",
+    "url": "https://github.com/google/fonts/tree/main/ofl/crimsonpro",
+    "revision": "9710da1eacb3be272583c3224dcb70f9da6eadbb",
+    "files": [
+      [
+        "CrimsonPro-Italic[wght].ttf",
+        "crimson-italic.ttf",
+        "d8fb3a3c3ad32ca5608969654feb002df9dd78f9"
+      ],
+      [
+        "CrimsonPro[wght].ttf",
+        "crimson.ttf",
+        "b8c1f6da0acbf2cb6d0af49ce89557288c829daa"
+      ],
+      [
+        "OFL.txt",
+        "crimson.txt",
+        "6a7d97cd277b519a8bd3d38fcc56b5a133ac8354"
+      ]
+    ]
+  },
+  {
+    "id": "fraunces",
+    "name": "Fraunces",
+    "directory": "fraunces",
+    "url": "https://github.com/google/fonts/tree/main/ofl/fraunces",
+    "revision": "9710da1eacb3be272583c3224dcb70f9da6eadbb",
+    "files": [
+      [
+        "Fraunces-Italic[SOFT,WONK,opsz,wght].ttf",
+        "fraunces-italic.ttf",
+        "2ddf59a11b89a3d6b2816ea6ae7965026c08143a"
+      ],
+      [
+        "Fraunces[SOFT,WONK,opsz,wght].ttf",
+        "fraunces.ttf",
+        "8210f9488d3c732359a9292dd09aca3f2bae830e"
+      ],
+      [
+        "OFL.txt",
+        "fraunces.txt",
+        "22fa7ce5733434d0c634f6e55116f410858e938c"
+      ]
+    ]
+  },
+  {
+    "id": "jetbrains",
+    "name": "JetBrains Mono",
+    "directory": "jetbrainsmono",
+    "url": "https://github.com/google/fonts/tree/main/ofl/jetbrainsmono",
+    "revision": "9710da1eacb3be272583c3224dcb70f9da6eadbb",
+    "files": [
+      [
+        "JetBrainsMono-Italic[wght].ttf",
+        "jetbrains-italic.ttf",
+        "5210f7350c95eef62d53de85b5953f4d5ff022ec"
+      ],
+      [
+        "JetBrainsMono[wght].ttf",
+        "jetbrains.ttf",
+        "aa310be8b717fe3774f9444dd89d5f4101cc6d10"
+      ],
+      [
+        "OFL.txt",
+        "jetbrains.txt",
+        "821a3dac22aff15a1f1c9689a1d79c45bb58ca39"
+      ]
+    ]
+  },
+  {
+    "id": "space",
+    "name": "Space Mono",
+    "directory": "spacemono",
+    "url": "https://github.com/google/fonts/tree/main/ofl/spacemono",
+    "revision": "9710da1eacb3be272583c3224dcb70f9da6eadbb",
+    "files": [
+      [
+        "OFL.txt",
+        "space.txt",
+        "a72b0a7845bec3214559673ffeba60c816a21841"
+      ],
+      [
+        "SpaceMono-Bold.ttf",
+        "space-bold.ttf",
+        "2c4f2682f915d988e7314544ff7c9e38c8c733f5"
+      ],
+      [
+        "SpaceMono-BoldItalic.ttf",
+        "space-bold-italic.ttf",
+        "94fe471ca44eae0cf5a5760df7da25856e39a781"
+      ],
+      [
+        "SpaceMono-Italic.ttf",
+        "space-italic.ttf",
+        "9bca1029bf05a1912b7b7732567b54a186e1cdaa"
+      ],
+      [
+        "SpaceMono-Regular.ttf",
+        "space.ttf",
+        "1cfa3653dc8ddb7aa9f4ef1c9c581e9516137e6e"
+      ]
+    ]
+  },
+  {
+    "id": "roboto",
+    "name": "Roboto Mono",
+    "directory": "robotomono",
+    "url": "https://github.com/google/fonts/tree/main/ofl/robotomono",
+    "revision": "9710da1eacb3be272583c3224dcb70f9da6eadbb",
+    "files": [
+      [
+        "OFL.txt",
+        "roboto.txt",
+        "8e7df338d36eb52c49548ecc58afcb7eb3f73898"
+      ],
+      [
+        "RobotoMono-Italic[wght].ttf",
+        "roboto-italic.ttf",
+        "414a5121f4ca743f0c64e82e22d91e426aa7d432"
+      ],
+      [
+        "RobotoMono[wght].ttf",
+        "roboto.ttf",
+        "f21d1d716bce3cc756bc618d32be71ce6f733f81"
+      ]
+    ]
+  },
+  {
+    "id": "lexend",
+    "name": "Lexend",
+    "directory": "lexend",
+    "url": "https://github.com/googlefonts/lexend",
+    "revision": "9710da1eacb3be272583c3224dcb70f9da6eadbb",
+    "files": [
+      [
+        "Lexend[wght].ttf",
+        "lexend.ttf",
+        "f70999106bfa76d48051b73ad7c888573663879c"
+      ],
+      [
+        "OFL.txt",
+        "lexend.txt",
+        "b1477aae6210797999bd5ad9c13bcae5fc98788b"
+      ]
+    ]
+  },
+  {
+    "id": "opendyslexic",
+    "name": "OpenDyslexic",
+    "repository": "antijingoist/opendyslexic",
+    "url": "https://opendyslexic.org/",
+    "revision": "1824da5c0e41dc3e13ffc7f3a636dcaf695d61b7",
+    "files": [
+      [
+        "compiled/OpenDyslexic-Regular.woff2",
+        "opendyslexic.woff2",
+        "4ee220be7e9b551ad100468bd08ba35f6f9fe2f8"
+      ],
+      [
+        "compiled/OpenDyslexic-Italic.woff2",
+        "opendyslexic-italic.woff2",
+        "9b78966bb5d2b8dbd89a875e16f4900e53160bb6"
+      ],
+      [
+        "compiled/OpenDyslexic-Bold.woff2",
+        "opendyslexic-bold.woff2",
+        "b5fd5e4f4b0977495d39bb3220096aef50120e31"
+      ],
+      [
+        "compiled/OpenDyslexic-Bold-Italic.woff2",
+        "opendyslexic-bold-italic.woff2",
+        "9e8a5f80f170b3de9df4bf5049624b67d81483f1"
+      ],
+      [
+        "OFL.txt",
+        "opendyslexic.txt",
+        "bb867823f2408fb8d2b3af5cb118b4bc0cd61972"
+      ]
+    ]
+  }
+]
