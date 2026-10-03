@@ -1,6 +1,13 @@
 /* Fixed origins and a reserved baseline keep each word slot steady during playback. */
-.terminal-main[data-terminal-size] .terminal-stage #terminal-words{width:calc(100% - 16px);height:1.5em;min-width:0;gap:12px;justify-content:flex-start;align-items:stretch;text-align:left;flex:none}
-.terminal-word-slot{display:flex;align-items:baseline;flex:1 1 0;min-width:0}
-.terminal-baseline{display:block;flex:none;width:0;height:1.15em;pointer-events:none}
-.terminal-word{display:block;flex:none;font-size:var(--frame-font-size,1em);line-height:1;white-space:nowrap}
-.terminal-main[data-terminal-size] .terminal-stage .terminal-no-prose{align-self:center;font-size:18px}
+.terminal-main[data-terminal-size][data-terminal-alignment=fixed] .terminal-stage #terminal-words{width:calc(100% - 16px);height:1.5em;min-width:0;gap:12px;justify-content:flex-start;align-items:stretch;text-align:left;flex:none}
+[data-terminal-alignment=fixed] .terminal-word-slot{display:flex;align-items:baseline;flex:1 1 0;min-width:0}
+[data-terminal-alignment=fixed] .terminal-baseline{display:block;flex:none;width:0;height:1.15em;pointer-events:none}
+[data-terminal-alignment=fixed] .terminal-word{display:block;flex:none;font-size:var(--frame-font-size,1em);line-height:1;white-space:nowrap}
+.terminal-main[data-terminal-size][data-terminal-alignment=fixed] .terminal-stage .terminal-no-prose{align-self:center;font-size:18px}
+
+.word-alignment-setting{margin:18px 0 12px}
+.word-alignment-options{display:flex;gap:4px}
+.word-alignment-options button{display:flex;align-items:center;justify-content:center;gap:8px;flex:1;min-height:44px;font:11px var(--mono)}
+.word-alignment-options svg{width:16px;height:16px}
+.word-alignment-options button[aria-pressed=true]{background:var(--accent-soft);color:var(--accent);box-shadow:inset 0 -2px 0 var(--accent)}
+.word-alignment-setting .theme-note{margin-bottom:0}

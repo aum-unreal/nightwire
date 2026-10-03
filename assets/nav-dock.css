@@ -1,6 +1,8 @@
 /* A switchboard: a document register, five route keys, a separate loading tab. */
+:root{--mobile-nav-height:0px}
 @media(max-width:800px){
- .mobile-nav{--dock-key:var(--surface);--dock-selected:var(--accent-soft);--dock-selected-ink:var(--accent);--dock-load:var(--accent);--dock-load-ink:var(--accent-ink);display:flex;align-items:stretch;justify-content:center;height:calc(84px + env(safe-area-inset-bottom));padding:7px 10px calc(9px + env(safe-area-inset-bottom));background:#000;border:0;box-shadow:none;isolation:isolate}
+ :root{--mobile-nav-height:calc(84px + env(safe-area-inset-bottom))}
+ .mobile-nav{--dock-key:var(--surface);--dock-selected:var(--accent-soft);--dock-selected-ink:var(--accent);--dock-load:var(--accent);--dock-load-ink:var(--accent-ink);display:flex;align-items:stretch;justify-content:center;height:var(--mobile-nav-height);padding:7px 10px calc(9px + env(safe-area-inset-bottom));background:#000;border:0;box-shadow:none;isolation:isolate}
  .mobile-nav::before{content:"";position:absolute;inset:0 0 auto;height:1px;background:linear-gradient(90deg,transparent,var(--accent-border) 20% 80%,transparent);pointer-events:none}
  .nav-switchboard{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 46px;grid-template-rows:16px 46px;gap:5px 9px;width:100%;max-width:540px;min-width:0}
  .nav-register{display:flex;align-items:center;gap:7px;min-width:0;padding:0 3px;color:var(--muted);font:8px/1 var(--mono);letter-spacing:.025em}

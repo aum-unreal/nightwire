@@ -7,6 +7,7 @@ export function createTerminal({root,doc,index,settings,save,saveSettings,icon,e
  const presentation=readStyle(settings.terminalStyle);
  root.className='terminal-main theme-'+presentation+(presentation==='cyberdeck'?' cyberdeck-root':presentation==='classic'?'':' vibe-root vibe-'+presentation);
  document.body.dataset.terminalPresentation=presentation;
+ root.dataset.terminalAlignment=settings.terminalAlignment==='center'?'center':'fixed';
  root.innerHTML=instrumentMarkup({doc,words,wpm,group,settings,icon,esc,presentation});
  root.querySelector('.terminal-header-tools,.deck-system-keys').insertAdjacentHTML('afterbegin',`<button class="icon-btn" id="terminal-blackout" aria-label="Blackout reading" title="Only words. Tap the screen to pause and return.">${icon('moon')}</button>`);
  root.querySelector('.terminal-monitor-top').insertAdjacentHTML('beforeend',typefaceTrigger(settings.font,esc));
@@ -36,7 +37,7 @@ export function createTerminal({root,doc,index,settings,save,saveSettings,icon,e
  const navigationTokens=['accent','accent-rgb','accent-soft','accent-border','accent-ink','line','muted','subtle','text'];
  function syncNavigation(){const style=getComputedStyle(root);for(const token of navigationTokens)document.body.style.setProperty('--terminal-'+token,style.getPropertyValue('--'+token));}
  function sizeScreen(){
-  const viewport=window.visualViewport?.height||innerHeight,dock=document.querySelector('.mobile-nav');
+  const viewport=Math.min(innerHeight,window.visualViewport?.height||innerHeight),dock=document.querySelector('.mobile-nav');
   const dockHeight=dock&&getComputedStyle(dock).display!=='none'?dock.getBoundingClientRect().height:0;
   const height=Math.max(220,Math.floor(viewport-dockHeight));root.style.setProperty('--terminal-height',height+'px');
   root.dataset.terminalSize=height<650?'compact':'regular';
@@ -46,6 +47,14 @@ export function createTerminal({root,doc,index,settings,save,saveSettings,icon,e
  function fit(){
   const el=$('#terminal-words');if(!el)return;el.style.fontSize='';el.style.removeProperty('--frame-font-size');
   const stage=$('.terminal-stage'),height=Math.max(1,stage.clientHeight-parseFloat(getComputedStyle(stage).paddingTop)-parseFloat(getComputedStyle(stage).paddingBottom)-4);
+  if(settings.terminalAlignment==='center'){
+   const style=getComputedStyle(stage),width=Math.max(1,stage.clientWidth-parseFloat(style.paddingLeft)-parseFloat(style.paddingRight)-24);
+   for(let pass=0;pass<3;pass++){
+    const ratio=Math.min(1,width/Math.max(1,el.scrollWidth),height/Math.max(1,el.getBoundingClientRect().height));if(ratio>=1)break;
+    el.style.fontSize=Math.max(1,parseFloat(getComputedStyle(el).fontSize)*ratio*.99)+'px';
+   }
+   return;
+  }
   // The line box depends on the viewport, while word fitting leaves its baseline fixed.
   const base=parseFloat(getComputedStyle(el).fontSize);el.style.fontSize=Math.min(base,height/1.5)+'px';
   const slots=[...el.querySelectorAll('.terminal-word-slot')];
@@ -56,7 +65,8 @@ export function createTerminal({root,doc,index,settings,save,saveSettings,icon,e
  }
 
  function frame(values,position){
-  $('#terminal-words').innerHTML=values.length?Array.from({length:settings.terminalGroup===2?2:1},(_,i)=>{const w=values[i],parts=w?bionicParts(w.text):[];return `<span class="terminal-word-slot"><span class="terminal-baseline" aria-hidden="true"></span>${w?`<span class="terminal-word">${settings.terminalBionic!==false?`<b>${esc(parts[0])}</b>${esc(parts[1])}`:esc(w.text)}</span>`:''}</span>`;}).join(''):'<span class="terminal-no-prose">No readable prose</span>';fit();
+  const wordMarkup=w=>{const [first,last]=bionicParts(w.text);return `<span class="terminal-word">${settings.terminalBionic!==false?`<b>${esc(first)}</b>${esc(last)}`:esc(w.text)}</span>`;};
+  $('#terminal-words').innerHTML=values.length?(settings.terminalAlignment==='center'?values.map(wordMarkup).join(''):Array.from({length:settings.terminalGroup===2?2:1},(_,i)=>`<span class="terminal-word-slot"><span class="terminal-baseline" aria-hidden="true"></span>${values[i]?wordMarkup(values[i]):''}</span>`).join('')):'<span class="terminal-no-prose">No readable prose</span>';fit();
   $('#terminal-position').textContent=`${Math.min(words.length,position+(position<words.length?values.length:0))} / ${words.length}`;
   const progress=words.length?position/words.length*100:0;root.style.setProperty('--word-progress',progress);root.style.setProperty('--reel-turn',position*9+'deg');$('#terminal-percent').textContent=Math.round(progress)+'%';$('#terminal-seek').value=position;$('#terminal-seek').style.setProperty('--position',progress+'%');
   const remaining=Math.ceil((words.length-position)/player.wpm*60);$('#terminal-remaining').textContent=(remaining>=60?Math.floor(remaining/60)+'m '+remaining%60+'s':remaining+'s')+' left';
@@ -91,9 +101,9 @@ export function createTerminal({root,doc,index,settings,save,saveSettings,icon,e
  const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
  on(reducedMotion,'change',()=>{if(!motion()){entryMotion?.revert();entryMotion=null;speed(player.wpm,false);}});
  on(document,'visibilitychange',()=>{if(document.hidden){exitBlackout(false);player.pause();}});on(window,'pagehide',()=>{exitBlackout(false);player.pause();});on(window,'resize',sizeScreen);on(window,'reading-font-ready',sizeScreen);if(window.visualViewport)on(window.visualViewport,'resize',sizeScreen);
- sizeScreen();const screenResize=new ResizeObserver(sizeScreen);screenResize.observe(root);
+ sizeScreen();const screenResize=new ResizeObserver(sizeScreen);screenResize.observe(root);screenResize.observe(root.parentElement);
  document.fonts.ready.then(()=>{if(!disposed)sizeScreen();});
  if(presentation==='cyberdeck'&&motion()&&window.anime)entryMotion=anime.animate($('.deck-hardware'),{opacity:[0,1],translateY:[7,0],duration:360,ease:'out(3)',onComplete:()=>{entryMotion?.revert();entryMotion=null;}});
  icons();
- return {save:persist,enterBlackout,exitBlackout,pause:()=>{exitBlackout(false);player.pause();},destroy(){exitBlackout(false);player.destroy();disposed=true;events.abort();screenResize.disconnect();pulse?.cancel();needleMotion?.cancel();dialMotion?.cancel();entryMotion?.revert();delete document.body.dataset.terminalPresentation;for(const token of navigationTokens)document.body.style.removeProperty('--terminal-'+token);},settingsChanged(){if((readStyle(settings.terminalStyle))!==presentation){player.pause();onStyleChange();return;}if(!motion()){entryMotion?.revert();entryMotion=null;}speed(player.wpm,false);player.emit();syncNavigation();}};
+ return {save:persist,enterBlackout,exitBlackout,pause:()=>{exitBlackout(false);player.pause();},destroy(){exitBlackout(false);player.destroy();disposed=true;events.abort();screenResize.disconnect();pulse?.cancel();needleMotion?.cancel();dialMotion?.cancel();entryMotion?.revert();delete document.body.dataset.terminalPresentation;for(const token of navigationTokens)document.body.style.removeProperty('--terminal-'+token);},settingsChanged(){if((readStyle(settings.terminalStyle))!==presentation){player.pause();onStyleChange();return;}root.dataset.terminalAlignment=settings.terminalAlignment==='center'?'center':'fixed';if(!motion()){entryMotion?.revert();entryMotion=null;}speed(player.wpm,false);player.emit();syncNavigation();}};
 }

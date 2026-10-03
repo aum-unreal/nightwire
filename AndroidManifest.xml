@@ -1,4 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="dev.nightwire" android:versionCode="17" android:versionName="0.9.2">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="dev.nightwire" android:versionCode="18" android:versionName="0.9.3">
   <uses-permission android:name="android.permission.INTERNET"/>
   <application android:label="Nightwire" android:icon="@drawable/ic_launcher" android:theme="@style/AppTheme" android:allowBackup="false" android:usesCleartextTraffic="false" android:hardwareAccelerated="true">
     <activity android:name=".MainActivity" android:exported="true" android:launchMode="singleTop" android:windowSoftInputMode="adjustResize" android:configChanges="orientation|screenSize|keyboardHidden|uiMode">
