@@ -6,3 +6,4 @@ tests/*.png
 tests/*.jpg
 tests/*.log
 scripts/__pycache__/
+tests/shots/
