@@ -1,0 +1,42 @@
+/* Base: element defaults, focus, selection and motion. Everything visible is built from primitives.css. */
+*,*::before,*::after{box-sizing:border-box}
+html{background:var(--room);-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--ui);font-size:var(--fs-ui);font-weight:450;line-height:1.35;letter-spacing:0;font-variant-numeric:tabular-nums;-webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit;letter-spacing:inherit}
+button{background:none;border:0;padding:0;cursor:pointer}
+button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}
+button,select,summary,[role="button"]{touch-action:manipulation}
+:where(button,[role="button"],summary,a[data-action]){position:relative}
+button:disabled{cursor:default}
+a{color:inherit;text-decoration:underline 1px var(--lamp);text-underline-offset:3px}
+img,svg{max-width:100%}
+svg.lucide{width:19px;height:19px;stroke-width:1.6;flex-shrink:0}
+[hidden]{display:none!important}
+
+/* Focus is a square lamp-coloured ring; programmatic focus targets stay quiet. */
+:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
+[tabindex="-1"]:focus{outline:none}
+::selection{background:rgba(var(--accent-rgb),.3);color:#fff}
+
+/* Touch, wheel and keyboard scrolling without visible scrollbar tracks. */
+*{scrollbar-width:none}
+::-webkit-scrollbar{display:none;width:0;height:0}
+
+/* Reduced motion: the OS setting or the app's Motion switch. Durations come from --t-* (0ms here). */
+.no-motion *{scroll-behavior:auto!important;transition:none!important}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+
+/* LEGACY — delete as you rebuild */
+button:disabled{opacity:.4}
+h1,h2,h3,p{margin-top:0}
+h1,h2,h3{font-weight:550;letter-spacing:-.035em}
+h1{font-size:40px}
+h2{font-size:23px}
+p{line-height:1.65}
+small{font-size:11px}
+.mono,kbd,.eyebrow{font-family:var(--mono)}
+.accent{color:var(--accent)}
+.muted{color:var(--muted)}
+.eyebrow{font-size:10px;letter-spacing:.14em;color:var(--muted);display:block;margin-bottom:12px}
+kbd{border:1px solid var(--line);border-radius:3px;padding:3px 5px;font-size:10px;color:var(--muted)}
+select{background:var(--surface);color:var(--muted);border:1px solid var(--line);border-radius:7px;height:46px;min-height:44px;padding:0 10px;max-width:140px;box-shadow:inset 0 1px 0 #ffffff08}

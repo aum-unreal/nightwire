@@ -26,6 +26,15 @@
   }
   return {body:source.slice(match[0].length), fields, offset:match[0].split('\n').length-1,tags};
  }
+ // The first top-level paragraph as plain text, cut at a word boundary to at most 240 characters.
+ function lede(tokens) {
+  const at = tokens.findIndex(t => t.type === 'paragraph_open' && t.level === 0), open = at >= 0 ? at : tokens.findIndex(t => t.type === 'paragraph_open');
+  if(open < 0) return '';
+  const text = (tokens[open+1]?.children || []).map(c => c.type === 'text' || c.type === 'code_inline' ? c.content : c.type === 'softbreak' || c.type === 'hardbreak' ? ' ' : '').join('').replace(/\s+/g,' ').trim();
+  if(text.length <= 240) return text;
+  const cut = text.slice(0,239), space = cut.lastIndexOf(' ');
+  return (space > 160 ? cut.slice(0,space) : cut).replace(/[\s,;:.–—-]+$/,'') + '…';
+ }
  function analyze(source,name,md = parser()) {
   const fm = frontmatter(source), tokens = md.parse(fm.body,{}), headings = [], links = [], texts = [], tags = new Set(fm.tags), used = new Map();
   for(let n=0;n<tokens.length;n++) {
@@ -43,7 +52,7 @@
   }
   const body = texts.join('\n');
   const title = headings.find(h=>h.level===1)?.text || fm.fields.find(f=>f.key==='title')?.value || name.replace(/\.(md|markdown|txt)$/i,'');
-  return {title,headings,links,tags:[...tags],fields:fm.fields,body,tokens,words:body.trim().split(/\s+/).filter(Boolean).length};
+  return {title,headings,links,tags:[...tags],fields:fm.fields,body,tokens,words:body.trim().split(/\s+/).filter(Boolean).length,lede:lede(tokens),lines:source.replace(/\r?\n$/,'').split(/\r?\n/).length};
  }
  function normalizeTarget(href) { try { return decodeURIComponent(href.replace(/^wiki:/,'')).split('#')[0].split('/').pop().replace(/\.(md|markdown|txt)$/i,'').normalize('NFKC').toLowerCase(); } catch { return ''; } }
  function resolveLink(href,docs) {

@@ -31,3 +31,9 @@ test('graphs connect shared tags, documents and heading hierarchy with valid edg
 test('frontmatter tag lists and body tags are extracted; source remains unchanged',()=>{
  const source='---\ntags:\n  - cyberdeck\n  - reading\n---\n# Title\nHello #world';const a=C.analyze(source,'a.md');assert.deepEqual(a.tags,['cyberdeck','reading','world']);assert.equal(a.headings[0].line,6);assert(source.includes('---\n'));
 });
+test('analysis carries a plain-text lede and the source line count',()=>{
+ const a=C.analyze('---\ntitle: T\n---\n# Title\n\n> [!NOTE]\n> Not this.\n\nFirst **bold** line\nwith `code`.\n\nSecond.\n','a.md');
+ assert.equal(a.lede,'First bold line with code.');assert.equal(a.lines,12);
+ const long=C.analyze('# T\n\n'+'word '.repeat(80)+'\n','b.md');assert(long.lede.length<=240&&long.lede.endsWith('…'));
+ assert.equal(C.analyze('# Only a heading','c.md').lede,'');
+});

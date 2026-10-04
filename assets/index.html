@@ -1,6 +1,45 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#000000"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; worker-src 'self'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'none'"><title>Nightwire · Markdown reader</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="desk.css"><link rel="stylesheet" href="reader.css"><link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="terminal.css"><link rel="stylesheet" href="terminal-screen.css"><link rel="stylesheet" href="read-styles.css"><link rel="stylesheet" href="read-themes/classic.css"><link rel="stylesheet" href="read-themes/cyberdeck.css"><link rel="stylesheet" href="read-themes/phosphor.css"><link rel="stylesheet" href="read-themes/mixtape.css"><link rel="stylesheet" href="read-themes/orbital.css"><link rel="stylesheet" href="read-themes/nocturne.css"><link rel="stylesheet" href="nav-dock.css"><link rel="stylesheet" href="graph-board.css"><link rel="stylesheet" href="font-rack.css"><link rel="stylesheet" href="terminal-blackout.css"><link rel="stylesheet" href="terminal-anchor.css"></head>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#000000"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; worker-src 'self'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'none'"><title>Nightwire · Markdown reader</title>
+<link rel="preload" href="fonts/work.ttf" as="font" type="font/ttf" crossorigin><link rel="preload" href="fonts/plex-mono.ttf" as="font" type="font/ttf" crossorigin><link rel="preload" href="fonts/fraunces.ttf" as="font" type="font/ttf" crossorigin><link rel="preload" href="fonts/fraunces-italic.ttf" as="font" type="font/ttf" crossorigin><link rel="preload" href="fonts/literata.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="ui/tokens.css"><link rel="stylesheet" href="ui/base.css"><link rel="stylesheet" href="ui/primitives.css"><link rel="stylesheet" href="ui/shell.css"><link rel="stylesheet" href="ui/desk.css"><link rel="stylesheet" href="ui/shelf.css"><link rel="stylesheet" href="ui/prose.css"><link rel="stylesheet" href="ui/reader-page.css"><link rel="stylesheet" href="ui/search.css"><link rel="stylesheet" href="ui/dialogs.css"><link rel="stylesheet" href="ui/prefs.css"><link rel="stylesheet" href="ui/typecase.css">
+<link rel="stylesheet" href="graph-board.css">
+<link rel="stylesheet" href="terminal.css"><link rel="stylesheet" href="terminal-screen.css"><link rel="stylesheet" href="read-themes/classic.css"><link rel="stylesheet" href="read-themes/cyberdeck.css"><link rel="stylesheet" href="read-themes/phosphor.css"><link rel="stylesheet" href="read-themes/mixtape.css"><link rel="stylesheet" href="read-themes/orbital.css"><link rel="stylesheet" href="read-themes/nocturne.css"><link rel="stylesheet" href="read-styles.css">
+<link rel="stylesheet" href="ui/read-shell.css"><link rel="stylesheet" href="terminal-blackout.css"><link rel="stylesheet" href="terminal-anchor.css"></head>
 <body>
+<svg xmlns="http://www.w3.org/2000/svg" hidden aria-hidden="true">
+ <!-- glyphs:core (E0). 24×24, drawn as 1.75px round strokes in currentColor by .glyph; no fills. -->
+ <symbol id="g-desk" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="M9 12h6M9 15.5h4"/></symbol>
+ <symbol id="g-shelf" viewBox="0 0 24 24"><path d="M7 8V5h10v3"/><path d="M5.5 11V8h13v3"/><path d="M4 11h16v8H4z"/><path d="M10 15h4"/></symbol>
+ <symbol id="g-map" viewBox="0 0 24 24"><circle cx="5" cy="17" r="2"/><circle cx="11" cy="12" r="2"/><circle cx="19" cy="7" r="2"/><path d="M7 17h4v-3M11 10V7h6"/></symbol>
+ <symbol id="g-read" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M8 12h8"/><path d="M12 8.5V9.5M12 14.5v1"/></symbol>
+ <symbol id="g-search" viewBox="0 0 24 24"><path d="M3 6h12M3 10h6M3 14h6M3 18h9"/><circle cx="15" cy="12" r="4"/><path d="m18 15 3 3"/></symbol>
+ <symbol id="g-find" viewBox="0 0 24 24"><path d="M11 21H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h8l4 4v3"/><path d="M14 3v4h4"/><circle cx="14.5" cy="15" r="3.5"/><path d="m17 17.5 3.5 3.5"/></symbol>
+ <symbol id="g-contents" viewBox="0 0 24 24"><path d="M5 3h14v3a1.5 1.5 0 0 0 0 3v2a1.5 1.5 0 0 0 0 3v2a1.5 1.5 0 0 0 0 3v2H5z"/><path d="M8 7.5h6M8 12.5h6M8 17.5h4"/></symbol>
+ <symbol id="g-tools" viewBox="0 0 24 24"><rect x="3" y="15" width="14" height="5" rx=".5"/><path d="M5 15v-5h14v5h-2"/><path d="M7 10V5h14v5h-2"/></symbol>
+ <symbol id="g-prefs" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5.5"/><path d="M13.7 10.1 15.4 8.1"/><path d="M20 12h2M12 20v2M4 12H2M12 4V2M17.7 17.7l1.4 1.4M6.3 17.7l-1.4 1.4M6.3 6.3 4.9 4.9M17.7 6.3l1.4-1.4"/></symbol>
+ <symbol id="g-chain" viewBox="0 0 24 24"><path d="M12 2.5v.5M12 6v.5M12 9.5v.5M12 13v1"/><circle cx="12" cy="18.5" r="2.5"/></symbol>
+ <symbol id="g-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="13" rx="1"/><path d="M16 8V4a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h3"/></symbol>
+ <symbol id="g-visor" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 8h18M3 12h18"/><path d="M12 12v2.5"/><circle cx="12" cy="16" r="1"/></symbol>
+ <symbol id="g-fit" viewBox="0 0 24 24"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/></symbol>
+ <symbol id="g-back" viewBox="0 0 24 24"><path d="M20 12H5"/><path d="m11 18-6-6 6-6"/></symbol>
+ <symbol id="g-ribbon" viewBox="0 0 24 24"><path d="M7 3h10v18l-5-4-5 4z"/></symbol>
+ <symbol id="g-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+ <symbol id="g-up" viewBox="0 0 24 24"><path d="m6 15 6-6 6 6"/></symbol>
+ <symbol id="g-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+ <symbol id="g-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+ <symbol id="g-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+ <symbol id="g-chevron" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
+ <symbol id="g-tick" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7"/></symbol>
+ <!-- glyphs:shell -->
+ <!-- glyphs:desk -->
+ <!-- glyphs:shelf -->
+ <!-- glyphs:reader -->
+ <!-- glyphs:search -->
+ <!-- glyphs:prefs -->
+ <!-- glyphs:map -->
+ <!-- glyphs:read -->
+</svg>
 <div class="shell">
  <aside class="sidebar" aria-label="Main navigation">
   <a class="brand" href="#home" data-action="home" aria-label="Nightwire home"><span class="brand-icon">N<span>_</span></span><div>NIGHTWIRE<small>MARKDOWN READER</small></div></a>
@@ -31,7 +70,7 @@
 </div>
 <input id="file-input" type="file" accept=".md,.markdown,.txt,text/markdown,text/plain" multiple hidden>
 <dialog id="search-dialog" class="search-dialog"><div class="search-field"><i data-lucide="search"></i><input id="search-input" placeholder="Search words, filenames, or #tags" aria-label="Search all files" autocomplete="off"><button class="icon-btn" data-close aria-label="Close search"><i data-lucide="x"></i></button></div><div class="search-meta mono" id="search-meta">FULL-TEXT SEARCH · ON DEVICE</div><div id="search-results" class="search-results"></div><div class="dialog-footer mono"><span>FUZZY + PREFIX MATCHING</span><kbd>ESC</kbd></div></dialog>
-<dialog id="panel-dialog" class="panel-dialog"><header class="dialog-title"><div><span class="eyebrow mono" id="panel-eyebrow">DOCUMENT TOOLS</span><h2 id="panel-title"></h2></div><button class="icon-btn" data-close aria-label="Close panel"><i data-lucide="x"></i></button></header><div id="panel-content"></div></dialog>
+<dialog id="panel-dialog" class="sheet" aria-labelledby="panel-title" data-size="bottom"><div class="sheet-lip" aria-hidden="true"></div><header class="sheet-head"><h2 class="sheet-title" id="panel-title" tabindex="-1"></h2></header><div class="sheet-body" id="panel-content"></div><footer class="sheet-foot"><button class="key sheet-close" data-close aria-label="Close panel"><svg class="glyph" aria-hidden="true"><use href="#g-close"/></svg><span class="key-label">Close</span></button></footer></dialog>
 <div id="toast" role="status" aria-live="polite"></div>
 <script src="vendor/markdown-it.js"></script><script src="vendor/purify.js"></script><script src="vendor/highlight.js"></script><script src="vendor/force-graph.js"></script><script src="vendor/lucide.js"></script><script src="vendor/anime.js"></script><script src="core.js"></script><script type="module" src="app.js"></script>
 </body></html>

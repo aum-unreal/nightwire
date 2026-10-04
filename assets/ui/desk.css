@@ -1,11 +1,21 @@
-/* A reading desk: one open sheet, its index, and a compact file register. */
+/* Desk (E2): the resume sheet, contents, register and topics. */
+
+/* LEGACY — delete as you rebuild */
+.section-heading{display:flex;align-items:center;justify-content:space-between;margin:0 0 18px;gap:14px}
+.section-heading h2{font-size:17px;margin:0;letter-spacing:-.015em;display:flex;align-items:center;gap:10px}
+.section-heading h2 span{font:10px var(--mono);color:var(--subtle)}
+@media(max-width:560px){
+ .section-heading{margin-bottom:14px}
+ .section-heading h2{font-size:16px}
+}
 .desk-main{max-width:1260px;padding-top:35px}
 .desk-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:28px}
 .desk-label{font:9px var(--mono);color:var(--muted);letter-spacing:.12em;margin-bottom:12px;display:block}
 .desk-heading h1{font-size:38px;font-weight:550;letter-spacing:-.05em;margin:0}
 .desk-heading .button{flex-shrink:0}
 .desk-search{width:100%;min-height:47px;border-bottom:1px solid var(--line);padding:0 0 15px;display:flex;align-items:center;gap:12px;text-align:left;color:var(--muted);font-size:12px;margin-bottom:30px}
-.desk-search>.lucide{width:17px}.desk-search kbd{margin-left:auto}
+.desk-search>.lucide{width:17px}
+.desk-search kbd{margin-left:auto}
 .desk-workspace{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:34px;align-items:start;margin-bottom:34px}
 .resume-sheet{position:relative;min-width:0;border:1px solid var(--line);border-top:2px solid var(--accent-border);border-radius:2px 18px 2px 2px;background:var(--surface);padding:27px 28px 24px}
 .resume-sheet::after{content:"";position:absolute;right:0;top:0;width:16px;height:16px;border-bottom:1px solid var(--line);border-left:1px solid var(--line);border-bottom-left-radius:3px;background:#000;clip-path:polygon(0 0,100% 100%,0 100%)}
@@ -16,7 +26,8 @@
 .resume-meta{display:flex;gap:12px;flex-wrap:wrap;font:9px var(--mono);color:var(--muted);margin-bottom:25px}
 .resume-bottom{display:flex;align-items:center;justify-content:space-between;gap:16px}
 .resume-position{min-width:58px;color:var(--muted);font:9px var(--mono);text-align:right}
-.resume-progress{height:2px;background:var(--line);margin-top:8px;overflow:hidden;width:68px}.resume-progress b{height:100%;background:var(--accent);display:block}
+.resume-progress{height:2px;background:var(--line);margin-top:8px;overflow:hidden;width:68px}
+.resume-progress b{height:100%;background:var(--accent);display:block}
 .desk-index{min-width:0;padding-top:3px}
 .desk-index-title{font:10px var(--mono);letter-spacing:.08em;color:var(--muted);margin:0 0 17px;display:flex;align-items:center;justify-content:space-between}
 .desk-section{width:100%;display:flex;align-items:baseline;gap:13px;min-height:48px;text-align:left;padding:12px 0;border-bottom:1px solid var(--line)}
@@ -34,7 +45,8 @@
 .desk-main .file-card:hover{background:transparent;transform:none}
 .desk-main .file-card.is-pressed{background:var(--surface);transform:none;box-shadow:none}
 .desk-main .file-emblem{font:9px var(--mono);color:var(--subtle)!important;border:0!important;background:none!important;box-shadow:none!important;min-width:22px;width:22px;height:auto;padding:0}
-.desk-main .file-details strong{font-size:13px;margin-bottom:7px}.desk-main .file-details .tags{display:none}
+.desk-main .file-details strong{font-size:13px;margin-bottom:7px}
+.desk-main .file-details .tags{display:none}
 .desk-main .file-card .star-button{margin-right:-8px}
 .desk-topics{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:24px 0 5px}
 .desk-topics .topics-label{font:9px var(--mono);color:var(--subtle);margin-right:4px}
@@ -42,8 +54,37 @@
 .desk-topics button:hover{color:var(--cyan);border-color:var(--accent-border)}
 .desk-empty{padding:38px 25px;border:1px dashed var(--line);margin-top:34px;position:relative}
 .empty-file-glyph{font:36px var(--mono);letter-spacing:-.08em;color:var(--accent);margin-bottom:26px}
-.desk-empty h2{font-size:23px;margin-bottom:10px}.desk-empty p{max-width:360px;font-size:13px;color:var(--muted);margin-bottom:25px}
-.desk-empty-tools{display:flex;gap:24px;flex-wrap:wrap;margin-top:24px}.desk-empty-tools .text-button{font-size:11px;color:var(--muted)}
-@media(max-width:900px){.desk-workspace{grid-template-columns:minmax(0,1fr);gap:27px}.desk-heading h1{font-size:32px}.resume-sheet h2{font-size:28px}.desk-index{padding:0}}
-@media(max-width:560px){.desk-main{padding-top:26px}.desk-heading{margin-bottom:22px}.desk-heading h1{font-size:30px}.desk-heading .button{font-size:11px;padding:10px 12px;min-height:43px}.desk-search{margin-bottom:25px}.desk-search kbd{display:none}.resume-sheet{padding:22px 22px 21px}.resume-sheet h2{font-size:27px}.resume-caption{margin-bottom:16px}.resume-meta{font-size:8px;gap:10px}.resume-bottom .button{font-size:11px;min-height:44px;padding-inline:14px}.desk-workspace{margin-bottom:28px}.desk-section{min-height:45px;padding-block:11px}.desk-index-title{margin-bottom:7px}.desk-register{margin-top:27px}}
-@media(max-width:360px){.desk-main{padding-inline:16px}.desk-heading h1{font-size:27px}.resume-sheet{padding-inline:18px}.resume-sheet h2{font-size:24px}.resume-bottom{gap:9px}}
+.desk-empty h2{font-size:23px;margin-bottom:10px}
+.desk-empty p{max-width:360px;font-size:13px;color:var(--muted);margin-bottom:25px}
+.desk-empty-tools{display:flex;gap:24px;flex-wrap:wrap;margin-top:24px}
+.desk-empty-tools .text-button{font-size:11px;color:var(--muted)}
+@media(max-width:900px){
+ .desk-workspace{grid-template-columns:minmax(0,1fr);gap:27px}
+ .desk-heading h1{font-size:32px}
+ .resume-sheet h2{font-size:28px}
+ .desk-index{padding:0}
+}
+@media(max-width:560px){
+ .desk-main{padding-top:26px}
+ .desk-heading{margin-bottom:22px}
+ .desk-heading h1{font-size:30px}
+ .desk-heading .button{font-size:11px;padding:10px 12px;min-height:43px}
+ .desk-search{margin-bottom:25px}
+ .desk-search kbd{display:none}
+ .resume-sheet{padding:22px 22px 21px}
+ .resume-sheet h2{font-size:27px}
+ .resume-caption{margin-bottom:16px}
+ .resume-meta{font-size:8px;gap:10px}
+ .resume-bottom .button{font-size:11px;min-height:44px;padding-inline:14px}
+ .desk-workspace{margin-bottom:28px}
+ .desk-section{min-height:45px;padding-block:11px}
+ .desk-index-title{margin-bottom:7px}
+ .desk-register{margin-top:27px}
+}
+@media(max-width:360px){
+ .desk-main{padding-inline:16px}
+ .desk-heading h1{font-size:27px}
+ .resume-sheet{padding-inline:18px}
+ .resume-sheet h2{font-size:24px}
+ .resume-bottom{gap:9px}
+}

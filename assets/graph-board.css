@@ -1,3 +1,61 @@
+/* LEGACY — delete as you rebuild (moved from style.css) */
+.graph-main{padding-bottom:20px}
+.graph-head{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:20px}
+.graph-toggle{font:10px var(--mono);padding:10px 11px;border:1px solid var(--line);border-radius:4px;color:var(--muted);min-height:40px}
+.graph-toggle.active{color:var(--cyan);border-color:#29484b;background:#0b181a}
+.graph-frame{border:1px solid var(--line);border-radius:7px;position:relative;overflow:hidden;background:#000}
+.graph-canvas{height:480px;background-image:radial-gradient(#1c2721 .7px,transparent .7px);background-size:24px 24px}
+.graph-info{position:absolute;top:20px;left:20px;font:9px/1.7 var(--mono);color:var(--muted);pointer-events:none;max-width:75%}
+.graph-info .accent{display:block;margin-bottom:3px}
+.graph-tools{position:absolute;bottom:17px;right:17px;display:flex;gap:5px}
+.graph-tools button{border:1px solid var(--line);background:#101717}
+.graph-legend{display:flex;gap:17px;margin:19px 0 0;flex-wrap:wrap;color:var(--muted);font:9px var(--mono)}
+.graph-legend span{display:flex;gap:6px;align-items:center}
+.graph-legend b{width:5px;height:5px;border-radius:50%}
+.graph-empty{position:absolute;inset:0;display:grid;place-content:center;text-align:center;padding:25px;pointer-events:none}
+.graph-empty h2{font-size:24px}
+.graph-empty p{color:var(--muted);max-width:320px;font-size:12px}
+.graph-selected{margin-top:18px;border:1px solid var(--line);border-radius:6px;padding:17px;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:64px}
+.graph-selected span{color:var(--muted);font-size:12px}
+.graph-selected strong{display:block;margin-bottom:6px;font-size:14px;font-weight:500}
+.graph-hint{font:9px var(--mono);color:var(--subtle);line-height:1.8;margin:19px 0}
+.graph-focus-name{font-size:11px;color:var(--muted);max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media(max-width:800px){
+ .graph-main{padding-bottom:105px}
+ .graph-canvas{height:440px}
+}
+@media(max-width:560px){
+ .graph-canvas{height:390px}
+ .graph-info{font-size:8px;left:15px;top:15px}
+ .graph-head{gap:7px}
+ .graph-toggle{font-size:8px;padding:9px}
+ .graph-focus-name{display:none}
+ .graph-legend{gap:12px;font-size:8px}
+ .graph-selected{padding:15px}
+ .graph-selected .button{font-size:10px;padding:10px;min-height:38px}
+ .graph-selected strong{font-size:12px}
+ .graph-selected span{font-size:11px}
+}
+@media(max-width:360px){
+ .graph-toggle{padding:8px;font-size:7px}
+}
+.graph-frame{box-shadow:inset 0 1px 0 #ffffff08,0 4px 14px #0005}
+.graph-toggle{border-radius:6px}
+.graph-toggle.active{background:rgba(var(--cyan-rgb),.06);border-color:rgba(var(--cyan-rgb),.28);color:var(--cyan)}
+.graph-frame{border-radius:10px}
+.graph-canvas{background-image:radial-gradient(rgba(var(--cyan-rgb),.16) .7px,transparent .7px)}
+.graph-tools{gap:7px;padding:5px;border:1px solid var(--line);border-radius:11px;background:#030504ef;box-shadow:0 5px 16px #000a}
+.graph-tools button{border-radius:6px;background:var(--surface);border-color:var(--line)}
+.graph-selected{background:var(--surface);border-radius:9px}
+@media(max-width:800px){
+ .graph-tools .icon-btn{width:40px;min-width:40px;height:40px}
+}
+@media(max-width:560px){
+ .graph-selected{padding:15px}
+}
+.graph-info{overflow-wrap:anywhere}
+/* end LEGACY */
+
 /* TRACE: a plotting plate with a cartridge rack and a docked inspection strip. */
 body[data-view=graph] .graph-main{--trace-edge:rgba(var(--accent-rgb),.25);padding:20px 28px 22px;max-width:1540px;min-width:0;height:calc(100dvh - 74px);min-height:500px;display:grid;grid-template-columns:214px minmax(0,1fr);grid-template-rows:61px minmax(0,1fr) 34px 66px;gap:14px 18px;overflow:hidden}
 .graph-main .trace-heading{grid-column:1 / -1;display:flex;align-items:center;justify-content:space-between;min-width:0;border-bottom:1px solid var(--line);padding-bottom:10px}
