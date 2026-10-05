@@ -19,10 +19,12 @@ function snippet(text,re){let at=-1;if(re){re.lastIndex=0;const m=re.exec(text);
  if(re){re.lastIndex=0;for(const m of win.matchAll(re)){if(m.index>last)parts.push({t:win.slice(last,m.index),hit:false});parts.push({t:m[0],hit:true});last=m.index+m[0].length;}}
  if(last<win.length)parts.push({t:win.slice(last),hit:false});if(end<text.length&&!/[.!?…]$/.test(win))parts.push({t:'…',hit:false});return parts;}
 // Line of the first hit in the source (1-based, counting frontmatter), and the last heading at or before it.
-function locate(doc,re){const raw=texts.get(doc.id)||'',a=doc.analysis,fm=NightwireCore.frontmatter(raw);let line=null;
+// A tag that lives only in the frontmatter (tags: [ideas]) points at that property line instead; its section reads "Properties".
+function locate(doc,re,bare){const raw=texts.get(doc.id)||'',a=doc.analysis,fm=NightwireCore.frontmatter(raw);let line=null;
  if(re){re.lastIndex=0;const m=re.exec(fm.body);if(m)line=fm.offset+1+(fm.body.slice(0,m.index).match(/\n/g)||[]).length;}
+ if(!line&&bare&&fm.offset){const head=raw.split('\n').slice(0,fm.offset).join('\n');bare.lastIndex=0;const m=bare.exec(head);if(m)return {line:1+(head.slice(0,m.index).match(/\n/g)||[]).length,section:'Properties'};}
  let section=null;if(line)for(const h of a.headings){if(h.line>line)break;if(!(h.level===1&&h.text===a.title))section=h.text;}return {line,section};}
-function result(doc,terms){const a=doc.analysis,re=termPattern(terms);return {id:doc.id,title:a.title,name:doc.name,...locate(doc,re),parts:snippet(runs.get(doc.id)||'',re)};}
+function result(doc,terms){const a=doc.analysis,re=termPattern(terms),bare=terms.some(t=>t.startsWith('#'))?termPattern(terms.map(t=>t.replace(/^#/,''))):null;return {id:doc.id,title:a.title,name:doc.name,...locate(doc,re,bare),parts:snippet(runs.get(doc.id)||'',re)};}
 self.onmessage=async ({data})=>{
  if(data.type==='index') {
   const current=++generation; index=null;documents=[];texts=new Map();runs=new Map();

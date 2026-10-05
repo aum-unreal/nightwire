@@ -9,21 +9,25 @@
 
 /* Controls stay in reach while the case scrolls. */
 .font-rack-controls{position:sticky;top:-4px;z-index:2;display:grid;gap:10px;margin:0 calc(-1*var(--gutter));padding:14px var(--gutter) 12px;background:var(--ink-1)}
-@media (min-width:801px){.font-rack-controls{margin:0 -24px;padding-inline:24px}}
+@media (min-width:801px){.font-rack-controls{margin:0 -24px 0 -23px;padding-inline:23px 24px}}
 .font-rack-filters{display:flex;gap:4px}
-.drawer-pull{flex:1 1 auto;display:grid;justify-items:center;align-content:center;gap:6px;min-width:0;min-height:var(--hit);padding:6px 8px 7px;border-radius:var(--r-key);background:var(--key-face);box-shadow:var(--key-rest);color:var(--muted);font:550 var(--fs-sm)/1 var(--ui);transition:transform var(--t-press) var(--ease),color var(--t-fast)}
+.drawer-pull{flex:1 1 auto;display:grid;justify-items:center;align-content:center;gap:6px;min-width:var(--hit);min-height:var(--hit);padding:6px 4px 7px;border-radius:var(--r-key);background:var(--key-face);box-shadow:var(--key-rest);color:var(--muted);font:550 var(--fs-sm)/1 var(--ui);transition:transform var(--t-press) var(--ease),color var(--t-fast)}
 .drawer-pull-cup{width:20px;height:6px;border:1px solid var(--rule-2);border-top:0;border-radius:0 0 6px 6px;box-shadow:inset 0 -2px 0 #000}
 .drawer-pull:is(:active,.is-pressed){transform:translateY(2px);box-shadow:var(--key-down)}
 .drawer-pull[aria-pressed="true"]{transform:translateY(1px);box-shadow:var(--key-seat);color:var(--text)}
 .drawer-pull[aria-pressed="true"] .drawer-pull-cup{border-color:var(--muted)}
 @media (hover:hover) and (pointer:fine){.drawer-pull:hover{color:var(--text)}}
 
-/* The case: hairline compartments, 3 across on phone, 5 from 520px. Each cell draws its own hairline so filtered gaps stay empty. */
-.font-rack-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;margin:1px 1px 0}
+/* The case: hairline compartments run to the sheet edges, 3 across on phone, 5 from 520px. Each cell draws its own hairline so filtered gaps stay empty.
+   Compartments align from the top so every pair sits on one line across a row; long names wrap (camel-case names carry a soft hyphen from fontRackMarkup). */
+.font-rack-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;margin:1px calc(-1*var(--gutter)) 0}
 @media (min-width:520px){.font-rack-grid{grid-template-columns:repeat(5,minmax(0,1fr))}}
-.font-option{position:relative;display:grid;align-content:end;justify-items:start;gap:7px;min-width:0;min-height:106px;padding:16px 12px 12px;overflow:hidden;background:var(--ink-2);box-shadow:0 0 0 1px var(--rule);color:var(--text);text-align:left;transition:transform var(--t-press) var(--ease)}
-.font-option-pair{max-width:100%;font:400 34px/1 var(--specimen-font);letter-spacing:0;color:var(--muted);white-space:nowrap;font-variant-ligatures:common-ligatures}
-.font-option-name{max-width:100%;font:400 13px/1.25 var(--specimen-font);color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media (min-width:801px){.font-rack-grid{margin-inline:-23px -24px}} /* 1px clear of the sheet's lit left edge */
+.font-option{container-type:inline-size;position:relative;display:grid;align-content:start;justify-items:start;gap:8px;min-width:0;min-height:116px;padding:32px 10px 14px;overflow:hidden;background:var(--ink-2);box-shadow:0 0 0 1px var(--rule);color:var(--text);text-align:left;transition:transform var(--t-press) var(--ease)}
+.font-option:is(:active,.is-pressed){transform:translateY(1px);background:var(--ink-3)}
+.font-option-pair{display:block;max-width:100%;height:36px;font:400 34px/36px var(--specimen-font);letter-spacing:0;color:var(--muted);white-space:nowrap;font-variant-ligatures:common-ligatures}
+.font-option[data-font="opendyslexic"] .font-option-pair{font-size:min(28px,28cqi)}
+.font-option-name{max-width:100%;font:400 13px/1.3 var(--specimen-font);color:var(--muted);hyphens:manual;overflow-wrap:break-word;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
 .font-option .pip{position:absolute;top:11px;right:11px;width:6px;height:6px}
 .font-option-l{position:absolute;top:8px;left:10px;padding:1px 3px 0;border:1px solid var(--rule-2);border-radius:1px;font:600 11px/1.1 var(--data);color:var(--subtle)}
 .font-option[aria-pressed="true"]{background:var(--ink-3);box-shadow:0 0 0 1px var(--rule-2),inset 0 2px 3px #000}

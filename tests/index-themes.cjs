@@ -13,11 +13,11 @@ const contrast=(a,b)=>(Math.max(luminance(a),luminance(b))+.05)/(Math.min(lumina
  await new Promise(resolve=>server.listen(8797,'127.0.0.1',resolve));const browser=await chromium.launch({...launch(),headless:true});
  const page=await browser.newPage({viewport:{width:412,height:915},hasTouch:true}),errors=[],external=[];
  page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(!r.url().startsWith('http://127.0.0.1:8797/'))external.push(r.url());});
- const open=()=>page.locator('#content [data-action=settings]').click(),close=()=>page.getByRole('button',{name:'Close panel'}).click();
+ const tab=name=>page.getByRole('tab',{name,exact:true}).click(),open=async()=>{await page.locator('#content [data-action=settings]').click();await tab('Page');},close=()=>page.getByRole('button',{name:'Close panel'}).click();
  const palette=()=>page.evaluate(()=>{
   const css=selector=>getComputedStyle(document.querySelector(selector)),read=getComputedStyle(document.documentElement);
   const rgb=value=>{const el=document.createElement('span');el.style.color=value;document.body.append(el);const c=getComputedStyle(el).color;el.remove();return c;};
-  return {accent:css('.terminal-main').getPropertyValue('--accent').trim(),nav:css('.mobile-nav').getPropertyValue('--accent').trim(),
+  return {accent:css('.terminal-main').getPropertyValue('--accent').trim(),nav:css('.mobile-nav').getPropertyValue('--key-face').trim(),panel:read.getPropertyValue('--index-panel').trim(),
    words:css('#terminal-words').color,bionic:css('.terminal-word b').color,text:rgb(read.getPropertyValue('--read-text')),bold:rgb(read.getPropertyValue('--read-bold')),
    background:css('.terminal-main').backgroundColor,card:css('.terminal-monitor').backgroundColor,key:css('#terminal-play').backgroundColor,keyText:css('#terminal-play').color,
    border:css('.terminal-monitor').borderLeftColor,preview:css('.classic-preview').backgroundColor,shelf:css('.speed-step').backgroundColor};
@@ -34,7 +34,7 @@ const contrast=(a,b)=>(Math.max(luminance(a),luminance(b))+.05)/(Math.min(lumina
    await page.locator('button[data-reader-theme="'+theme+'"]').click();
    for(const black of [true,false]){
     if(await page.getByRole('switch',{name:'Pure black page',exact:true}).getAttribute('aria-checked')!==String(black))await page.getByRole('switch',{name:'Pure black page',exact:true}).click();
-    const p=await palette();assert.equal(p.words,p.text,theme+' prose uses the page palette');assert.equal(p.bionic,p.bold,theme+' emphasis uses the page palette');assert.equal(p.nav,p.accent,theme+' navigation matches Index');assert.equal(p.preview,p.background,'Miniature follows the same paper');assert.equal(p.card,p.background,'Card and desk share paper');
+    const p=await palette();assert.equal(p.words,p.text,theme+' prose uses the page palette');assert.equal(p.bionic,p.bold,theme+' emphasis uses the page palette');assert.equal(p.nav,p.panel,theme+' navigation takes the Index paper');assert.equal(p.preview,p.background,'Miniature follows the same paper');assert.equal(p.card,p.background,'Card and desk share paper');
     assert(contrast(p.words,p.card)>=4.5,theme+' readable prose');assert(contrast(p.bionic,p.card)>=4.5,theme+' readable emphasis');assert(contrast(p.keyText,p.key)>=4.5,theme+' readable paper key');
     if(black)assert.equal(p.background,'rgb(0, 0, 0)');else if(theme!=='nightwire')assert.notEqual(p.background,'rgb(0, 0, 0)');
     assert.equal(await page.locator('#terminal-seek').inputValue(),'16');assert.equal(await page.locator('#terminal-wpm').textContent(),'450');assert.equal(await page.locator('[data-group="2"]').getAttribute('aria-pressed'),'true');assert.equal(await page.locator('#terminal-words').evaluate(el=>getComputedStyle(el).fontFamily),font);
@@ -43,14 +43,14 @@ const contrast=(a,b)=>(Math.max(luminance(a),luminance(b))+.05)/(Math.min(lumina
    }
   }
   assert.equal(colours.size,6,'Every page palette reaches the card rules');assert.equal(materials.size,6,'Paper keys are derived for every palette');
-  await page.locator('button[data-reader-theme=nightwire]').click();
+  await page.locator('button[data-reader-theme=nightwire]').click();await tab('Light');
   for(const [id,accent]of [['neon','#c8fa72'],['glacier','#76e5ff'],['violet','#bc9cff'],['pink','#ff9bcf'],['amber','#ffd279'],['ember','#ffad8b'],['mint','#81efc2'],['muted','#b5c7c0']]){
    await page.locator('button[data-palette="'+id+'"]').click();assert.equal((await palette()).accent,accent,'Nightwire inherits '+id);
   }
   await page.locator('#custom-hex').fill('#91b7ff');await page.locator('#custom-hex').press('Enter');assert.equal((await palette()).accent,'#91b7ff','Custom accent reaches Index');
   const shelves=[];for(const intensity of ['quiet','balanced','vivid']){await page.locator('button[data-intensity="'+intensity+'"]').click();shelves.push((await palette()).shelf);}assert.equal(new Set(shelves).size,3,'Colour intensity reaches archival materials');
-  await page.locator('button[data-action=contrast]').click();assert.equal((await palette()).words,'rgb(243, 244, 245)');
-  await page.locator('button[data-reader-theme=catppuccin]').click();await close();
+  await tab('Touch');await page.locator('button[data-action=contrast]').click();assert.equal((await palette()).words,'rgb(243, 244, 245)');
+  await tab('Page');await page.locator('button[data-reader-theme=catppuccin]').click();await close();
   const saved=await palette();await page.reload();await page.waitForFunction(()=>!!window.Nightwire&&!!document.querySelector('.resume-sheet'));await page.locator('.mobile-nav [data-action=terminal]').click();await page.locator('#terminal-words').waitFor();
   const reloaded=await page.locator('.terminal-main').evaluate(el=>getComputedStyle(el).getPropertyValue('--accent').trim());assert.equal(reloaded,saved.accent,'Palette survives relaunch');assert.equal(await page.locator('#terminal-seek').inputValue(),'16');
   await page.locator('#terminal-blackout').click();assert.equal(await page.locator('.terminal-main').evaluate(el=>getComputedStyle(el).backgroundColor),'rgb(0, 0, 0)','Blackout overrides themed paper');await page.keyboard.press('Escape');

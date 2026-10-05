@@ -1,10 +1,18 @@
-/* Settings previews show each instrument's silhouette before switching. */
-.read-style-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:13px 0 22px}
-.read-style-card{display:flex;flex-direction:column;gap:11px;padding:10px;text-align:left;border:1px solid var(--line);border-radius:8px;background:#050706;min-width:0;position:relative}
-.read-style-card[aria-pressed=true]{border-color:var(--accent);background:var(--accent-soft)}
-.read-style-card>span:last-child{display:block}.read-style-card strong{display:block;color:var(--text);font-size:12px;font-weight:550}.read-style-card small{display:block;color:var(--muted);font-size:10px;line-height:1.5;margin-top:5px}
- .read-style-mini{display:block;position:relative;width:100%;height:106px;border:0;border-radius:0;background:#000;overflow:hidden;pointer-events:none;isolation:isolate}
-@media(max-width:360px){.read-style-gallery{gap:7px}.read-style-card{padding:8px}.read-style-card small{font-size:9px}.read-style-mini{height:96px}}
-
-/* The active instrument owns Read navigation; the saved application palette is unchanged. */
-body[data-terminal-presentation] :is(.mobile-nav,.sidebar){--accent:var(--terminal-accent);--accent-rgb:var(--terminal-accent-rgb);--accent-soft:var(--terminal-accent-soft);--accent-border:var(--terminal-accent-border);--accent-ink:var(--terminal-accent-ink);--line:var(--terminal-line);--muted:var(--terminal-muted);--subtle:var(--terminal-subtle);--text:var(--terminal-text)}
+/* The cartridge shelf (§6.8 Picker): each Read style stands on a ledge; the seated one drops 8px with its pip lit.
+   A horizontal snap row on phone, two columns on wide. Miniatures are 150×110 and keep their instrument colours. */
+.read-style-gallery{--cart-w:166px;display:flex;gap:10px;margin:4px -16px 20px;padding:2px 16px 18px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-inline:16px;background:linear-gradient(var(--rule-2),var(--rule-2)) 0 calc(100% - 5px)/100% 1px no-repeat}
+.read-style-card{position:relative;flex:none;display:flex;flex-direction:column;gap:8px;width:var(--cart-w);min-width:0;padding:8px 8px 10px;scroll-snap-align:start;border-radius:var(--r-key);background:var(--key-face,#0b0b0a);box-shadow:var(--key-rest);color:var(--muted);text-align:left;transition:transform var(--t-move) var(--ease),box-shadow var(--t-fast)}
+.read-style-card:is(:active,.is-pressed){transform:translateY(2px);box-shadow:var(--key-down)}
+.read-style-card[aria-pressed=true]{transform:translateY(8px);box-shadow:var(--key-seat);color:var(--text)}
+.read-style-mini{display:block;position:relative;width:150px;height:110px;max-width:100%;border:0;border-radius:var(--r-paper);background:#000;overflow:hidden;pointer-events:none;isolation:isolate;box-shadow:inset 0 0 0 1px var(--rule)}
+.read-style-plate{display:flex;align-items:center;gap:7px;min-width:0;padding-top:2px}
+.read-style-plate .pip{width:6px;height:6px}
+.read-style-name{font:500 12px/1.2 var(--data);color:var(--text);white-space:nowrap}
+.read-style-line{display:block;font:400 12.5px/1.35 var(--ui);color:var(--muted)}
+@media (hover:hover) and (pointer:fine){.read-style-card:not([aria-pressed=true]):hover .read-style-name{color:var(--text)}}
+@media (min-width:801px){
+ .read-style-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 12px;margin-inline:0;padding:2px 0 14px;overflow:visible;scroll-snap-type:none;background:none}
+ .read-style-card{width:auto}
+ .read-style-mini{width:100%}
+}
+@media (prefers-reduced-motion:reduce){.read-style-card{transition:none}}

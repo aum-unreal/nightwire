@@ -4,19 +4,27 @@
 
 /* Frame: tabs and card run edge to edge of the sheet body and fill it. */
 .prefs{--prefs-x:var(--gutter);--prefs-pad:24px;display:flex;flex-direction:column;min-height:calc(100% + 4px + var(--prefs-pad));margin:-4px calc(-1*var(--prefs-x)) calc(-1*var(--prefs-pad))}
-@media (min-width:801px){.prefs{--prefs-x:24px;--prefs-pad:32px}}
+@media (min-width:801px){.prefs{--prefs-x:24px;--prefs-pad:32px;margin-left:-23px;--prefs-l:23px}} /* 1px clear of the sheet's lit left edge */
 
 /* Tabs: the seated tab stands 4px taller, shares the card's face and opens into it. */
-.prefs-tabs{position:sticky;top:-4px;z-index:2;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));align-items:end;gap:3px;padding:6px var(--prefs-x) 0;background:var(--ink-1)}
-.prefs-tab{position:relative;display:flex;align-items:center;justify-content:center;gap:6px;min-width:0;height:40px;padding:0 4px;background:var(--ink-1);color:var(--muted);font:550 var(--fs-ui)/1 var(--ui);clip-path:polygon(0 100%,0 7px,7px 0,calc(100% - 7px) 0,100% 7px,100% 100%);box-shadow:inset 0 1px 0 var(--rule-2),inset 1px 0 0 var(--rule),inset -1px 0 0 var(--rule),inset 0 -1px 0 var(--paper-edge);transition:color var(--t-fast),transform var(--t-press) var(--ease)}
+.prefs-tabs{position:sticky;top:-4px;z-index:2;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));align-items:end;gap:3px;padding:6px var(--prefs-x) 0 var(--prefs-l,var(--prefs-x));background:var(--ink-1)}
+/* Each tab is two clipped layers: the outer one is the card edge (so the 7px corner cuts get a real hairline), the inner one the face. The bottom stays open onto the card. */
+.prefs-tab{--cut:7px;position:relative;isolation:isolate;display:flex;align-items:center;justify-content:center;gap:6px;min-width:0;height:44px;padding:0 4px;background:none;color:var(--muted);font:550 var(--fs-ui)/1 var(--ui);transition:color var(--t-fast),transform var(--t-press) var(--ease)}
+.prefs-tab::before,.prefs-tab::after{content:"";position:absolute;z-index:-1;inset:0;clip-path:polygon(0 100%,0 var(--cut),var(--cut) 0,calc(100% - var(--cut)) 0,100% var(--cut),100% 100%)}
+.prefs-tab::before{background:linear-gradient(var(--rule-2),var(--rule) 60%)}
+.prefs-tab::after{--cut:6.4px;inset:1px 1px 0;background:var(--ink-1)}
 .prefs-tab .pip{width:6px;height:6px}
-.prefs-tab[aria-selected="true"]{z-index:1;height:44px;margin-bottom:-1px;background:var(--ink-2);color:var(--text);box-shadow:inset 0 1px 0 var(--paper-edge),inset 1px 0 0 var(--rule-2),inset -1px 0 0 var(--rule-2)}
+.prefs-tab:not([aria-selected="true"]):is(:active,.is-pressed){transform:translateY(1px)}
+.prefs-tab[aria-selected="true"]{z-index:1;height:48px;margin-bottom:-1px;color:var(--text)}
+.prefs-tab[aria-selected="true"]::before{background:linear-gradient(var(--paper-edge),var(--rule-2))}
+.prefs-tab[aria-selected="true"]::after{background:var(--ink-2)}
 .prefs-tab:focus-visible{outline-offset:-5px}
 @media (hover:hover) and (pointer:fine){.prefs-tab:hover{color:var(--text)}}
+@media (min-width:801px){.prefs-tab[aria-selected="true"]::after{background:var(--grain) 0 0/160px,var(--ink-2)}}
 @media (max-width:359px){.prefs-tab{gap:4px;font-size:var(--fs-sm)}.prefs-tab .pip{width:5px;height:5px}}
 
 /* The card. Wide adds the paper grain (§4: only the desk sheet and the wide prefs sheet). */
-.prefs-card{flex:1 0 auto;border-radius:0;padding:22px var(--prefs-x) calc(28px + env(safe-area-inset-bottom))}
+.prefs-card{flex:1 0 auto;border-radius:0;padding:22px var(--prefs-x) calc(28px + env(safe-area-inset-bottom)) var(--prefs-l,var(--prefs-x))}
 @media (min-width:801px){.prefs-card{background-image:var(--grain);background-size:160px}}
 .prefs-panel{display:grid;align-content:start;gap:22px;min-width:0}
 .prefs-panel[hidden]{display:none}
@@ -24,11 +32,12 @@
 .prefs-group>.group-label{margin:0}
 .prefs-panel .setting-note{margin:0}
 
-/* Page: six mini pages fanned at (100% - 96px)/5. The seated page rises 10px into the pool. */
+/* Page: six mini pages fanned at (100% - w)/5, w = 96px where it fits. The seated page rises 10px into the pool but keeps its place in the fan,
+   so every page keeps a visible strip of at least 44px and its centre uncovered (w <= 100% - 220px and w <= 28%: step > w/2). */
 .reader-theme-grid{position:relative;height:150px;min-width:0}
-.reader-theme-option{position:absolute;top:16px;left:calc(var(--k)*(100% - 96px)/5);z-index:var(--k);display:flex;flex-direction:column;gap:6px;width:96px;height:128px;padding:14px 11px 0;border-radius:var(--r-paper);background-color:var(--p-bg);box-shadow:inset 0 1px 0 #ffffff21,inset 1px 0 0 #ffffff12,-1px 0 0 #000;transition:transform var(--t-move) var(--ease)}
+.reader-theme-option{--w:min(96px,100% - 220px,28%);position:absolute;top:16px;left:calc(var(--k)*(100% - var(--w))/5);z-index:var(--k);display:flex;flex-direction:column;gap:6px;width:var(--w);height:128px;padding:14px 11px 0;border-radius:var(--r-paper);background-color:var(--p-bg);box-shadow:inset 0 1px 0 #ffffff21,inset 1px 0 0 #ffffff12,-1px 0 0 #000;transition:transform var(--t-move) var(--ease)}
 html[data-reader-black="true"] .reader-theme-option{background-color:#000}
-.reader-theme-option[aria-pressed="true"]{z-index:7;transform:translateY(-10px);background-image:var(--pool);box-shadow:inset 0 1px 0 var(--lamp-dim),inset 1px 0 0 #ffffff12,inset -1px 0 0 #ffffff0a,-1px 0 0 #000}
+.reader-theme-option[aria-pressed="true"]{transform:translateY(-10px);background-image:var(--pool);box-shadow:inset 0 1px 0 var(--lamp-dim),inset 1px 0 0 #ffffff12,inset -1px 0 0 #ffffff0a,-1px 0 0 #000}
 .reader-theme-option:is(:active,.is-pressed){transform:translateY(2px)}
 .reader-theme-option[aria-pressed="true"]:is(:active,.is-pressed){transform:translateY(-8px)}
 .reader-theme-option>span{display:block;flex:none;border-radius:1px;pointer-events:none}
@@ -83,11 +92,11 @@ html[data-reader-black="true"] .reader-theme-option{background-color:#000}
 .dimmer.is-custom .dimmer-pointer::before{background:var(--text)}
 .dimmer-pointer .pip{position:absolute;left:50%;top:29px;width:6px;height:6px;margin-left:-3px}
 .dimmer-face{position:absolute;inset:27px;z-index:1;display:grid;place-content:center;justify-items:center;gap:0;border-radius:50%;background:radial-gradient(circle at 50% 28%,#1b1b19,#0b0b0a 72%);box-shadow:0 0 0 1px #000,inset 0 1px 0 #ffffff17,inset 0 -2px 0 #000}
-#custom-hex{width:92px;height:var(--hit);padding:0;border:0;border-radius:0;background:linear-gradient(var(--rule-2),var(--rule-2)) 50% calc(100% - 9px)/68px 1px no-repeat;color:var(--text);font:400 13px/1 var(--data);letter-spacing:.02em;text-align:center;text-transform:uppercase;outline:none}
+#custom-hex{width:92px;height:var(--hit);padding:0;border:0;border-radius:0;background:linear-gradient(var(--rule-2),var(--rule-2)) 50% calc(100% - 9px)/68px 1px no-repeat;color:var(--text);font:400 13px/1 var(--data);text-align:center;text-transform:uppercase;outline:none}
 #custom-hex:focus{background-image:linear-gradient(var(--lamp),var(--lamp))}
 #custom-hex:focus-visible{outline:2px solid var(--lamp);outline-offset:1px}
 #custom-hex[aria-invalid="true"]{background-image:repeating-linear-gradient(90deg,var(--muted) 0 2px,transparent 2px 4px)}
-.dimmer-state{max-width:88px;margin-top:-4px;font-size:12px;line-height:1.3;text-align:center;color:var(--muted)}
+.dimmer-state{max-width:96px;margin-top:-4px;font-size:12px;line-height:1.3;text-align:center;color:var(--muted);text-wrap:balance}
 .dimmer-state:empty{display:none}
 .dimmer-hint{margin:-12px 0 0;text-align:center;font-size:var(--fs-sm);color:var(--muted)}
 

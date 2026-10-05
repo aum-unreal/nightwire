@@ -34,6 +34,7 @@ main{padding:calc(28px + env(safe-area-inset-top)) var(--gutter) 48px;outline:no
 .tray-routes .nav-key .pip{margin-left:auto}
 .tray-routes .nav-key[aria-current="page"]{background:#060606;box-shadow:var(--key-seat)}
 .tray-routes .nav-key:is(:active,.is-pressed){background:#060606}
+.tray-routes .nav-key:focus-visible{position:relative;z-index:1}
 
 /* Cards: index cards filed in the tray, each exactly --card-h tall. */
 .tray-cards{position:relative;flex:1 1 0;min-height:0;margin:0 -8px;padding:0;list-style:none;overflow-y:auto;overscroll-behavior:contain;scroll-snap-type:y mandatory}
@@ -43,6 +44,8 @@ main{padding:calc(28px + env(safe-area-inset-top)) var(--gutter) 48px;outline:no
 .tray-card-meta{display:block;min-width:0;overflow:hidden;white-space:nowrap;font:400 11px/1.2 var(--data);color:var(--subtle)}
 .tray-card-filament{position:absolute;left:20px;right:20px;bottom:7px;height:2px;background:linear-gradient(90deg,var(--lamp) calc(var(--p,0)*100%),var(--rule) 0)}
 .tray-card:is(:active,.is-pressed){background:var(--ink-2)}
+/* The list scrolls, so its rows ring inside their own edges. */
+.tray-cards :focus-visible{outline-offset:-3px}
 .tray-card[aria-current="true"]{background:var(--pool),var(--ink-2);box-shadow:inset 0 1px 2px #000,inset 0 -1px 0 var(--rule)}
 .tray-card[aria-current="true"]::before{content:"";position:absolute;left:7px;top:15px;width:6px;height:6px;border-radius:50%;background:radial-gradient(circle at 40% 35%,var(--lamp-hi),var(--lamp) 55%,var(--lamp-dim));box-shadow:var(--pip-glow)}
 @media (hover:hover) and (pointer:fine){.tray-card:hover .tray-card-title{text-decoration:underline 1px var(--rule-2);text-underline-offset:3px}}
@@ -71,8 +74,8 @@ body:is([data-view="reader"],[data-view="terminal"]) .tray-cards,
 body:is([data-view="reader"],[data-view="terminal"]) .tray-receipt{display:none}
 body:is([data-view="reader"],[data-view="terminal"]) .slot--tray{flex-direction:column;justify-content:center;gap:6px;min-height:56px;margin-top:auto;padding:0}
 body:is([data-view="reader"],[data-view="terminal"]) .slot--tray .slot-grip{width:22px;height:6px;background:repeating-linear-gradient(90deg,var(--rule-2) 0 1px,transparent 1px 4px)}
-body:is([data-view="reader"],[data-view="terminal"]) :is(.slot--tray .slot-label,.prefs-key .key-label){position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
-body:is([data-view="reader"],[data-view="terminal"]) .prefs-key{justify-content:center;padding:0}
+body:is([data-view="reader"],[data-view="terminal"]) .tray :is(.slot--tray .slot-label,.prefs-key .key-label){position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+body:is([data-view="reader"],[data-view="terminal"]) .tray .prefs-key{justify-content:center;padding:0}
 body[data-view="terminal"] .tray :is(.tray-search,.prefs-key){display:none}
 
 /* Dock: the switchboard. Its internals hold in every mode; only display and height are conditional. */
@@ -88,6 +91,11 @@ body[data-view="terminal"] .tray :is(.tray-search,.prefs-key){display:none}
 .odo-strip>span{display:block;height:14px;text-align:center}
 .odo-pc{margin-left:1px;color:var(--subtle)}
 .mobile-nav.has-receipt .nav-register{visibility:hidden}
+/* A receipt takes the register's place: the register row opens to the slip's height (44px or more, set by JS as --receipt-h), so it never hangs over the page or the slot. */
+body:not(.dock-collapsed) .mobile-nav.has-receipt{height:calc(var(--mobile-nav-height) + var(--receipt-h,44px) - 24px)}
+body:not(.dock-collapsed) .mobile-nav.has-receipt .nav-switchboard{grid-template-rows:var(--receipt-h,44px) 50px}
+body.dock-collapsed .mobile-nav.has-receipt .nav-switchboard{grid-template-rows:max(44px,var(--receipt-h,44px))}
+body.dock-collapsed .mobile-nav.has-receipt{height:calc(var(--mobile-nav-height) + max(0px,var(--receipt-h,44px) - 44px))}
 
 .nav-routes{grid-area:2/1/3/2;display:flex;gap:4px;min-width:0}
 .mobile-nav .nav-key{position:relative;display:flex;flex:1 1 0;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-width:44px;height:50px;padding:4px 2px 2px;border-radius:var(--key-radius,var(--r-key));background:var(--key-face);box-shadow:var(--key-rest),0 0 0 1px var(--key-edge,transparent);color:var(--key-ink,var(--muted));transition:flex-grow var(--t-move) var(--ease),transform var(--t-press) var(--ease),color var(--t-fast)}
@@ -136,6 +144,10 @@ html.is-short :where(body:not([data-view="terminal"])) main{padding-bottom:calc(
 @media (max-width:359px){
  #dock-section{display:none}
  .mobile-nav .nav-key:not(.active) .nav-key-name{display:none}
+ /* Four 44px glyph keys leave the seated key ~72px: pip, glyph and caption still fit whole. */
+ .nav-routes{gap:2px}
+ .mobile-nav .nav-key.active{gap:5px;padding-inline:2px}
+ .mobile-nav .nav-key.active .glyph{width:18px;height:18px}
 }
 
 /* Lamp only */
@@ -143,12 +155,12 @@ html.is-short :where(body:not([data-view="terminal"])) main{padding-bottom:calc(
 .focus-mode .main-column{margin-left:0}
 
 /* Receipt: a paper slip with a perforated top edge, in the lane JS picks (data-lane). Hidden, not faded, once retracted. */
-#toast.receipt{position:fixed;z-index:var(--z-receipt);inset:auto;display:flex;align-items:center;gap:2px;width:auto;height:auto;min-height:var(--hit);margin:0;padding:6px 0 0 14px;border:0;border-radius:var(--r-paper);overflow:visible;background:var(--ink-3);box-shadow:var(--paper-lit),0 0 0 1px #000;color:var(--text);font:500 13px/1.3 var(--ui);opacity:0;transform:translateY(8px);transition:opacity var(--t-fast) var(--ease),transform var(--t-fast) var(--ease)}
+#toast.receipt{position:fixed;z-index:var(--z-receipt);inset:auto;display:flex;align-items:center;gap:2px;width:auto;height:auto;min-height:var(--hit);margin:0;padding:0 0 0 14px;border:0;border-radius:var(--r-paper);overflow:visible;background:var(--ink-3);box-shadow:var(--paper-lit),0 0 0 1px #000;color:var(--text);font:500 13px/1.3 var(--ui);opacity:0;transform:translateY(8px);transition:opacity var(--t-fast) var(--ease),transform var(--t-fast) var(--ease)}
 #toast.receipt::before{content:"";position:absolute;left:4px;right:4px;top:3px;height:4px;background:radial-gradient(circle,#000 1.3px,transparent 1.7px) 0 50%/7px 4px repeat-x;pointer-events:none}
 #toast.receipt.is-in{opacity:1;transform:none}
 #toast.receipt[hidden]{display:none}
 #toast[data-lane="top"]{top:calc(8px + env(safe-area-inset-top));left:8px;right:8px;max-width:480px;margin-inline:auto}
-.receipt-text{flex:1 1 auto;min-width:0;padding:6px 0 8px}
+.receipt-text{flex:1 1 auto;min-width:0;padding:10px 0 7px}
 .receipt .key{flex:none;min-height:var(--hit)}
 .receipt-undo{padding:0 10px;font-weight:550}
 .receipt-close{color:var(--subtle)}

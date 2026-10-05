@@ -1,11 +1,12 @@
 import {readInstruments} from './read-theme-registry.js';
 export const readStyles=[
- {id:'classic',name:'Classic',detail:'Archival index. Theme-aware paper keys, filed tab, engraved ruler.'},
- {id:'cyberdeck',name:'Cyberdeck',detail:'Field terminal. Moulded shell, cartridge, hardware shelf.'},
- {id:'phosphor',name:'Phosphor',detail:'Command workstation. CRT buffer, key bank, indexed presets.'},
- {id:'mixtape',name:'Mixtape',detail:'Cassette machine. Tape label, moving hubs, enamel transport.'},
- {id:'orbital',name:'Orbital',detail:'Optical flight bench. Progress arc, payload rail, actuator keys.'},
- {id:'nocturne',name:'Nocturne',detail:'Bound midnight folio. Margin controls, ribbon, engraved colophon.'}
+ {id:'classic',name:'Classic',detail:'A filed index card in the page’s own colours.'},
+ {id:'cyberdeck',name:'Cyberdeck',detail:'A handheld deck: one OLED window, hard keys.'},
+ {id:'phosphor',name:'Phosphor',detail:'A green screen above a bank of keys.'},
+ {id:'mixtape',name:'Mixtape',detail:'A cassette whose reels follow your place.'},
+ {id:'orbital',name:'Orbital',detail:'An optical bench; the arc is your progress.'},
+ {id:'nocturne',name:'Nocturne',detail:'A bound folio with its keys in the margin.'}
 ];
 export const readStyle=value=>readStyles.some(style=>style.id===value)?value:'cyberdeck';
-export function stylePicker(){return `<div class="read-style-gallery" aria-label="Read style previews">${readStyles.map(s=>`<button class="read-style-card" data-read-style="${s.id}" aria-pressed="false"><span class="read-style-mini mini-${s.id}" aria-hidden="true">${readInstruments[s.id].preview}</span><span><strong>${s.name}</strong><small>${s.detail}</small></span></button>`).join('')}</div>`;}
+// The cartridge shelf (§6.8 Picker): one seated card per instrument, its miniature above a Plex name plate.
+export function stylePicker(){return `<div class="read-style-gallery cartridge-shelf" role="group" aria-label="Read style">${readStyles.map(s=>`<button class="read-style-card" data-read-style="${s.id}" aria-pressed="false"><span class="read-style-mini mini-${s.id}" aria-hidden="true">${readInstruments[s.id].preview}</span><span class="read-style-plate"><span class="pip" aria-hidden="true"></span><span class="read-style-name">${s.name}</span></span><span class="read-style-line">${s.detail}</span></button>`).join('')}</div>`;}

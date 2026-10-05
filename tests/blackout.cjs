@@ -3,13 +3,15 @@ const fs=require('node:fs'),http=require('node:http'),path=require('node:path'),
 const {chromium}=require('../../folio/node_modules/playwright'),launch=require('../../folio/tests/gpu-launch.cjs');
 const root=path.resolve(__dirname,'../assets');
 const server=http.createServer((req,res)=>{const file=path.join(root,req.url==='/'?'index.html':decodeURIComponent(req.url.split('?')[0]));if(!file.startsWith(root+path.sep)){res.writeHead(403).end();return;}fs.readFile(file,(err,data)=>{if(err){res.writeHead(404).end();return;}res.setHeader('Content-Type',file.endsWith('.js')?'application/javascript':file.endsWith('.css')?'text/css':file.endsWith('.html')?'text/html':file.endsWith('.ttf')?'font/ttf':file.endsWith('.woff2')?'font/woff2':'text/plain');res.end(data);});});
+// Prefs › Read: the style cards replace the old "Read tab style" combobox (§6.8).
+async function chooseStyle(page,style){const tab=page.getByRole('tab',{name:'Read',exact:true});if(await tab.count())await tab.click();await page.locator(`#panel-dialog [data-read-style="${style}"]`).click();}
 (async()=>{
  await new Promise(r=>server.listen(8795,'127.0.0.1',r));const browser=await chromium.launch({...launch(),headless:true});const page=await browser.newPage({viewport:{width:412,height:915},hasTouch:true});const errors=[];page.on('pageerror',e=>errors.push(e.message));
  // Keep IndexedDB preview imports while observing the native fullscreen bridge.
  await page.addInitScript(()=>{window.blackoutCalls=[];});
  const range=async(id,value)=>page.locator(id).evaluate((el,value)=>{el.value=value;el.dispatchEvent(new Event('input',{bubbles:true}));},String(value));
  const enter=async()=>{await page.locator('#terminal-blackout').click();await page.getByRole('button',{name:'Exit blackout reading'}).waitFor();};
- const exited=async()=>{assert.equal(await page.locator('.terminal-blackout-surface').count(),0);assert.equal(await page.evaluate(()=>document.body.classList.contains('reading-blackout')),false);assert.equal(await page.locator('.terminal-deck').evaluate(el=>el.inert),false);assert(await page.locator('#terminal-play').isVisible());assert.equal(await page.locator('#terminal-status').textContent(),'PAUSED');};
+ const exited=async()=>{assert.equal(await page.locator('.terminal-blackout-surface').count(),0);assert.equal(await page.evaluate(()=>document.body.classList.contains('reading-blackout')),false);assert.equal(await page.locator('.terminal-deck').evaluate(el=>el.inert),false);assert(await page.locator('#terminal-play').isVisible());assert.equal(await page.locator('#terminal-status').textContent(),'Paused');};
  async function onlyWords(){
   assert.equal(await page.locator('.terminal-deck').isVisible(),false);assert.equal(await page.locator('.mobile-nav').isVisible(),false);assert.equal(await page.locator('.sidebar').isVisible(),false);
   assert.equal(await page.locator('#terminal-words').count(),1);
@@ -25,7 +27,7 @@ const server=http.createServer((req,res)=>{const file=path.join(root,req.url==='
   await page.evaluate(()=>{window.Native={readingBlackout:value=>window.blackoutCalls.push(value)};});
   await page.locator('#file-input').setInputFiles({name:'Blackout.md',mimeType:'text/markdown',buffer:Buffer.from('# Quiet words\n\n'+('Keep your attention on these words. '.repeat(200)))});await page.locator('#markdown h1').waitFor();const input=await page.evaluate(()=>Nightwire.classifierInput());await page.locator('.mobile-nav [data-action=terminal]').click();await page.locator('#terminal-words').waitFor();await range('#terminal-speed-input',300);await page.locator('[data-group="2"]').click();
   for(const style of ['classic','cyberdeck','phosphor','mixtape','orbital','nocturne']){
-   await page.setViewportSize({width:412,height:915});await page.locator('#content [data-action=settings]').click();await page.getByRole('combobox',{name:'Read tab style'}).selectOption(style);await page.waitForFunction(style=>document.body.dataset.terminalPresentation===style,style);await page.getByRole('button',{name:'Close panel'}).click();await range('#terminal-seek',20);
+   await page.setViewportSize({width:412,height:915});await page.locator('#content [data-action=settings]').click();await chooseStyle(page,style);await page.waitForFunction(style=>document.body.dataset.terminalPresentation===style,style);await page.getByRole('button',{name:'Close panel'}).click();await range('#terminal-seek',20);
    for(const bionic of [true,false]){
     if((await page.locator('#terminal-bionic').getAttribute('aria-pressed'))!==String(bionic))await page.locator('#terminal-bionic').click();
     for(const [width,height]of [[320,568],[412,915],[780,360],[1280,915]]){
@@ -36,7 +38,7 @@ const server=http.createServer((req,res)=>{const file=path.join(root,req.url==='
    }
    await page.setViewportSize({width:412,height:915});await page.locator('#terminal-play').click();await enter();await page.waitForFunction(()=>Number(document.querySelector('#terminal-seek').value)>20);await page.keyboard.press('Escape');await exited();const paused=await page.locator('#terminal-seek').inputValue();await page.waitForTimeout(100);assert.equal(await page.locator('#terminal-seek').inputValue(),paused);
    await enter();assert.equal(await page.evaluate(()=>Nightwire.back()),true);await exited();assert.equal(await page.evaluate(()=>document.body.dataset.view),'terminal');
-   await page.locator('#content [data-action=settings]').click();await page.locator('[data-action=terminal-blackout]').click();await onlyWords();await page.keyboard.press('Enter');await exited();
+   await page.locator('#content [data-action=settings]').click();{const tab=page.getByRole('tab',{name:'Read',exact:true});if(await tab.count())await tab.click();}await page.locator('[data-action=terminal-blackout]').click();await onlyWords();await page.keyboard.press('Enter');await exited();
    await enter();await page.keyboard.press('Space');await page.waitForFunction(value=>Number(document.querySelector('#terminal-seek').value)>Number(value),paused);await page.evaluate(()=>Nightwire.pauseReading());await exited();
    await enter();await page.evaluate(()=>{Object.defineProperty(document,'hidden',{configurable:true,value:true});document.dispatchEvent(new Event('visibilitychange'));delete document.hidden;});await exited();
    await enter();await page.evaluate(()=>document.querySelector('.mobile-nav [data-action=home]').click());await page.locator('.resume-sheet').waitFor();assert.equal(await page.locator('.terminal-blackout-surface').count(),0);assert.equal(await page.evaluate(()=>document.body.classList.contains('reading-blackout')),false);await page.locator('.mobile-nav [data-action=terminal]').click();await page.locator('#terminal-words').waitFor();

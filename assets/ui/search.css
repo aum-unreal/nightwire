@@ -19,6 +19,11 @@
 .search-field::after{content:"";position:absolute;left:44px;right:52px;bottom:calc(6px + env(safe-area-inset-bottom));height:1px;background:var(--rule-2);transform-origin:left;transition:background-color var(--t-fast)}
 .search-field:focus-within::after{background:var(--lamp)}
 .search-close{color:var(--muted)}
+/* Keyboard fallback (.search--top): the field leads and the slips hang from it instead of resting on it */
+.search--top .search-field{padding-bottom:0;border-top:0;border-bottom:1px solid var(--rule)}
+.search--top .search-field::after{bottom:6px}
+.search--top .search-results>:first-child{margin-top:0}
+.search--top .search-result.row:first-child{border-top:0}
 
 /* Meta: one quiet line of data */
 .search-meta{flex:none;margin:0;padding:12px var(--gutter) 8px calc(var(--gutter) + 45px);font:400 var(--fs-data)/1.35 var(--data);color:var(--muted)}
@@ -48,8 +53,7 @@
 
 /* Wide: a paper column under the tray's Search key (rail width in Reader and Read). Never centred, never blurred. */
 @media (min-width:801px){
- html:not(.is-short) #search-dialog.sheet{--search-left:var(--tray-w);inset:24px auto auto calc(var(--search-left) + 24px);width:min(560px,calc(100vw - var(--search-left) - 48px));height:auto;max-height:80dvh;padding:0;border-radius:var(--r-paper);background:var(--ink-2);box-shadow:var(--paper-lit);overflow:hidden}
- html:not(.is-short) body:is([data-view="reader"],[data-view="terminal"]) #search-dialog.sheet{--search-left:var(--rail-w)}
+ html:not(.is-short) #search-dialog.sheet{inset:calc(24px + env(safe-area-inset-top)) auto auto calc(var(--tray-w) + 24px);width:min(560px,calc(100vw - var(--tray-w) - 48px));height:auto;max-height:80dvh;padding:0;border-radius:var(--r-paper);background:var(--ink-2);box-shadow:var(--paper-lit);overflow:hidden}
  html:not(.is-short) #search-dialog.sheet[open]{flex-direction:column;animation-name:search-drop}
  html:not(.is-short) #search-dialog.sheet::before{display:none}
  html:not(.is-short) .search-field{padding:0 4px;border-top:0;border-radius:var(--r-paper) var(--r-paper) 0 0;box-shadow:inset 0 3px 4px #000,inset 0 -1px 0 #ffffff0a}

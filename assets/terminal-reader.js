@@ -2,17 +2,22 @@ import {typefaceTrigger} from './reader-fonts.js';
 import {readStyle} from './read-styles.js';
 import {instrumentMarkup} from './read-theme-registry.js';
 import {readingWords,WordPlayer,clampWpm,bionicParts} from './terminal-core.js';
-export function createTerminal({root,doc,index,settings,save,saveSettings,icon,escape:esc,motion,feedback,icons,onDocument,onFiles,onStyleChange}) {
+// Sentence-case readout shared by every instrument's monitor: "1 word · bionic".
+export const modeText=(group,settings)=>`${group===2?'2 words':'1 word'} · ${settings.terminalBionic!==false?'bionic':'plain'}`;
+export function createTerminal({root,doc,index,settings,save,saveSettings,icon,escape:esc,motion,feedback,icons,onDocument,onFiles,onStyleChange,onPlaying}) {
  const words=readingWords(doc.analysis),wpm=clampWpm(settings.terminalWpm),group=settings.terminalGroup===2?2:1;
  const presentation=readStyle(settings.terminalStyle);
  root.className='terminal-main theme-'+presentation+(presentation==='cyberdeck'?' cyberdeck-root':presentation==='classic'?'':' vibe-root vibe-'+presentation);
  document.body.dataset.terminalPresentation=presentation;
  root.dataset.terminalAlignment=settings.terminalAlignment==='center'?'center':'fixed';
  root.innerHTML=instrumentMarkup({doc,words,wpm,group,settings,icon,esc,presentation});
- root.querySelector('.terminal-header-tools,.deck-system-keys').insertAdjacentHTML('afterbegin',`<button class="icon-btn" id="terminal-blackout" aria-label="Blackout reading" title="Only words. Tap the screen to pause and return.">${icon('moon')}</button>`);
+ root.querySelector('.terminal-header-tools,.deck-system-keys').insertAdjacentHTML('afterbegin',`<button class="icon-btn" id="terminal-blackout" aria-label="Blackout reading"><svg class="glyph" aria-hidden="true"><use href="#g-visor"/></svg></button>`);
  root.querySelector('.terminal-monitor-top').insertAdjacentHTML('beforeend',typefaceTrigger(settings.font,esc));
  const $=s=>root.querySelector(s),events=new AbortController(),signal=events.signal;
- let pulse=null,needleMotion=null,dialMotion=null,entryMotion=null,disposed=false,player,blackoutSurface=null,stagePlaceholder=null;
+ let pulse=null,needleMotion=null,dialMotion=null,entryMotion=null,disposed=false,player,blackoutSurface=null,stagePlaceholder=null,wasPlaying=false;
+ // A live serial plate fills each instrument's label slot: file, length and time left. The name shrinks first.
+ const left=seconds=>seconds>=60?`${Math.floor(seconds/60)} min ${seconds%60} s`:seconds+' s';
+ root.querySelectorAll('.terminal-serial').forEach(el=>el.innerHTML=`<span class="serial-name">${esc(doc.name)}</span><span class="serial-meta"> · ${words.length} ${words.length===1?'word':'words'} · <span class="serial-left"></span></span>`);
  const on=(el,event,fn)=>el.addEventListener(event,fn,{signal});
  const persist=()=>{if(player)save(player.index);};
  function systemBlackout(value){if(typeof window.Native?.readingBlackout==='function')Native.readingBlackout(value);}
@@ -34,15 +39,14 @@ export function createTerminal({root,doc,index,settings,save,saveSettings,icon,e
   document.body.classList.remove('reading-blackout');systemBlackout(false);sizeScreen();
   if(restoreFocus)$('#terminal-play').focus({preventScroll:true});return true;
  }
- const navigationTokens=['accent','accent-rgb','accent-soft','accent-border','accent-ink','line','muted','subtle','text'];
- function syncNavigation(){const style=getComputedStyle(root);for(const token of navigationTokens)document.body.style.setProperty('--terminal-'+token,style.getPropertyValue('--'+token));}
+ // The dock and rail take their materials from ui/read-shell.css via body[data-terminal-presentation]; light stays the user's accent, so no JS bridge is needed.
  function sizeScreen(){
   const viewport=Math.min(innerHeight,window.visualViewport?.height||innerHeight),dock=document.querySelector('.mobile-nav');
   const dockHeight=dock&&getComputedStyle(dock).display!=='none'?dock.getBoundingClientRect().height:0;
   const height=Math.max(220,Math.floor(viewport-dockHeight));root.style.setProperty('--terminal-height',height+'px');
   root.dataset.terminalSize=height<650?'compact':'regular';
   root.dataset.terminalLandscape=root.clientWidth>=580&&root.clientWidth>height*1.25&&height<560?'true':'false';
-  fit();syncNavigation();
+  fit();
  }
  function fit(){
   const el=$('#terminal-words');if(!el)return;el.style.fontSize='';el.style.removeProperty('--frame-font-size');
@@ -69,10 +73,10 @@ export function createTerminal({root,doc,index,settings,save,saveSettings,icon,e
   $('#terminal-words').innerHTML=values.length?(settings.terminalAlignment==='center'?values.map(wordMarkup).join(''):Array.from({length:settings.terminalGroup===2?2:1},(_,i)=>`<span class="terminal-word-slot"><span class="terminal-baseline" aria-hidden="true"></span>${values[i]?wordMarkup(values[i]):''}</span>`).join('')):'<span class="terminal-no-prose">No readable prose</span>';fit();
   $('#terminal-position').textContent=`${Math.min(words.length,position+(position<words.length?values.length:0))} / ${words.length}`;
   const progress=words.length?position/words.length*100:0;root.style.setProperty('--word-progress',progress);root.style.setProperty('--reel-turn',position*9+'deg');$('#terminal-percent').textContent=Math.round(progress)+'%';$('#terminal-seek').value=position;$('#terminal-seek').style.setProperty('--position',progress+'%');
-  const remaining=Math.ceil((words.length-position)/player.wpm*60);$('#terminal-remaining').textContent=(remaining>=60?Math.floor(remaining/60)+'m '+remaining%60+'s':remaining+'s')+' left';
+  const remaining=Math.ceil((words.length-position)/player.wpm*60);$('#terminal-remaining').textContent=left(remaining)+' left';root.querySelectorAll('.serial-left').forEach(el=>el.textContent=left(remaining)+' left');
   const heading=doc.analysis.headings.find(h=>h.id===values[0]?.anchor);$('#terminal-section').textContent=heading?.text||doc.analysis.title;$('#terminal-section').title=heading?.text||doc.analysis.title;
  }
- function status(){if(disposed)return;$('#terminal-status').textContent=player.playing?'STREAMING':player.index===words.length&&words.length?'COMPLETE':'PAUSED';$('.terminal-monitor').classList.toggle('streaming',player.playing);$('#terminal-play').innerHTML=icon(player.playing?'pause':'play')+`<span>${player.playing?'Pause':player.index===words.length&&words.length?'Replay':'Start'}</span>`;$('#terminal-play').setAttribute('aria-label',player.playing?'Pause reading':'Start reading');icons();persist();}
+ function status(){if(disposed)return;$('#terminal-status').textContent=player.playing?'Reading':player.index===words.length&&words.length?'Finished':'Paused';if(player.playing!==wasPlaying){wasPlaying=player.playing;onPlaying?.(wasPlaying);}$('.terminal-monitor').classList.toggle('streaming',player.playing);$('#terminal-play').innerHTML=icon(player.playing?'pause':'play')+`<span>${player.playing?'Pause':player.index===words.length&&words.length?'Replay':'Start'}</span>`;$('#terminal-play').setAttribute('aria-label',player.playing?'Pause reading':'Start reading');icons();persist();}
  player=new WordPlayer(words,{index,wpm,group,onFrame:frame,onState:status});player.emit();status();
  for(const b of root.querySelectorAll('.terminal-transport button'))b.disabled=!words.length;
  const speed=(value,animate=true)=>{
@@ -93,7 +97,7 @@ export function createTerminal({root,doc,index,settings,save,saveSettings,icon,e
  on($('#terminal-restart'),'click',()=>{feedback();player.seek(0);persist();});on($('#terminal-prev'),'click',()=>{feedback();player.step(-1);persist();});on($('#terminal-next'),'click',()=>{feedback();player.step(1);persist();});
  on($('#terminal-seek'),'input',e=>{player.seek(e.target.value);persist();});
  root.querySelectorAll('[data-group]').forEach(b=>on(b,'click',()=>{feedback();settings.terminalGroup=Number(b.dataset.group);player.grouping(settings.terminalGroup);root.querySelectorAll('[data-group]').forEach(v=>v.setAttribute('aria-pressed',v===b));saveSettings();updateMode();}));
- function updateMode(){$('#terminal-mode').textContent=`${player.group===1?'SINGLE':'PAIR'} / ${settings.terminalBionic!==false?'BIONIC':'PLAIN'}`;}
+ function updateMode(){$('#terminal-mode').textContent=modeText(player.group,settings);}
  on($('#terminal-bionic'),'click',()=>{feedback();settings.terminalBionic=settings.terminalBionic===false;$('#terminal-bionic').setAttribute('aria-pressed',settings.terminalBionic);saveSettings();updateMode();player.emit();});
  on($('#terminal-file'),'click',()=>{feedback();player.pause();onFiles();});
  on($('#terminal-document'),'click',()=>onDocument(words[Math.min(player.index,words.length-1)]?.anchor));
@@ -105,5 +109,5 @@ export function createTerminal({root,doc,index,settings,save,saveSettings,icon,e
  document.fonts.ready.then(()=>{if(!disposed)sizeScreen();});
  if(presentation==='cyberdeck'&&motion()&&window.anime)entryMotion=anime.animate($('.deck-hardware'),{opacity:[0,1],translateY:[7,0],duration:360,ease:'out(3)',onComplete:()=>{entryMotion?.revert();entryMotion=null;}});
  icons();
- return {save:persist,enterBlackout,exitBlackout,pause:()=>{exitBlackout(false);player.pause();},destroy(){exitBlackout(false);player.destroy();disposed=true;events.abort();screenResize.disconnect();pulse?.cancel();needleMotion?.cancel();dialMotion?.cancel();entryMotion?.revert();delete document.body.dataset.terminalPresentation;for(const token of navigationTokens)document.body.style.removeProperty('--terminal-'+token);},settingsChanged(){if((readStyle(settings.terminalStyle))!==presentation){player.pause();onStyleChange();return;}root.dataset.terminalAlignment=settings.terminalAlignment==='center'?'center':'fixed';if(!motion()){entryMotion?.revert();entryMotion=null;}speed(player.wpm,false);player.emit();syncNavigation();}};
+ return {save:persist,enterBlackout,exitBlackout,pause:()=>{exitBlackout(false);player.pause();},destroy(){exitBlackout(false);player.destroy();disposed=true;events.abort();screenResize.disconnect();pulse?.cancel();needleMotion?.cancel();dialMotion?.cancel();entryMotion?.revert();delete document.body.dataset.terminalPresentation;if(wasPlaying){wasPlaying=false;onPlaying?.(false);}},settingsChanged(){if((readStyle(settings.terminalStyle))!==presentation){player.pause();onStyleChange();return;}root.dataset.terminalAlignment=settings.terminalAlignment==='center'?'center':'fixed';if(!motion()){entryMotion?.revert();entryMotion=null;}speed(player.wpm,false);player.emit();}};
 }

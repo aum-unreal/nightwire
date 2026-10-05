@@ -40,14 +40,5 @@
 @font-face{font-family:"NW OpenDyslexic";src:url("fonts/opendyslexic-italic.woff2") format("woff2");font-style:italic;font-weight:400;font-display:swap}
 @font-face{font-family:"NW OpenDyslexic";src:url("fonts/opendyslexic-bold.woff2") format("woff2");font-style:normal;font-weight:600 900;font-display:swap}
 @font-face{font-family:"NW OpenDyslexic";src:url("fonts/opendyslexic-bold-italic.woff2") format("woff2");font-style:italic;font-weight:600 900;font-display:swap}
-.reader-main .markdown,.reader-theme-preview p,.reader-theme-preview blockquote,.type-preview p,.type-preview .type-glyphs{font-family:var(--reading-font,var(--sans));font-optical-sizing:auto}
+.reader-main .markdown{font-family:var(--reading-font,var(--sans));font-optical-sizing:auto}
 .reader-main .markdown :is(h1,h2,h3,h4,h5,h6){font-family:inherit;font-optical-sizing:auto}
-.type-preview{padding:19px 20px;background:var(--read-bg);border:1px solid var(--read-line);border-radius:7px;margin:16px 0 6px;min-width:0;overflow-wrap:anywhere}
-.type-preview-caption{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:10px;color:var(--read-muted);margin-bottom:15px}
-.type-preview-caption strong{color:var(--read-link);font-weight:500}
-.type-preview-caption small{font-size:9px;text-align:right}
-.type-preview p{font-size:var(--font-size);line-height:var(--reader-leading);color:var(--read-text);margin:0 0 13px}
-.type-preview p strong{color:var(--read-bold);font-weight:650}.type-preview p em{color:var(--read-italic)}
-.type-preview .type-glyphs{display:block;font-size:15px;letter-spacing:.025em;color:var(--read-muted);line-height:1.6}
-@media(max-width:560px){.setting-row select#setting-font{width:145px;max-width:145px;min-width:0;text-overflow:ellipsis}.type-preview-caption{flex-wrap:wrap;gap:6px}.type-preview-caption small{text-align:left}.type-preview{padding:17px}}
-@media(max-width:360px){.setting-row select#setting-font{width:128px;max-width:128px}}

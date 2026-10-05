@@ -8,11 +8,11 @@ const server=http.createServer((req,res)=>{const file=path.join(root,req.url==='
  try{
   await page.addInitScript(()=>localStorage.setItem('settings',JSON.stringify({motion:false,font:'opendyslexic'})));await page.goto('http://127.0.0.1:8802/');await page.waitForFunction(()=>!!window.Nightwire);
   await page.locator('#file-input').setInputFiles({name:'Fixed origins.md',mimeType:'text/markdown',buffer:Buffer.from('# Stable\n\ni a reading coordination extraordinarily tiny electroencephalographically clear W 中文 👀 end\n\n'+('Keep each starting point steady. '.repeat(40)))});await page.locator('#markdown h1').waitFor();await page.locator('.mobile-nav [data-action=terminal]').click();await page.locator('#terminal-words').waitFor();
-  const close=()=>page.getByRole('button',{name:'Close panel'}).click();let cases=0;
+  const close=async()=>{if(await page.locator('#panel-dialog[open]').count())await page.getByRole('button',{name:'Close panel'}).click();};let cases=0;
   for(const style of ['classic','cyberdeck','phosphor','mixtape','orbital','nocturne']){
-   await page.setViewportSize({width:412,height:915});await page.locator('#content [data-action=settings]').click();await page.getByRole('combobox',{name:'Read tab style'}).selectOption(style);await close();
+   await page.setViewportSize({width:412,height:915});await page.locator('#content [data-action=settings]').click();await page.locator('[data-read-style="'+style+'"]').click();await page.waitForFunction(value=>document.body.dataset.terminalPresentation===value,style);await close();
    for(const font of ['opendyslexic','literata']){
-    await page.locator('#content [data-action=settings]').click();await page.getByRole('combobox',{name:'Reading typeface'}).selectOption(font);await page.evaluate(()=>document.fonts.ready);await close();
+    await page.locator('#content .type-trigger').click();await page.locator('.font-option[data-font="'+font+'"]').click();await page.evaluate(()=>document.fonts.ready);await close();
     for(const [width,height]of [[320,568],[412,915],[780,360],[1280,915]]){
      await page.setViewportSize({width,height});await page.waitForTimeout(25);
      for(const group of [1,2]){

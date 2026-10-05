@@ -14,7 +14,7 @@
  --danger:#ff8a7a;--warn:#e8c547;
  /* Aliases kept for the instruments and the rules owners have not rebuilt yet */
  --surface:var(--ink-2);--raised:var(--ink-3);--line:var(--rule);
- --cyan:var(--hue-2);--pink:var(--hue-3);--cyan-rgb:117,223,235;--pink-rgb:233,148,211;--glow-alpha:.08;
+ --cyan:var(--hue-2);--pink:var(--hue-3);--cyan-rgb:117,223,235;--pink-rgb:233,148,211;
  /* Light and material */
  --pool:radial-gradient(130% 70% at 50% -20%,var(--lamp-wash),transparent 62%);
  /* --grain: the static 160px feTurbulence tile (baseFrequency .9, numOctaves 2, alpha .04), pre-rasterised to PNG so repaints never re-run the filter at another scale (seen as patchy tiles). */

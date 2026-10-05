@@ -6,7 +6,9 @@ const server=http.createServer((req,res)=>{const file=path.join(root,req.url==='
  await new Promise(r=>server.listen(8801,'127.0.0.1',r));
  const browser=await chromium.launch({...launch(),headless:true}),page=await browser.newPage({viewport:{width:412,height:915},hasTouch:true}),errors=[],external=[];
  page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(!r.url().startsWith('http://127.0.0.1:8801/'))external.push(r.url());});
- const close=()=>page.getByRole('button',{name:'Close panel'}).click();
+ const close=()=>page.getByRole('button',{name:'Close panel'}).click(),settingsKey=()=>page.locator('[data-action=settings]:visible');
+ // §8: the single visible Preferences entry (instrument key in Read), or Tools › Reading preferences in the phone reader; then the tab.
+ const prefs=async tab=>{if(await settingsKey().count())await settingsKey().first().click();else{await page.getByRole('button',{name:'More document tools'}).click();await page.locator('#panel-content [data-action=settings]').click();}await page.locator('#panel-content .prefs').waitFor();await page.getByRole('tab',{name:tab,exact:true}).click();};
  const pick=async id=>{await page.getByRole('button',{name:'Choose reading typeface',exact:true}).click();await page.locator('.font-option[data-font="'+id+'"]').click();await page.evaluate(()=>document.fonts.ready);await close();};
  const check=async(selector,id)=>{
   const expected=await page.evaluate(async id=>(await import('/reader-fonts.js')).readingFonts[id],id);
@@ -23,13 +25,13 @@ const server=http.createServer((req,res)=>{const file=path.join(root,req.url==='
   const text='# Shared reading type\n\nKeep **useful details** and *clear notes*.\n\n## Second heading\n\n### Third heading\n\n#### Fourth heading\n\n##### Fifth heading\n\n###### Sixth heading\n\n- A readable list\n\n> A quoted passage\n\n| Reading | Font |\n| --- | --- |\n| Both readers | Shared |\n\n```js\nconst code = true;\n```\n\n'+('One shared typeface follows the reading page and word stream. '.repeat(40));
   await page.locator('#file-input').setInputFiles({name:'Shared-type.md',mimeType:'text/markdown',buffer:Buffer.from(text)});await page.locator('#markdown h1').waitFor();
   const revision=(await page.evaluate(()=>Nightwire.classifierInput())).contentRevision,codeFamily=await page.locator('#markdown code').first().evaluate(el=>getComputedStyle(el).fontFamily);
-  const pageText='#markdown h1,#markdown h2,#markdown h3,#markdown h4,#markdown h5,#markdown h6,#markdown p,#markdown li,#markdown th,#markdown td';
+  const pageText='#markdown :is(h1,h2,h3,h4,h5,h6,p,li,td):not(.file-label *)'; // §6.4: the file label sits inside #markdown but is chrome; th is a 13/600 Booktabs header label, not prose
   for(const [style,theme,fromPage,fromRead]of [
    ['classic','nightwire','opendyslexic','lexend'],['cyberdeck','minimal','fraunces','atkinson'],
    ['phosphor','catppuccin','lora','jetbrains'],['mixtape','tokyo','newsreader','inter'],
    ['orbital','nord','crimson','nunito'],['nocturne','gruvbox','literata','opendyslexic']
   ]){
-   await page.locator('.top-actions [data-action=settings]').click();await page.locator('button[data-reader-theme="'+theme+'"]').click();await page.getByRole('combobox',{name:'Read tab style'}).selectOption(style);await close();
+   await prefs('Page');await page.locator('button[data-reader-theme="'+theme+'"]').click();assert.equal(await page.locator('button[data-reader-theme="'+theme+'"]').getAttribute('aria-pressed'),'true');await page.getByRole('tab',{name:'Read',exact:true}).click();await page.locator('#panel-content [data-read-style="'+style+'"]').click();await close();
    await pick(fromPage);await check(pageText,fromPage);
    await page.locator('.mobile-nav [data-action=terminal]').click();await page.locator('#terminal-words').waitFor();await check('#terminal-words,#terminal-words b',fromPage);
    await page.locator('#terminal-seek').evaluate(el=>{el.value=20;el.dispatchEvent(new Event('input',{bubbles:true}));});await page.locator('[data-group="2"]').click();
@@ -38,13 +40,13 @@ const server=http.createServer((req,res)=>{const file=path.join(root,req.url==='
    await page.locator('#terminal-bionic').click();await check('#terminal-words .terminal-word',fromRead);await page.locator('#terminal-bionic').click();
    await page.locator('#terminal-document').click();await page.locator('#markdown h1').waitFor();await check(pageText,fromRead);
    assert.equal(await page.locator('#markdown code').first().evaluate(el=>getComputedStyle(el).fontFamily),codeFamily);
-   await page.locator('.top-actions [data-action=settings]').click();assert.equal(await page.getByRole('combobox',{name:'Reading typeface'}).inputValue(),fromRead);await close();
+   await prefs('Type');assert.equal(await page.locator('#reading-font-name').textContent(),(await page.evaluate(async id=>(await import('/reader-fonts.js')).readingFonts[id].name,fromRead)));await close();
    await page.locator('.mobile-nav [data-action=terminal]').click();await page.locator('#terminal-words').waitFor();assert.equal(await page.locator('#terminal-seek').inputValue(),'20');await check('#terminal-words',fromRead);
    await page.locator('#terminal-document').click();await page.locator('#markdown h1').waitFor();
   }
-  await page.reload();await page.waitForFunction(()=>!!window.Nightwire&&!!document.querySelector('.resume-sheet'));await page.getByRole('button',{name:'Continue reading',exact:true}).click();await page.locator('#markdown h1').waitFor();await check(pageText,'opendyslexic');
+  await page.reload();await page.waitForFunction(()=>!!window.Nightwire&&!!document.querySelector('.resume-sheet'));await page.locator('.resume-key').click();await page.locator('#markdown h1').waitFor();await check(pageText,'opendyslexic');
   await page.locator('.mobile-nav [data-action=terminal]').click();await page.locator('#terminal-words').waitFor();await check('#terminal-words','opendyslexic');assert.equal(await page.locator('#terminal-seek').inputValue(),'20');
-  await page.locator('#content [data-action=settings]').click();await page.getByRole('combobox',{name:'Reading typeface'}).selectOption('lexend');await page.evaluate(()=>document.fonts.ready);await close();await check('#terminal-words','lexend');
+  await page.locator('#content [data-action=settings]').click();await page.getByRole('tab',{name:'Type',exact:true}).click();await page.getByRole('button',{name:'Open the type case'}).click();await page.locator('.font-option[data-font=lexend]').click();await page.evaluate(()=>document.fonts.ready);await close();await check('#terminal-words','lexend');
   await page.locator('#terminal-document').click();await page.locator('#markdown h1').waitFor();await check(pageText,'lexend');assert.equal((await page.evaluate(()=>Nightwire.classifierInput())).contentRevision,revision);
   assert.deepEqual(errors,[]);assert.deepEqual(external,[]);console.log('Font sync: both directions across six Page/Read themes, all six heading levels and prose, accessibility fonts, bionic/plain text, settings selector, reload, word position, source separation and classifier revision passed.');
  }finally{await browser.close();server.close();}

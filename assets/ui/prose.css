@@ -1,114 +1,111 @@
-/* Prose (E3): the rendered Markdown and the source view. */
+/* Prose (E3, §6.4): the rendered Markdown and the source view.
+   Every colour comes from the --read-* page tokens (reader-themes.js). The lamp (--read-lamp) is the
+   user's accent on the Nightwire page and the theme's link colour on the other five pages. */
 
-/* LEGACY — delete as you rebuild */
-.markdown{max-width:var(--reader-width);margin:0 auto;color:#c5ceca;font-size:var(--font-size);line-height:var(--reader-leading);overflow-wrap:anywhere;font-family:var(--sans)}
-.serif .markdown{font-family:Georgia,"Noto Serif",serif}
-.markdown h1,.markdown h2,.markdown h3,.markdown h4,.markdown h5,.markdown h6{color:var(--text);font-family:var(--sans);line-height:1.35;scroll-margin-top:180px}
-.markdown h1{font-size:2.1em;letter-spacing:-.05em;margin:0 0 26px}
-.markdown h2{font-size:1.4em;margin:46px 0 21px;padding-top:10px;border-top:1px solid var(--line)}
-.markdown h3{font-size:1.15em;margin:30px 0 13px}
-.markdown p{margin:0 0 21px;line-height:inherit}
-.markdown a{color:var(--cyan);text-decoration:none;border-bottom:1px solid #2c5256}
-.markdown a:hover{color:var(--accent)}
-.markdown ul,.markdown ol{padding-left:24px;margin:0 0 22px}
-.markdown li{padding-left:4px;margin:6px 0}
-.markdown li::marker{color:var(--subtle)}
-.markdown li.task-item{list-style:none;margin-left:-20px}
-.task-check{display:inline-block;color:var(--accent);margin-right:10px;font-family:var(--mono)}
-.markdown code{font: .84em var(--code);font-variant-ligatures:none;color:var(--accent);background:#142011;border:1px solid #22331b;padding:3px 5px;border-radius:3px}
-.markdown pre{overflow:auto;border:1px solid var(--line);background:#090d0d;border-radius:6px;margin:0 0 24px;padding:43px 18px 18px;position:relative;white-space:pre}
-.markdown pre code{border:0;padding:0;color:#bfcbc4;background:none;font-size:12px;line-height:1.8;display:block;overflow:visible}
-.code-label{position:absolute;top:13px;left:17px;color:var(--subtle);font:9px var(--mono);letter-spacing:.1em}
-.code-copy{position:absolute;top:5px;right:6px;color:var(--muted);width:36px;min-width:36px;height:32px}
-.code-copy svg{width:14px;height:14px}
-.markdown blockquote{margin:25px 0;padding:16px 20px;border-left:2px solid var(--accent);background:#0d140c;color:#a6b5a8;border-radius:0 5px 5px 0}
-.markdown blockquote p:last-child{margin-bottom:0}
-.markdown blockquote.callout{border-color:var(--cyan);background:#0b1516;color:#a9c8ca}
-.callout-label{font:10px var(--mono);color:var(--cyan);display:block;margin-bottom:8px;text-transform:uppercase;letter-spacing:.1em}
-.markdown hr{border:0;border-top:1px solid var(--line);margin:35px 0}
-.table-wrap{overflow:auto;margin-bottom:24px;border:1px solid var(--line);border-radius:5px}
-.markdown table{border-collapse:collapse;min-width:100%;font-size:.82em;white-space:normal}
-.markdown th,.markdown td{border-bottom:1px solid var(--line);padding:12px;text-align:left;min-width:100px}
-.markdown th{background:#111713;color:#d2e1d2}
-.markdown tr:last-child td{border-bottom:0}
-.image-placeholder{border:1px dashed var(--line);padding:12px;display:block;font-size:12px;color:var(--muted);margin:15px 0}
-.markdown img{max-width:100%;border-radius:5px}
-.markdown details{border:1px solid var(--line);padding:12px;border-radius:5px}
-.markdown summary{cursor:pointer}
-.markdown mark{background:#405521;color:#eaffc3;border-radius:2px;padding:1px 0}
-.markdown mark.current{background:var(--accent);color:#000}
-.markdown [data-line]{scroll-margin-top:180px}
-.hljs-keyword,.hljs-selector-tag,.hljs-literal{color:var(--pink)}
-.hljs-string,.hljs-attr{color:var(--accent)}
-.hljs-number,.hljs-title,.hljs-built_in{color:var(--cyan)}
-.hljs-comment{color:var(--subtle)}
-.source-view{white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.85 var(--code);font-variant-ligatures:none;color:#b2c1b7;counter-reset:source;max-width:100%;tab-size:2}
-.source-line{display:flex;gap:17px;scroll-margin-top:180px}
-.source-number{display:inline-block;min-width:35px;color:var(--subtle);text-align:right;user-select:none}
-.source-text{flex:1;min-width:0}
-.empty-document{padding:30px 0;color:var(--muted);font-size:13px}
-@media(max-width:800px){
- .markdown{font-size:var(--font-size)}
- .markdown h1{font-size:1.9em}
- .markdown h2{font-size:1.4em}
-}
-@media(max-width:560px){
- .markdown h1{font-size:1.8em;line-height:1.25}
- .markdown{line-height:var(--reader-leading)}
- .markdown h2{margin-top:35px}
- .markdown pre{margin-inline:-5px;padding-inline:14px}
- .source-line{gap:10px}
- .source-number{min-width:26px;font-size:10px}
- .source-view{font-size:11px}
-}
-.markdown code{color:var(--accent);background:var(--accent-soft);border-color:var(--accent-border)}
-.markdown pre{border-radius:9px;background:linear-gradient(145deg,rgba(var(--cyan-rgb),.025),transparent 65%),#070a09;box-shadow:inset 0 1px 0 #ffffff08}
-.markdown pre code{color:#bfcbc4;background:none;border:0}
-.markdown blockquote{border-color:var(--accent);background:rgba(var(--accent-rgb),.055);color:#bccac0;border-radius:0 8px 8px 0}
-.markdown blockquote.callout{border-color:var(--cyan);background:rgba(var(--cyan-rgb),.055);color:#bbccce}
-.markdown th{background:rgba(var(--accent-rgb),.065);color:var(--text)}
-.markdown mark{background:rgba(var(--accent-rgb),.25);color:var(--text)}
-.markdown mark.current{background:var(--accent);color:var(--accent-ink)}
-.markdown a:active{color:var(--accent);background:var(--accent-soft)}
-.source-number{color:var(--read-muted)}
-.reader-main .markdown,.reader-main .source-view{color:var(--read-text)}
-.markdown h1{color:var(--read-h1)}
-.markdown h2{color:var(--read-h2);border-color:var(--read-line)}
-.markdown h3{color:var(--read-h3)}
-.markdown h4{color:var(--read-h4)}
-.markdown h5{color:var(--read-h5)}
-.markdown h6{color:var(--read-h6)}
+:is(.reader-main,.markdown,.source-view){--read-lamp:var(--lamp);--read-lamp-dim:var(--lamp-dim);--read-well:#050505}
+:root:not([data-reader-theme="nightwire"]) :is(.reader-main,.markdown,.source-view){--read-lamp:var(--read-link);--read-lamp-dim:var(--read-line);--read-well:color-mix(in srgb,var(--read-bg) 55%,#000)}
+
+/* Body */
+.markdown{max-width:66ch;color:var(--read-text);font:400 var(--font-size)/var(--reader-leading) var(--reading-font);overflow-wrap:break-word;counter-reset:h2 h3;text-rendering:optimizeLegibility;font-variant-numeric:normal}
+.markdown>:first-child{margin-top:0}
+.markdown p{margin:0 0 1.15em}
+.markdown :is(ul,ol){margin:0 0 1.15em;padding-left:1.4em}
+.markdown li{margin:.3em 0;padding-left:.2em}
+.markdown li>:is(ul,ol){margin:.3em 0 0}
+.markdown li::marker{color:var(--read-muted);font-variant-numeric:tabular-nums}
 .markdown strong{color:var(--read-bold);font-weight:650}
 .markdown em{color:var(--read-italic)}
-.markdown a{color:var(--read-link);border-bottom-color:var(--read-line)}
-.markdown a:hover{color:var(--read-bold)}
-.markdown ul>li::marker,.markdown ol>li::marker{color:var(--read-h3)}
-.markdown hr{border-color:var(--read-line)}
-.markdown code{color:var(--read-link);background:var(--read-panel);border-color:var(--read-line)}
-.markdown pre{background:var(--read-panel);border-color:var(--read-line);box-shadow:none}
-.markdown pre code{color:var(--read-text);background:none}
-.markdown pre .code-label,.markdown pre .code-copy{color:var(--read-muted)}
-.markdown pre .hljs-keyword,.markdown pre .hljs-selector-tag,.markdown pre .hljs-built_in{color:var(--read-keyword)}
-.markdown pre .hljs-string,.markdown pre .hljs-attr{color:var(--read-string)}
-.markdown pre .hljs-number,.markdown pre .hljs-literal{color:var(--read-number)}
-.markdown pre .hljs-comment,.markdown pre .hljs-quote{color:var(--read-muted);font-style:italic}
-.markdown pre .hljs-title,.markdown pre .hljs-function{color:var(--read-link)}
-.markdown blockquote,.markdown blockquote.callout{background:var(--read-panel);border-color:var(--read-h3);color:var(--read-text);box-shadow:none}
-.markdown .callout-label{color:var(--read-link)}
-.markdown th{background:var(--read-panel);color:var(--read-bold)}
-.markdown th,.markdown td{border-color:var(--read-line)}
-.markdown .task-check{color:var(--read-link)}
-.markdown mark{background:var(--read-line);color:var(--read-text)}
-.markdown mark.current{background:var(--read-link);color:#111318}
-:root[data-reader-theme="minimal"] .markdown h2{border-top:0;padding-top:0;font-weight:600}
-:root[data-reader-theme="minimal"] .markdown h3{font-size:1.07em;font-weight:600}
-:root[data-reader-theme="minimal"] .markdown blockquote{background:none;border-radius:0;padding-block:3px}
-:root[data-reader-theme="catppuccin"] .markdown h2{border-top:0;padding-top:0}
-:root[data-reader-theme="catppuccin"] .markdown blockquote{border-radius:0 12px 12px 0}
-:root[data-reader-theme="tokyo"] .markdown h2{border-top:0;border-bottom:1px solid var(--read-line);padding:0 0 12px}
-:root[data-reader-theme="tokyo"] .markdown pre{border-radius:3px}
-:root[data-reader-theme="nord"] .markdown h2{border-top:0;padding-top:0;letter-spacing:-.015em}
-:root[data-reader-theme="nord"] .markdown blockquote{border-left-width:3px;border-radius:0}
-:root[data-reader-theme="gruvbox"] .markdown h2{border-top:0;padding-top:0}
-:root[data-reader-theme="gruvbox"] .markdown h3{font-size:1em;letter-spacing:0}
-:root[data-reader-theme="gruvbox"] .markdown pre,:root[data-reader-theme="gruvbox"] .markdown blockquote{border-radius:2px}
+.markdown img{max-width:100%;height:auto;border-radius:var(--r-paper)}
+.markdown details:not(.frontmatter){margin:0 0 1.15em;padding:0 0 0 1em;border-left:1px solid var(--read-line)}
+.markdown details:not(.frontmatter)>summary{min-height:var(--hit);display:flex;align-items:center;cursor:pointer;color:var(--read-bold)}
+.markdown [id],.markdown [data-line]{scroll-margin-top:calc(var(--strip-h) + 16px)}
+
+/* Headings: the reading face, one colour, no rules. h2 and h3 carry counter numerals. */
+.markdown :is(h1,h2,h3,h4,h5,h6){position:relative;margin:1.6em 0 .55em;color:var(--read-h1);font-family:var(--reading-font);font-weight:600;line-height:1.25;letter-spacing:0;text-wrap:balance;scroll-margin-top:calc(var(--strip-h) + 16px)}
+.markdown h1{margin:0 0 .5em;font-size:1.9em;font-weight:650;line-height:1.12;letter-spacing:-.01em}
+.markdown h2{margin-top:2.2em;font-size:1.35em;counter-increment:h2;counter-reset:h3}
+.markdown h3{font-size:1.1em;counter-increment:h3}
+.markdown :is(h4,h5,h6){font-size:1em}
+.markdown h2::before{content:counter(h2,decimal-leading-zero);font:400 12px/1 var(--data);font-variant-numeric:tabular-nums;color:var(--read-lamp)}
+.markdown h3::before{content:counter(h2) "." counter(h3);font:400 11px/1 var(--data);font-variant-numeric:tabular-nums;color:var(--subtle)}
+.markdown.no-h2 h3::before{content:counter(h3,decimal-leading-zero)}
+.markdown :is(h2,h3)::before{display:inline-block;margin-right:.6em;vertical-align:.32em}
+@container reader (min-width:600px){
+ .markdown :is(h2,h3)::before{position:absolute;right:calc(100% + 12px);top:.62em;min-width:0;margin:0;text-align:right;vertical-align:0}
+}
+
+/* Links: text colour with a 1px lamp underline (the theme's link colour on the other pages). */
+.markdown a{color:var(--read-link);text-decoration:underline 1px var(--read-lamp);text-underline-offset:3px;text-decoration-skip-ink:auto}
+.markdown a:is(:active,.is-pressed){color:var(--read-bold);text-decoration-thickness:2px}
+@media (hover:hover) and (pointer:fine){.markdown a:hover{color:var(--read-bold)}}
+
+/* Blockquote: no box; a hanging Fraunces quote in the dim lamp. */
+.markdown blockquote{position:relative;margin:1.5em 0;padding:0 0 0 1.2em;color:var(--read-muted)}
+.markdown blockquote:not(.callout)::before{content:"\201C";position:absolute;left:-.12em;top:-.08em;font:italic 400 64px/1 var(--display);font-variation-settings:var(--fv-title);color:var(--read-lamp-dim);pointer-events:none}
+.markdown blockquote:not(.callout)>*{position:relative}
+.markdown blockquote>:last-child{margin-bottom:0}
+.markdown blockquote em{color:inherit}
+
+/* Callouts: paper slips. note (and anything unknown) plain; tip folded; warning and danger hatched. */
+.markdown blockquote.callout{margin:1.5em 0;padding:12px 16px 14px;border-radius:var(--r-paper);background:var(--read-panel);box-shadow:inset 0 1px 0 var(--read-line),inset 0 -1px 0 #000;color:var(--read-text)}
+.markdown .callout-label{margin:0 0 4px;font:600 13px/1.35 var(--ui);color:var(--read-bold)}
+.markdown blockquote.callout[data-callout="tip"]{clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,0 100%)}
+.markdown blockquote.callout[data-callout="tip"]::after{content:"";position:absolute;top:0;right:0;width:12px;height:12px;background:linear-gradient(225deg,transparent 50%,var(--read-line) 50% calc(50% + 1px),color-mix(in srgb,var(--read-panel) 70%,#fff 6%) 0)}
+.markdown blockquote.callout:is([data-callout="warning"],[data-callout="danger"],[data-callout="caution"],[data-callout="error"]){padding-left:22px;background:repeating-linear-gradient(-45deg,var(--warn) 0 3px,transparent 3px 7px) left top/6px 100% no-repeat,var(--read-panel)}
+.markdown blockquote.callout:is([data-callout="danger"],[data-callout="caution"],[data-callout="error"]){background:repeating-linear-gradient(-45deg,var(--danger) 0 3px,transparent 3px 7px) left top/6px 100% no-repeat,var(--read-panel)}
+
+/* Code: a recessed well with a language tab and a copy tab on its top edge. */
+.markdown .code-block{position:relative;margin:0 0 1.4em}
+.markdown pre{margin:0;padding:34px 16px 16px;overflow:auto;border:1px solid var(--read-line);border-radius:var(--r-paper);background:var(--read-well);box-shadow:inset 0 2px 4px #000;white-space:pre;tab-size:2;-webkit-overflow-scrolling:touch}
+.markdown pre code{display:block;padding:0;border:0;background:none;color:var(--read-text);font:400 14px/1.6 var(--code);font-variant-ligatures:none}
+.markdown .code-label{position:absolute;z-index:1;top:0;left:0;padding:4px 10px 5px;border-radius:var(--r-paper) 0 var(--r-paper) 0;background:var(--ink-3);box-shadow:inset 0 -1px 0 var(--read-line),inset -1px 0 0 var(--read-line);font:400 11px/1.2 var(--data);color:var(--subtle)}
+.markdown .code-copy{position:absolute;z-index:1;top:0;right:0;display:grid;place-items:start end;width:var(--hit);height:var(--hit);padding:0;color:var(--read-muted);background:none}
+.markdown .code-copy::before{content:"";position:absolute;top:0;right:0;width:34px;height:28px;border-radius:0 var(--r-paper) 0 var(--r-paper);background:var(--ink-3);box-shadow:inset 0 -1px 0 var(--read-line),inset 1px 0 0 var(--read-line);transition:transform var(--t-press) var(--ease)}
+.markdown .code-copy .glyph{position:relative;width:16px;height:16px;margin:6px 9px 0 0;transition:transform var(--t-press) var(--ease)}
+.markdown .code-copy:is(:active,.is-pressed)::before,.markdown .code-copy:is(:active,.is-pressed) .glyph{transform:translateY(1px)}
+.markdown .code-copy:is(:active,.is-pressed){color:var(--read-text)}
+.markdown :not(pre)>code{padding:.08em .32em;border:1px solid var(--read-line);border-radius:var(--r-paper);background:var(--read-panel);color:var(--read-bold);font:400 .9em/1 var(--code);font-variant-ligatures:none;overflow-wrap:anywhere}
+.hljs-keyword,.hljs-selector-tag,.hljs-built_in,.hljs-doctag{color:var(--read-keyword)}
+.hljs-string,.hljs-attr,.hljs-regexp,.hljs-template-tag{color:var(--read-string)}
+.hljs-number,.hljs-literal,.hljs-symbol{color:var(--read-number)}
+.hljs-title,.hljs-function,.hljs-section,.hljs-type{color:var(--read-link)}
+.hljs-comment,.hljs-quote,.hljs-meta{color:var(--read-muted);font-style:italic}
+
+/* Tables: booktabs. Numeric cells in Plex, right-aligned; the first column sticks. */
+.markdown .table-wrap{margin:0 0 1.4em;overflow-x:auto;border-top:1.5px solid var(--rule-2);border-bottom:1.5px solid var(--rule-2);-webkit-overflow-scrolling:touch}
+.markdown .table-wrap.is-scrollable{background:linear-gradient(270deg,#0009,transparent) right/14px 100% no-repeat}
+.markdown table{width:100%;border-collapse:collapse;font-size:.88em;line-height:1.45}
+.markdown :is(th,td){padding:9px 14px 9px 0;text-align:left;vertical-align:top;min-width:6em}
+.markdown th{font:600 13px/1.35 var(--ui);color:var(--read-bold);border-bottom:.75px solid var(--rule-2)}
+.markdown td{border-bottom:1px solid color-mix(in srgb,var(--read-line) 55%,transparent)}
+.markdown tr:last-child td{border-bottom:0}
+.markdown :is(th,td):first-child{position:sticky;left:0;z-index:1;background:var(--read-bg)}
+.markdown td.num{font:400 .92em/1.45 var(--data);font-variant-numeric:tabular-nums;text-align:right}
+.markdown :is(th,td):last-child{padding-right:0}
+
+/* Tasks: a drawn 18px box; done adds a lamp tick. */
+.markdown li.task-item{list-style:none;margin-left:-1.4em}
+.markdown .task-check{position:relative;display:inline-block;width:18px;height:18px;margin:0 10px 0 0;vertical-align:-3px;border:1.5px solid var(--read-muted);border-radius:var(--r-paper)}
+.markdown .task-check[data-done]{border-color:var(--read-lamp-dim)}
+.markdown .task-check[data-done]::after{content:"";position:absolute;inset:-1px;background:var(--read-lamp);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='m3.5 9.5 3.5 3.5 7.5-8' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/100% no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='m3.5 9.5 3.5 3.5 7.5-8' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/100% no-repeat}
+.markdown li.task-item:has(>.task-check[data-done],>p>.task-check[data-done]){color:var(--read-muted)}
+
+/* Inline marks. hr is a perforation; #tags are tag marks (primitives). */
+.markdown hr.perf,.markdown hr{height:8px;margin:2em 0;border:0;background:radial-gradient(circle,var(--rule-2) 1.2px,transparent 1.5px) 0 50%/7px 8px repeat-x}
+.markdown .image-placeholder{display:block;margin:0 0 1.15em;padding:10px 14px;border-left:1px solid var(--read-line);font:400 var(--fs-sm)/1.45 var(--ui);color:var(--read-muted)}
+.markdown .image-placeholder a{font-size:inherit}
+.markdown .empty-document{color:var(--read-muted);font-style:italic}
+
+/* Find hits: a marker band; the current hit is stronger and outlined. */
+.markdown mark{color:inherit;background:none}
+.markdown mark.find-hit,.source-view mark.find-hit{color:inherit;background:linear-gradient(transparent 55%,rgba(var(--accent-rgb),.45) 55% 92%,transparent 92%)}
+.markdown mark.find-hit.current,.source-view mark.find-hit.current{background:linear-gradient(transparent 55%,rgba(var(--accent-rgb),.7) 55% 92%,transparent 92%);outline:2px solid var(--lamp);outline-offset:1px}
+
+/* Source view: a punched ruler gutter; Markdown syntax in the second hue. */
+.source-view{--src-size:13px;max-width:100%;color:var(--read-text);font:400 var(--src-size)/1.75 var(--code);font-variant-ligatures:none;tab-size:2}
+.source-line{display:grid;grid-template-columns:4ch minmax(0,1fr);column-gap:14px;scroll-margin-top:calc(var(--strip-h) + 16px)}
+.source-number{position:relative;padding-right:4px;text-align:right;font:400 11px/calc(var(--src-size)*1.75) var(--data);font-variant-numeric:tabular-nums;color:var(--subtle);user-select:none;-webkit-user-select:none}
+.source-number.is-fifth::after{content:"";position:absolute;top:calc(var(--src-size)*.875);right:-9px;width:4px;height:4px;margin-top:-2px;border-radius:50%;background:var(--read-well);box-shadow:inset 0 0 0 1px var(--rule-2)}
+.source-text{min-width:0;white-space:pre-wrap;overflow-wrap:anywhere}
+.source-view .md-syn{color:var(--hue-2)}
+@container reader (max-width:420px){.source-view{--src-size:12px}.source-line{column-gap:10px;grid-template-columns:3.4ch minmax(0,1fr)}}

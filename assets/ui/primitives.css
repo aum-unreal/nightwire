@@ -90,7 +90,7 @@ input.ruler:focus-visible{outline-offset:2px}
 /* Sheet: a bottom or full sheet on phone, a right side sheet on wide */
 dialog.sheet{position:fixed;inset:auto 0 0;margin:0;width:100%;max-width:none;height:auto;max-height:92dvh;padding:0;border:0;border-radius:0;background:var(--ink-1);color:var(--text);box-shadow:none;overflow:hidden;overscroll-behavior:contain}
 dialog.sheet[open]{display:flex;flex-direction:column;animation:sheet-up var(--t-sheet) var(--ease)}
-dialog.sheet::before{content:"";position:absolute;inset:0 0 auto;height:1px;background:var(--paper-edge);pointer-events:none}
+dialog.sheet::before{content:"";position:absolute;inset:0 0 auto;height:1px;background:var(--paper-edge);pointer-events:none;z-index:1}
 dialog.sheet::backdrop{background:rgb(0 0 0/.72);-webkit-backdrop-filter:none;backdrop-filter:none}
 dialog.sheet[data-size="full"]{inset:0;height:100dvh;max-height:100dvh;padding-top:env(safe-area-inset-top)}
 .sheet-lip{flex:none;display:grid;place-items:center;height:var(--hit);touch-action:none;cursor:grab}
@@ -170,70 +170,3 @@ body.is-feeding .slot-card{transform:translateY(-4px);background-image:var(--poo
 .type-trigger-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:400 var(--fs-data)/1.2 var(--data);color:var(--muted)}
 .type-trigger-notch{flex:none;width:6px;height:10px;margin-left:auto;font-size:0;color:transparent;border-left:1px solid var(--rule-2);transform:skewX(-20deg)}
 .type-trigger:is(:active,.is-pressed){transform:translateY(2px);box-shadow:var(--key-down)}
-
-/* LEGACY — delete as you rebuild */
-.icon-btn{width:44px;min-width:44px;height:44px;display:inline-flex;align-items:center;justify-content:center;color:var(--muted);border-radius:5px}
-.icon-btn:hover{background:var(--raised);color:var(--text)}
-.icon-btn.small{width:28px;min-width:28px;height:28px}
-.icon-btn.small svg{width:15px}
-.button{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:1px solid var(--line);background:var(--surface);padding:13px 19px;border-radius:5px;font-size:13px;min-height:46px;font-weight:500;text-decoration:none;color:var(--text)}
-.button:hover{border-color:var(--subtle)}
-.button.primary{background:var(--accent);border-color:var(--accent);color:#121c0b}
-.button.primary:hover{background:#d9ff9c}
-.button.compact{min-height:38px;padding:9px 14px;font-size:11px}
-.button.compact svg{width:15px;height:15px}
-.text-button{font-size:11px;color:var(--muted);display:inline-flex;align-items:center;gap:7px;min-height:36px}
-.text-button svg{width:14px}
-.star-button.saved{color:var(--accent)}
-.tags{display:flex;gap:6px;flex-wrap:wrap}
-.tag{font:9px var(--mono);padding:4px 7px;background:#111b16;color:#a6c3ab;border:1px solid #21352a;border-radius:3px}
-.tag.button-tag{cursor:pointer;min-height:32px}
-.segmented{padding:4px;border:1px solid var(--line);border-radius:5px;display:flex;gap:3px;background:var(--surface)}
-.segmented button{font-size:11px;padding:9px 13px;color:var(--muted);border-radius:3px;min-height:36px}
-.segmented button.active{color:var(--accent);background:#1d2b14}
-.stepper{display:flex;align-items:center;border:1px solid var(--line);border-radius:4px}
-.stepper span{font:12px var(--mono);width:40px;text-align:center}
-.stepper .icon-btn{width:36px;min-width:36px;height:38px}
-.toggle{width:40px;height:24px;background:#28352b;border-radius:16px;padding:3px}
-.toggle span{display:block;width:18px;height:18px;background:#869789;border-radius:50%}
-.toggle.on{background:var(--accent)}
-.toggle.on span{background:#213611;margin-left:16px}
-.field-label{display:block;font:9px var(--mono);color:var(--muted);margin-bottom:8px}
-.danger{color:#ffadb2;border-color:#583034}
-@media(max-width:560px){
- .segmented button{font-size:10px;padding:8px 11px}
-}
-.button,.stepper,.segmented{box-shadow:inset 0 1px 0 #ffffff08,0 4px 14px #0005}
-.button{border-radius:8px;background:linear-gradient(180deg,#ffffff04,#0000),var(--surface);border-color:var(--line)}
-.button.primary{background:linear-gradient(180deg,#ffffff24,#0000000a),var(--accent);border-color:var(--accent);color:var(--accent-ink);box-shadow:inset 0 1px 0 #fff5,inset 0 -2px 0 #0002,0 4px 18px rgba(var(--accent-rgb),var(--glow-alpha))}
-.button.primary:hover{background:linear-gradient(180deg,#ffffff30,#00000005),var(--accent)}
-.button.primary.is-pressed{box-shadow:inset 0 2px 4px #0003,0 1px 5px rgba(var(--accent-rgb),var(--glow-alpha))}
-.icon-btn{border:1px solid transparent;border-radius:8px}
-.icon-btn:hover,.icon-btn.is-pressed{border-color:var(--line);background:var(--raised);color:var(--accent)}
-.icon-btn[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent);border-color:var(--accent-border)}
-.star-button.saved{color:var(--accent);background:var(--accent-soft);border-color:var(--accent-border)}
-.star-button.saved svg{fill:rgba(var(--accent-rgb),.16)}
-.tag{border-color:rgba(var(--pink-rgb),.17);background:rgba(var(--pink-rgb),.055);color:var(--pink);border-radius:5px}
-.tag.button-tag{min-height:36px;padding:8px 10px}
-.text-button.accent{color:var(--accent)}
-.text-button{border-radius:6px;padding-inline:5px}
-.segmented{border-radius:8px;gap:4px}
-.segmented button{border-radius:5px;min-height:40px}
-.segmented button.active{background:var(--accent-soft);color:var(--accent);box-shadow:inset 0 1px 0 rgba(var(--accent-rgb),.1)}
-.stepper{border-radius:8px;background:var(--surface)}
-.stepper .icon-btn{height:42px;width:40px;min-width:40px;border-radius:6px}
-.toggle{width:48px;min-width:48px;height:30px;border:1px solid var(--line);padding:5px;margin-block:7px;background:#24302a;box-shadow:inset 0 2px 4px #0006;border-radius:20px;overflow:visible!important}
-.toggle::before{content:"";position:absolute;inset:-7px 0;pointer-events:auto}
-.toggle span{width:18px;height:18px;margin:0;background:#9aa89f;box-shadow:0 1px 3px #0008;transition:margin-left 150ms,background-color 150ms;pointer-events:none}
-.toggle.on{background:var(--accent);border-color:var(--accent);box-shadow:inset 0 1px 2px #0002}
-.toggle.on span{margin-left:18px;background:var(--accent-ink)}
-@media(hover:hover){
- .button:hover{box-shadow:inset 0 1px 0 #ffffff10,0 6px 20px #0007}
-}
-@media(max-width:560px){
- .stepper .icon-btn{width:36px;min-width:36px}
-}
-@media(max-width:360px){
- .stepper span{width:32px}
-}
-.no-motion .toggle span{transition:none}

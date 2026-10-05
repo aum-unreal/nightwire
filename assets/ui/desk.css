@@ -17,35 +17,43 @@
 html.is-short .desk-main{padding-top:env(safe-area-inset-top)}
 html.is-short .desk-masthead{display:flex}
 
+/* Stamp runs (shared with the shelf): every segment carries its own "·"; the run is pulled left
+   and clipped, so whichever segment starts a line hides its dot. */
+.stamp-run{display:flex;flex-wrap:wrap;align-items:baseline;min-width:0;margin-left:-1.5em}
+.stamp:has(>.stamp-run){display:block;min-width:0;overflow:hidden}
+.stamp-seg{display:inline-flex;min-width:0;max-width:100%;white-space:nowrap}
+.stamp-seg::before{content:"·"/"";flex:none;width:1.5em;text-align:center;color:var(--rule-2)}
+.stamp-file{display:block;min-width:0;overflow:hidden;white-space:nowrap}
+
 /* The spread: sheet | crease | contents page once the desk is 540px wide */
 .desk-spread{display:grid;grid-template-columns:minmax(0,1fr);row-gap:28px;align-items:start}
 .desk-crease{display:none}
 
 /* The sheet */
 .resume-sheet{display:flex;flex-direction:column;align-items:flex-start;min-width:0;padding:22px 22px 20px}
+/* The ribbon hangs from the top edge, 28px short of the fold */
 .resume-sheet>.ribbon{position:absolute;top:0;right:36px}
-.resume-stamp{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px .5em;max-width:100%;min-width:0;margin:0 0 18px;padding-right:56px;white-space:nowrap}
-.resume-stamp>span{flex:none}
-.resume-stamp>.resume-file-wrap{display:flex;align-items:baseline;gap:.5em;flex:1 1 14ch;min-width:min(100%,14ch)}
-.resume-file{flex:0 1 auto;min-width:0}
-.resume-stamp .stamp-dot{color:var(--rule-2)}
+.resume-stamp{align-self:stretch;margin:0 0 16px;padding-right:58px}
+.resume-stamp .stamp-seg--file{flex:1 1 14ch}
 .resume-sheet h2{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:4;overflow:hidden;max-width:100%;margin:0 0 12px;padding-right:8px;font:480 32px/1.08 var(--display);font-variation-settings:var(--fv-title);letter-spacing:-.01em;color:var(--text);text-wrap:balance;overflow-wrap:anywhere}
 .resume-lede{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;max-width:58ch;margin:0 0 22px;padding-right:12px;font:italic 400 16px/1.5 var(--reading-font,var(--display));color:var(--muted)}
-.resume-key{gap:10px;padding:0 16px 0 14px;color:var(--text);font-variant-numeric:tabular-nums}
+.resume-key{gap:10px;margin-top:2px;padding:0 18px 0 14px;color:var(--text);font-variant-numeric:tabular-nums}
+.resume-key .key-label{overflow:visible}
 /* Fore-edge: 50 stacked page edges below the fold; the read ones are lit. */
-.fore-edge{position:absolute;top:34px;right:0;bottom:10px;width:10px;background:linear-gradient(var(--lamp) 0 var(--p,0%),var(--rule) 0);-webkit-mask:repeating-linear-gradient(#000 0 1px,transparent 1px 2%);mask:repeating-linear-gradient(#000 0 1px,transparent 1px 2%);pointer-events:none}
+.fore-edge{position:absolute;top:30px;right:0;bottom:12px;width:10px;background:linear-gradient(var(--lamp) 0 var(--p,0%),var(--rule) 0);-webkit-mask:repeating-linear-gradient(#000 0 1px,transparent 1px 2%);mask:repeating-linear-gradient(#000 0 1px,transparent 1px 2%);pointer-events:none}
 
-/* Contents page */
+/* Contents page. Number and title share the first line; the leader and the datum sit on the last. */
 .desk-index{min-width:0;padding-top:2px}
-.desk-index>.group-label{margin:0 0 2px;padding-left:16px}
-.desk-section{align-items:last baseline;gap:10px;padding:12px 0 12px 16px;transition:transform var(--t-press) var(--ease),background-color var(--t-fast)}
-.desk-section .section-number{flex:none;align-self:first baseline;min-width:2ch;font:400 var(--fs-data)/1.4 var(--data);color:var(--subtle)}
-.desk-section .section-title{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;flex:0 1 auto;min-width:0;font:450 var(--fs-ui)/1.4 var(--ui);color:var(--text);overflow-wrap:anywhere}
-.desk-section .leader{align-self:last baseline;margin-bottom:4px}
-.desk-section .section-at{flex:none;font:400 var(--fs-data)/1.4 var(--data);color:var(--subtle);font-variant-numeric:tabular-nums}
-.desk-section[aria-current="location"]{transform:translateX(-6px)}
-.desk-section.row[aria-current="location"]:not([aria-current="false"])::before{left:4px;top:auto;bottom:calc(12px + .7em - 4px);margin-top:0}
-.desk-section[aria-current="location"] .section-at{color:var(--muted)}
+.desk-index>.group-label{margin:0 0 4px;padding-left:16px}
+.desk-section{align-items:flex-start;gap:8px;min-height:48px;padding:14px 0 14px 16px;transition:transform var(--t-press) var(--ease),background-color var(--t-fast)}
+.desk-section .section-number{flex:none;min-width:2ch;font:400 var(--fs-data)/20px var(--data);color:var(--subtle)}
+.desk-section .section-title{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;flex:0 1 auto;min-width:0;font:450 var(--fs-ui)/20px var(--ui);color:var(--text);overflow-wrap:anywhere}
+.desk-section .leader{flex:1 1 12px;min-width:12px;align-self:flex-end;margin:0 0 5px}
+.desk-section .section-at{flex:none;align-self:flex-end;min-width:3ch;font:400 var(--fs-data)/20px var(--data);color:var(--subtle);text-align:right}
+/* The row holding the reading position protrudes 6px with its pip lit, level with the number */
+.desk-section[aria-current="location"]{width:calc(100% + 6px);transform:translateX(-6px)}
+.desk-section.row[aria-current="location"]::before{left:3px;top:20px;margin-top:0}
+.desk-section[aria-current="location"] :is(.section-number,.section-at){color:var(--muted)}
 .desk-section[aria-current="location"]:is(:active,.is-pressed){transform:translate(-6px,1px)}
 @media (hover:hover) and (pointer:fine){.desk-section:hover{background:var(--ink-1)}}
 .desk-index-none{margin:10px 0 0 16px;font:italic 400 15px/1.5 var(--reading-font,var(--display));color:var(--muted)}
@@ -57,11 +65,18 @@ html.is-short .desk-masthead{display:flex}
  .desk-spread{grid-template-columns:minmax(0,3fr) 24px minmax(200px,2fr)}
  .desk-crease{display:block;align-self:stretch;min-height:100%;background:linear-gradient(90deg,transparent,#ffffff09 48%,#000c 50%,#ffffff09 52%,transparent)}
  .resume-sheet h2{font-size:28px}
- .desk-index{padding-top:22px}
+ /* The contents page sits flush; the current row's pip hangs into the crease. */
+ .desk-index{padding-top:20px}
+ .desk-index>.group-label{padding-left:0}
+ .desk-section{padding-left:0}
+ .desk-section.row[aria-current="location"]::before{left:-12px}
+ .desk-index-none{margin-left:0}
+ .desk-index-foot{margin-left:-4px}
 }
 @container desk (min-width:760px){
  .resume-sheet{padding:26px 28px 24px}
  .resume-sheet h2{font-size:36px}
+ .desk-section{gap:10px}
 }
 
 /* Also on the shelf: dock mode only; the tray lists these files in tray mode. */
@@ -70,12 +85,12 @@ html.is-short .desk-masthead{display:flex}
 html.is-short .desk-register{display:block}
 .desk-slips{margin:0;padding:0;list-style:none;counter-reset:slip;border-top:1px solid var(--rule)}
 .desk-slips>li{counter-increment:slip}
-.file-card.slip{display:grid;grid-template-columns:2.4em minmax(0,1fr) 64px;column-gap:12px;row-gap:4px;align-items:baseline;width:100%;min-height:var(--card-h);padding:13px 0;border-bottom:1px solid var(--rule);color:var(--text);text-align:left}
+.file-card.slip{display:grid;grid-template-columns:2.2em minmax(0,1fr) 64px;column-gap:12px;row-gap:4px;align-items:baseline;width:100%;min-height:var(--card-h);padding:13px 0;border-bottom:1px solid var(--rule);color:var(--text);text-align:left;transition:transform var(--t-press) var(--ease)}
 .file-card.slip::before{content:counter(slip,decimal-leading-zero);grid-row:1;font:400 var(--fs-data)/1.35 var(--data);color:var(--subtle)}
 .slip strong{grid-column:2;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;font:500 var(--fs-row)/1.35 var(--ui);overflow-wrap:anywhere}
-.slip .stamp{grid-column:2;grid-row:2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.slip .stamp{grid-column:2;grid-row:2;min-width:0}
 .slip .ruler{grid-column:3;grid-row:1/3;align-self:center}
-.file-card.slip:is(:active,.is-pressed){background:var(--ink-1)}
+.file-card.slip:is(:active,.is-pressed){transform:translateY(1px);background:var(--ink-1)}
 .desk-shelf{margin:6px 0 0 -4px;color:var(--muted)}
 
 /* The heading fingerprint, shared with the shelf cards */
@@ -90,29 +105,30 @@ svg.ruler{flex:none;display:block;width:64px;height:20px;overflow:visible}
 .desk-topics .tag-count{margin-left:.4em;font-size:var(--fs-data);color:var(--subtle)}
 .desk-topics .topic-sep{margin:0 .55em;color:var(--rule-2)}
 
-/* Empty Desk */
-.desk.is-empty{display:flex;flex-direction:column;min-height:calc(100dvh - 28px - 96px)}
-.desk-imprint{margin:0 0 28px;font:italic 400 72px/1 var(--display);font-variation-settings:var(--fv-mark);letter-spacing:-.01em;color:var(--text);opacity:.06;text-align:center;white-space:nowrap;user-select:none}
-.desk-empty{display:flex;flex-direction:column;align-items:center;gap:22px;margin:auto 0;text-align:center}
-.is-empty .desk-imprint{margin-top:auto}
-.is-empty .desk-imprint+.desk-empty{margin-top:0}
+/* Empty Desk: centred on wide, in the bottom third on phone. The slot is the only drop target. */
+.desk.is-empty{display:flex;flex-direction:column;min-height:calc(100dvh - 76px - env(safe-area-inset-top))}
+.desk-imprint{margin:auto 0 28px;font:italic 400 72px/1 var(--display);font-variation-settings:var(--fv-mark);letter-spacing:-.01em;color:var(--text);opacity:.06;text-align:center;white-space:nowrap;user-select:none}
+.desk-empty{display:flex;flex-direction:column;align-items:center;gap:22px;margin:0 0 auto;text-align:center}
 .desk-empty-line{margin:0;font:italic 400 20px/1.3 var(--display);font-variation-settings:var(--fv-sheet);color:var(--muted)}
-.desk-empty .slot--large{width:min(100%,340px);color:var(--text)}
+.desk-empty .slot--large{width:min(100%,400px);color:var(--text)}
 .slot-hint{display:none;color:var(--muted);font-weight:450}
 @media (hover:hover) and (pointer:fine){.slot-hint{display:inline}}
-.desk-empty-keys{display:flex;flex-wrap:wrap;justify-content:center;gap:16px 18px;width:min(100%,340px)}
-.desk-empty-keys .key--paper{position:relative;flex:1 1 140px;min-height:52px;justify-content:flex-start;padding:0 14px 0 30px;color:var(--text)}
-/* Paste: a ruled slip with a margin rule */
-.desk-paste{background-image:linear-gradient(90deg,transparent 18px,var(--rule-2) 18px 19px,transparent 19px),linear-gradient(var(--rule) 0 0),linear-gradient(var(--rule) 0 0);background-size:100% 100%,100% 1px,100% 1px;background-position:0 0,0 calc(50% - 11px),0 calc(50% + 12px);background-repeat:no-repeat}
+.desk-empty-keys{display:flex;flex-wrap:wrap;justify-content:center;gap:18px 16px;width:min(100%,400px);padding-top:8px;isolation:isolate}
+.desk-empty-keys .key--paper{position:relative;flex:1 1 172px;min-height:52px;justify-content:flex-start;padding:0 12px 0 30px;color:var(--text)}
+.desk-empty-keys .key-label{overflow:visible}
+/* Paste: a ruled slip with a red-line margin drawn in rule */
+.desk-paste{background-image:linear-gradient(90deg,transparent 18px,var(--rule-2) 18px 19px,transparent 19px),linear-gradient(var(--rule) 0 0),linear-gradient(var(--rule) 0 0);background-size:100% 100%,100% 1px,100% 1px;background-position:0 0,0 calc(50% - 12px),0 calc(50% + 13px);background-repeat:no-repeat}
 /* Samples: three page edges fanned behind the top sheet */
-.desk-sample::before,.desk-sample::after{content:"";position:absolute;inset:0;z-index:-1;border-radius:var(--r-paper);background:var(--ink-1);box-shadow:inset 0 1px 0 var(--rule-2),inset -1px 0 0 var(--rule);pointer-events:none}
+.desk-sample::before,.desk-sample::after{content:"";position:absolute;inset:0;z-index:-1;border-radius:var(--r-paper);background:var(--ink-1);box-shadow:inset 0 1px 0 var(--rule-2),inset -1px 0 0 var(--rule);pointer-events:none;transition:transform var(--t-press) var(--ease)}
 .desk-sample::before{transform:translate(4px,-4px)}
-.desk-sample::after{transform:translate(8px,-8px);background:#050505}
+.desk-sample::after{transform:translate(8px,-8px);background:var(--well)}
+.desk-sample:is(:active,.is-pressed)::before{transform:translate(4px,-6px)}
+.desk-sample:is(:active,.is-pressed)::after{transform:translate(8px,-10px)}
 @media (max-width:800px){
- .desk.is-empty{min-height:calc(100dvh - env(safe-area-inset-top) - var(--mobile-nav-height,86px) - 40px)}
+ .desk.is-empty{min-height:calc(100dvh - env(safe-area-inset-top) - var(--mobile-nav-height,86px) - 24px)}
  .desk-imprint{display:none}
- .desk-empty{margin:auto 0 8px}
+ .desk-empty{margin:auto 0 12px}
 }
-html.is-short .desk.is-empty{min-height:calc(100dvh - env(safe-area-inset-top) - var(--mobile-nav-height,86px) - 40px)}
+html.is-short .desk.is-empty{min-height:calc(100dvh - env(safe-area-inset-top) - var(--mobile-nav-height,86px) - 24px)}
 html.is-short .desk-imprint{display:none}
-html.is-short .desk-empty{margin:auto 0 8px}
+html.is-short .desk-empty{margin:auto 0 12px}

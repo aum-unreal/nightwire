@@ -5,9 +5,3 @@
 [data-terminal-alignment=fixed] .terminal-word{display:block;flex:none;font-size:var(--frame-font-size,1em);line-height:1;white-space:nowrap}
 .terminal-main[data-terminal-size][data-terminal-alignment=fixed] .terminal-stage .terminal-no-prose{align-self:center;font-size:18px}
 
-.word-alignment-setting{margin:18px 0 12px}
-.word-alignment-options{display:flex;gap:4px}
-.word-alignment-options button{display:flex;align-items:center;justify-content:center;gap:8px;flex:1;min-height:44px;font:11px var(--mono)}
-.word-alignment-options svg{width:16px;height:16px}
-.word-alignment-options button[aria-pressed=true]{background:var(--accent-soft);color:var(--accent);box-shadow:inset 0 -2px 0 var(--accent)}
-.word-alignment-setting .theme-note{margin-bottom:0}
