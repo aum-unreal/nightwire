@@ -1,73 +1,60 @@
-/* Shelf (E2): header, controls and the card list. */
+/* Shelf (E2, §6.3): index cards hung on a rod. Each card carries its heading fingerprint and a punch row for progress. */
 
-/* LEGACY — delete as you rebuild */
-.page-heading{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:30px;gap:16px}
-.page-heading h1{margin-bottom:10px;font-size:32px}
-.page-heading p{margin:0;color:var(--muted);font-size:13px}
-.page-heading .eyebrow{margin-bottom:13px}
-.file-list{display:flex;flex-direction:column;gap:10px}
-.file-card{width:100%;display:flex;align-items:center;gap:14px;border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:17px;text-align:left;color:var(--text);cursor:pointer}
-.file-card:hover{border-color:#536744;background:#0f1510}
-.file-emblem{height:40px;min-width:38px;border:1px solid #2c3728;border-radius:5px;display:grid;place-items:center;font:10px var(--mono);color:var(--accent);background:#131b0d}
-.file-card:nth-child(3n+2) .file-emblem{color:var(--cyan);border-color:#224145;background:#0d181a}
-.file-card:nth-child(3n+3) .file-emblem{color:var(--pink);border-color:#422c3e;background:#190f18}
-.file-details{min-width:0;flex:1}
-.file-details strong{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;margin-bottom:7px}
-.file-details .mono{font-size:9px;color:var(--muted);line-height:1.4}
-.file-details .tags{margin-top:9px}
-.file-card>.lucide{width:14px;color:var(--subtle)}
-.file-card .star-button{color:var(--subtle);margin-left:auto}
-.empty-card{border:1px dashed #2a332d;border-radius:6px;padding:27px 22px;text-align:center;color:var(--muted);font-size:12px;line-height:1.8}
-.empty-card svg{display:block;margin:0 auto 15px;color:var(--subtle);width:28px;height:28px}
-.empty-card strong{display:block;color:var(--text);font-weight:450;margin-bottom:4px}
-.library-tools{display:flex;gap:10px;align-items:center;margin-bottom:20px}
-.inline-search{border:1px solid var(--line);border-radius:5px;display:flex;align-items:center;gap:10px;padding:0 13px;flex:1;background:var(--surface)}
-.inline-search input{min-width:0;flex:1;background:none;border:none;color:var(--text);height:46px;outline:none;font-size:12px}
-.inline-search svg{color:var(--muted);width:17px}
-.library-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.library-grid .file-card{min-height:100px}
-.library-hint{color:var(--subtle);font:9px var(--mono);margin-top:22px;line-height:1.7}
-.drop-zone{border:1px dashed var(--line);border-radius:5px;padding:15px;color:var(--muted);font-size:12px;text-align:center;margin-top:22px}
-@media(max-width:800px){
- .page-heading{margin-bottom:24px}
- .page-heading h1{font-size:30px}
- .page-heading p{font-size:12px}
- .page-heading .eyebrow{font-size:9px}
- .library-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.shelf-main{padding-top:calc(28px + env(safe-area-inset-top))}
+@media (max-width:800px){.shelf-main{padding-top:calc(20px + env(safe-area-inset-top))}}
+html.is-short .shelf-main{padding-top:calc(20px + env(safe-area-inset-top))}
+.shelf{container:shelf/inline-size;max-width:980px}
+
+.shelf-head{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 14px;margin:0 0 18px}
+.shelf-head h1{margin:0;font:480 var(--fs-page)/1.1 var(--display);font-variation-settings:var(--fv-title);letter-spacing:-.01em;color:var(--text)}
+
+/* Controls: filter · sort slide · bookmarked rocker, one row that wraps */
+.shelf-controls{display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px;margin:0 0 26px}
+.shelf-filter{flex:1 1 220px}
+.shelf-sort{flex:1 1 210px;max-width:320px}
+.shelf-marked{display:flex;align-items:center;gap:8px;flex:none;margin-left:auto}
+.shelf-marked-label{font:450 var(--fs-sm)/1.2 var(--ui);color:var(--muted)}
+
+/* The list: one column, two once the shelf is 700px wide. A rod runs through each column's eyelets. */
+.shelf-list{--eye:15.5px;position:relative;display:grid;grid-template-columns:minmax(0,1fr);gap:10px;margin:0;padding:0;list-style:none}
+.shelf-list:has(.shelf-card)::before,.shelf-list:has(.shelf-card:nth-child(2))::after{content:"";position:absolute;top:-10px;bottom:-10px;left:var(--eye);width:1px;background:var(--rule);pointer-events:none}
+.shelf-list::after{display:none}
+
+.shelf-card{position:relative;z-index:1;width:calc(100% - 2px);transition:transform var(--t-press) var(--ease)}
+.shelf-card:nth-child(odd){translate:2px 0}
+/* The punched eyelet; the rod shows through it */
+.shelf-card::before{--rod:3px;content:"";position:absolute;left:calc(var(--eye) - 3.5px);top:14px;width:7px;height:7px;border-radius:50%;background:linear-gradient(90deg,transparent var(--rod),var(--rule) var(--rod) calc(var(--rod) + 1px),transparent calc(var(--rod) + 1px)),#000;box-shadow:inset 0 1px 1px #000,0 0 0 1px var(--rule-2);pointer-events:none}
+.shelf-card:nth-child(odd)::before{--rod:1px}
+.shelf-card:has(>.file-card:is(:active,.is-pressed)){transform:translateY(-3px)}
+
+.shelf-card>.file-card{display:grid;grid-template-columns:minmax(0,1fr);gap:6px;width:100%;min-height:104px;padding:13px 58px 14px 34px;border-radius:inherit;color:var(--text);text-align:left}
+.shelf-card>.file-card:is(:active,.is-pressed){transform:none}
+.shelf-card strong{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;font:500 var(--fs-row)/1.35 var(--ui);overflow-wrap:anywhere}
+.shelf-card .stamp{display:flex;flex-wrap:wrap;column-gap:.5em;min-width:0}
+.shelf-card .stamp>span{white-space:nowrap}
+.shelf-card .stamp-file{min-width:0;max-width:100%}
+.shelf-card-foot{display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px 16px;margin-top:6px}
+.shelf-card>.ribbon{position:absolute;top:0;right:12px}
+
+/* Punch row: 20 holes; the read ones are punched with a lit rim */
+.punch{position:relative;flex:none;width:140px;height:8px;margin-bottom:1px;background:radial-gradient(circle,var(--rule) 1.3px,transparent 1.7px) 0 50%/7px 8px repeat-x}
+.punch b{display:block;width:calc(var(--n,0)*7px);height:100%;background:radial-gradient(circle,#000 1.5px,var(--lamp) 1.8px 2.5px,transparent 2.8px) 0 50%/7px 8px repeat-x,var(--ink-2)}
+.shelf-tag{font:400 12.5px/1.3 var(--data);color:var(--muted);text-decoration:underline 1px dotted;text-underline-offset:3px}
+
+@container shelf (min-width:700px){
+ .shelf-list{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:20px}
+ .shelf-list::after{display:block;left:calc(50% + 10px + var(--eye))}
+ .shelf-card:nth-child(odd){translate:none}
+ .shelf-card:nth-child(odd)::before{--rod:3px}
+ .shelf-card:is(:nth-child(4n+1),:nth-child(4n+4)){translate:2px 0}
+ .shelf-card:is(:nth-child(4n+1),:nth-child(4n+4))::before{--rod:1px}
 }
-@media(max-width:560px){
- .library-grid{grid-template-columns:minmax(0,1fr)}
- .library-grid .file-card{min-height:84px}
- .file-card{padding:16px}
- .file-details strong{font-size:13px}
- .library-tools select{max-width:115px;font-size:10px;padding:0 6px}
- .library-tools{gap:7px}
- .inline-search input{font-size:11px}
- .page-heading>.button{font-size:10px;padding:10px 12px;min-height:40px}
- .page-heading>.button svg{width:14px}
-}
-.file-card.is-pressed{transform:translateY(2px) scale(.99);border-color:var(--accent);box-shadow:inset 0 2px 7px #0009}
-.file-card{box-shadow:inset 0 1px 0 #ffffff08,0 4px 14px #0005}
-.file-card{border-radius:10px;border-color:var(--line);background:linear-gradient(180deg,#ffffff03,transparent 45%),var(--surface);padding-block:18px}
-.file-card:hover{border-color:var(--accent-border);background:var(--raised)}
-.file-card .file-emblem{border-radius:8px;color:var(--accent);background:rgba(var(--accent-rgb),.075);border-color:rgba(var(--accent-rgb),.22);box-shadow:inset 0 1px 0 #ffffff0b;font-weight:500}
-.file-card:nth-child(3n+2) .file-emblem{color:var(--cyan);background:rgba(var(--cyan-rgb),.075);border-color:rgba(var(--cyan-rgb),.22)}
-.file-card:nth-child(3n+3) .file-emblem{color:var(--pink);background:rgba(var(--pink-rgb),.075);border-color:rgba(var(--pink-rgb),.22)}
-.file-card .star-button{width:42px;min-width:42px;height:42px}
-.empty-card{border-color:var(--accent-border);background:linear-gradient(135deg,rgba(var(--accent-rgb),.022),transparent);border-radius:10px}
-.inline-search{border-radius:8px;box-shadow:inset 0 2px 7px #0009}
-.inline-search:focus-within{border-color:var(--accent-border);box-shadow:0 0 0 2px rgba(var(--accent-rgb),.07)}
-.inline-search:focus-within svg{color:var(--accent)}
-@media(hover:hover){
- .file-card:hover{box-shadow:inset 0 1px 0 #ffffff10,0 6px 20px #0007}
- .file-card:hover{transform:translateY(-1px)}
-}
-@media(max-width:560px){
- .file-card{gap:12px}
- .file-card .star-button{width:40px;min-width:40px;height:42px}
- .file-card>.lucide{display:none}
-}
-.file-list,.file-card{min-width:0;max-width:100%}
-.file-details .mono{overflow-wrap:anywhere}
-.file-emblem,.file-card .star-button{flex-shrink:0}
-.inline-search{min-width:0}
+
+/* Empty states */
+.shelf-empty{grid-column:1/-1;padding:36px 0 12px 34px}
+.shelf-empty-line{margin:0 0 6px;font:italic 400 17px/1.5 var(--reading-font,var(--display));color:var(--muted)}
+.shelf-empty-note{margin:0;font:400 var(--fs-sm)/1.5 var(--ui);color:var(--muted)}
+
+/* Shared error slip: the reader and Read error states (E3/E7 markup) still use .empty-card. */
+.empty-card{max-width:520px;margin:40px auto;padding:22px;border-radius:var(--r-paper);background:var(--ink-2);box-shadow:var(--paper-lit);color:var(--muted);font:400 var(--fs-sm)/1.6 var(--ui)}
+.empty-card strong{display:block;margin-bottom:6px;font:500 var(--fs-row)/1.35 var(--ui);color:var(--text)}

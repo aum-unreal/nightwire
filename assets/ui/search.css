@@ -1,28 +1,64 @@
-/* Search (E4): the search sheet and its results. */
+/* Search (E4): the search sheet and its ledger of results.
+   Phone and landscape phone (dock mode): a full-height sheet. The field is pinned at the bottom under the thumb,
+   results stack up from it like slips, so a short list sits at the bottom. DOM order is field, meta, results
+   (logical for keyboards and screen readers); column-reverse draws it bottom-up.
+   Wide (tray mode): a 560px paper column hung beside the tray's Search key, field on top. */
 
-/* LEGACY — delete as you rebuild */
-.search-dialog{max-width:660px;margin:10dvh auto auto}
-.search-field{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line)}
-.search-field>svg{color:var(--accent)}
-.search-field input{background:none;border:0;outline:none;font-size:15px;color:var(--text);width:100%;min-width:0;height:42px}
-.search-meta{font-size:8px;color:var(--subtle);padding:15px 21px;letter-spacing:.1em}
-.search-results{max-height:55dvh;overflow:auto;min-height:160px}
-.search-result{display:block;width:100%;text-align:left;padding:16px 21px;border-top:1px solid var(--line)}
-.search-result:hover{background:#172113}
-.search-result strong{display:block;margin-bottom:7px;font-size:14px;font-weight:500;color:var(--text)}
-.search-result small{color:var(--accent);font:9px var(--mono)}
-.search-result p{font-size:12px;color:var(--muted);margin:10px 0 0}
-.search-empty{text-align:center;padding:37px 23px;color:var(--muted);font-size:13px;line-height:1.7}
-.dialog-footer{border-top:1px solid var(--line);padding:12px 20px;font-size:8px;display:flex;align-items:center;justify-content:space-between;color:var(--subtle)}
-@media(max-width:800px){
- .search-dialog{margin-top:7dvh}
+#search-dialog.sheet{inset:0;width:100%;max-width:none;height:100dvh;max-height:100dvh;padding:env(safe-area-inset-top) 0 0;background:var(--ink-1)}
+#search-dialog.sheet[open]{display:flex;flex-direction:column-reverse;animation-name:sheet-up}
+#search-dialog.sheet.search--top{flex-direction:column}
+#search-dialog.sheet::before{inset:env(safe-area-inset-top) 0 auto;width:auto;height:1px;background:var(--paper-edge)}
+#search-dialog.sheet::backdrop{background:rgb(0 0 0/.72)}
+
+/* Field: a recessed well with one baseline that lights while you type */
+.search-field{position:relative;flex:none;display:grid;grid-template-columns:44px minmax(0,1fr) var(--hit);align-items:center;min-height:56px;padding:0 4px calc(env(safe-area-inset-bottom)) 4px;background:var(--well);box-shadow:inset 0 3px 4px #000,inset 0 1px 0 #000;border-top:1px solid var(--rule)}
+.search-field>.glyph{justify-self:center;color:var(--muted);transition:color var(--t-fast)}
+.search-field:focus-within>.glyph{color:var(--text)}
+#search-input{width:100%;min-width:0;height:var(--hit);margin:0;padding:0 8px 0 2px;border:0;border-radius:0;background:none;color:var(--text);font:400 var(--fs-row)/1.3 var(--ui);caret-color:var(--text);outline:none;-webkit-appearance:none;appearance:none}
+#search-input::placeholder{color:var(--subtle)}
+.search-field::after{content:"";position:absolute;left:44px;right:52px;bottom:calc(6px + env(safe-area-inset-bottom));height:1px;background:var(--rule-2);transform-origin:left;transition:background-color var(--t-fast)}
+.search-field:focus-within::after{background:var(--lamp)}
+.search-close{color:var(--muted)}
+
+/* Meta: one quiet line of data */
+.search-meta{flex:none;margin:0;padding:12px var(--gutter) 8px calc(var(--gutter) + 45px);font:400 var(--fs-data)/1.35 var(--data);color:var(--muted)}
+.search-sheet:has(.no-ledger) .search-meta{padding-left:var(--gutter)}
+.search-meta:empty{display:none}
+
+/* Results: a ledger. Line numbers sit in a ruled column on the left. */
+.search-results{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;padding:12px var(--gutter) 0;scroll-padding:8px}
+.search-results>:first-child{margin-top:auto}
+.search-result.row{display:grid;grid-template-columns:32px minmax(0,1fr);column-gap:13px;align-items:start;flex:none;min-height:56px;padding:12px 0 13px;border-bottom:1px solid var(--rule);background:linear-gradient(90deg,transparent 38px,var(--rule) 38px 39px,transparent 39px) no-repeat}
+.search-result.row:first-child{border-top:1px solid var(--rule-2)}
+.no-ledger>.search-result.row{grid-template-columns:minmax(0,1fr);background:none}
+.no-ledger .search-result .row-num{display:none}
+.search-result .row-num{min-width:0;text-align:right;font:400 11px/20px var(--data);color:var(--subtle);font-variant-numeric:tabular-nums}
+.search-result .row-main{min-width:0}
+.search-result strong{display:block;font:550 var(--fs-row)/20px var(--ui);color:var(--text);overflow-wrap:anywhere}
+.result-path{display:block;margin-top:2px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font:400 12.5px/1.4 var(--ui);color:var(--muted)}
+.result-snippet{display:-webkit-box;margin-top:6px;overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:2;font:400 15px/1.45 var(--reading-font,var(--display));color:var(--muted);overflow-wrap:anywhere}
+.result-snippet mark{background:linear-gradient(transparent 55%,rgba(var(--accent-rgb),.45) 55% 92%,transparent 92%);color:var(--text)}
+.result-file{margin-top:6px;font:400 11px/1.3 var(--data);color:var(--subtle)}
+.search-result.row:is(:active,.is-pressed){background-color:var(--ink-3)}
+.search-result.row:focus-visible{outline-offset:-2px}
+@media (hover:hover) and (pointer:fine){.search-result.row:hover strong{text-decoration:underline 1px var(--rule-2);text-underline-offset:3px}}
+
+/* Notes in place of results */
+.search-empty{flex:none;margin:0;padding:24px 0 28px;font:italic 400 17px/1.45 var(--reading-font,var(--display));color:var(--muted);text-wrap:pretty}
+
+/* Wide: a paper column under the tray's Search key (rail width in Reader and Read). Never centred, never blurred. */
+@media (min-width:801px){
+ html:not(.is-short) #search-dialog.sheet{--search-left:var(--tray-w);inset:24px auto auto calc(var(--search-left) + 24px);width:min(560px,calc(100vw - var(--search-left) - 48px));height:auto;max-height:80dvh;padding:0;border-radius:var(--r-paper);background:var(--ink-2);box-shadow:var(--paper-lit);overflow:hidden}
+ html:not(.is-short) body:is([data-view="reader"],[data-view="terminal"]) #search-dialog.sheet{--search-left:var(--rail-w)}
+ html:not(.is-short) #search-dialog.sheet[open]{flex-direction:column;animation-name:search-drop}
+ html:not(.is-short) #search-dialog.sheet::before{display:none}
+ html:not(.is-short) .search-field{padding:0 4px;border-top:0;border-radius:var(--r-paper) var(--r-paper) 0 0;box-shadow:inset 0 3px 4px #000,inset 0 -1px 0 #ffffff0a}
+ html:not(.is-short) .search-field::after{bottom:6px}
+ html:not(.is-short) .search-meta{padding:14px 24px 6px calc(24px + 45px)}
+ html:not(.is-short) .search-sheet:has(.no-ledger) .search-meta{padding-left:24px}
+ html:not(.is-short) .search-results{flex:0 1 auto;padding:6px 24px 12px}
+ html:not(.is-short) .search-results>:first-child{margin-top:0}
+ html:not(.is-short) .search-result.row:first-child{border-top:0}
+ html:not(.is-short) .search-result.row:last-child{border-bottom:0}
 }
-@media(max-width:560px){
- .search-field{padding:9px 13px;gap:7px}
- .search-field input{font-size:12px}
- .search-meta{font-size:7px;padding:13px 17px}
- .search-result{padding:15px 17px}
-}
-.search-result{transition:background-color 150ms}
-.search-result:hover,.search-result.is-pressed{background:var(--accent-soft)}
-.search-field{background:linear-gradient(180deg,rgba(var(--accent-rgb),.035),transparent)}
+@keyframes search-drop{from{opacity:0;transform:translateY(-8px)}}
