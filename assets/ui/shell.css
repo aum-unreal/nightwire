@@ -132,7 +132,8 @@ body[data-view="terminal"] .nav-switchboard{grid-template-columns:minmax(0,1fr)}
  .mobile-nav{display:block}
  .main-column{margin-left:0}
  main{padding-top:calc(16px + env(safe-area-inset-top))}
- :where(body:not([data-view="terminal"])) main{padding-bottom:calc(var(--mobile-nav-height) + 24px)}
+ /* Keeps the full dock height while folded to the spine: a shorter page would clamp scrollY at the bottom, read as a scroll up, unfold the dock and loop. */
+ :where(body:not([data-view="terminal"])) main{padding-bottom:calc(86px + env(safe-area-inset-bottom) + 24px)}
 }
 html.is-short{--mobile-nav-height:calc(86px + env(safe-area-inset-bottom))}
 html.is-short body.dock-collapsed{--mobile-nav-height:calc(52px + env(safe-area-inset-bottom))}
@@ -140,7 +141,7 @@ html.is-short .sidebar{display:none}
 html.is-short .mobile-nav{display:block}
 html.is-short .main-column{margin-left:0}
 html.is-short main{padding-top:calc(16px + env(safe-area-inset-top))}
-html.is-short :where(body:not([data-view="terminal"])) main{padding-bottom:calc(var(--mobile-nav-height) + 24px)}
+html.is-short :where(body:not([data-view="terminal"])) main{padding-bottom:calc(86px + env(safe-area-inset-bottom) + 24px)}
 @media (max-width:359px){
  #dock-section{display:none}
  .mobile-nav .nav-key:not(.active) .nav-key-name{display:none}

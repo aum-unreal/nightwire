@@ -46,11 +46,6 @@ function outlineMarkup(data){
  return items.map(([level,n,label],i)=>`<li role="treeitem" aria-level="${level}" tabindex="${i?-1:0}" data-action="graph-node" data-node="${esc(n.id)}">${esc(label)}</li>`).join('');
 }
 
-/* Kept for callers that only need a symmetric margin. */
-export function graphFitPadding(){
- const el=document.querySelector('#graph-canvas');
- return el?Math.max(16,Math.min(48,Math.min(el.clientWidth,el.clientHeight)*.12)):48;
-}
 /* The free plate: the canvas minus the stencil band (28px) and the open tag. */
 function freeRect(graph){
  const canvas=document.querySelector('#graph-canvas'),w=graph.width(),h=graph.height(),pad=Math.max(14,Math.min(36,Math.min(w,h)*.08));

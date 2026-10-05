@@ -16,7 +16,6 @@ function stored(key,fallback){try{return JSON.parse(localStorage.getItem(key))??
 const state={view:'home',docs:[],active:null,doc:null,source:false,focus:false,settings:{...defaults,...stored('settings',{})},docState:stored('doc-state',{}),last:stored('last-document',null),starredOnly:false,sort:stored('sort','recent'),filter:'',graphScope:'document',graphFilters:{headings:true,tags:true,links:true},graphSelected:null};
 let deskAnimation, database, graph, graphResize, graphNeedsFit=true, route=0, toastTimer, findTimer, searchTimer, findMarks=[],findAt=-1,indexReady=false,indexGeneration=0;
 const bodyCache=new Map(), analysisCache=new Map(), content=$('#content'), searchWorker=new Worker('search-worker.js');
-const dates=new Intl.DateTimeFormat(undefined,{month:'short',day:'numeric'});
 const icon=name=>`<i data-lucide="${name}"></i>`;
 // E0 helpers. glyph(): a sprite symbol from index.html. progressOf(): stored reading progress 0..1, or null. sectionAt(): the section (h2s, else h3s) holding progress p, n=0 before the first. sameName(): a title that only repeats its filename.
 const glyph=name=>`<svg class="glyph" aria-hidden="true"><use href="#g-${name}"/></svg>`;
@@ -30,7 +29,6 @@ function syncSlides(root=document){root.querySelectorAll('.slide').forEach(s=>{c
 new MutationObserver(records=>{const slides=new Set(records.map(r=>r.target.closest?.('.slide')).filter(Boolean));for(const s of slides)syncSlides(s.parentElement||document);}).observe(document.documentElement,{subtree:true,attributes:true,attributeFilter:['aria-pressed']});
 let middleTick=false;window.addEventListener('resize',()=>{if(middleTick)return;middleTick=true;requestAnimationFrame(()=>{middleTick=false;middleEllipsis();});},{passive:true});
 function focusSheetTitle(){const sheet=[...document.querySelectorAll('dialog.sheet[open]')].pop()||$('#panel-dialog');sheet?.querySelector('.sheet-title')?.focus({preventScroll:true});}
-const byteSize=n=>n<1024?`${n} B`:n<1024*1024?`${(n/1024).toFixed(1)} KB`:`${(n/1024/1024).toFixed(1)} MB`;
 const color={document:'',heading:'',tag:'',link:''}; // Map inks; applySettings() fills them from the palette before anything paints.
 const palettes={
  neon:{name:'Signal lime',accent:'#c8fa72',secondary:'#75dfeb',tertiary:'#e994d3'},
