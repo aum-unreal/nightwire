@@ -10,6 +10,7 @@
 /* Controls stay in reach while the case scrolls. */
 .font-rack-controls{position:sticky;top:-4px;z-index:2;display:grid;gap:10px;margin:0 calc(-1*var(--gutter));padding:14px var(--gutter) 12px;background:var(--ink-1)}
 @media (min-width:801px){.font-rack-controls{margin:0 -24px 0 -23px;padding-inline:23px 24px}}
+@media (max-height:480px){.font-rack-controls{position:static}} /* landscape phones: give the rows the whole view */
 .font-rack-filters{display:flex;gap:4px}
 .drawer-pull{flex:1 1 auto;display:grid;justify-items:center;align-content:center;gap:6px;min-width:var(--hit);min-height:var(--hit);padding:6px 4px 7px;border-radius:var(--r-key);background:var(--key-face);box-shadow:var(--key-rest);color:var(--muted);font:550 var(--fs-sm)/1 var(--ui);transition:transform var(--t-press) var(--ease),color var(--t-fast)}
 .drawer-pull-cup{width:20px;height:6px;border:1px solid var(--rule-2);border-top:0;border-radius:0 0 6px 6px;box-shadow:inset 0 -2px 0 #000}
@@ -34,4 +35,26 @@
 .font-option[aria-pressed="true"] :is(.font-option-pair,.font-option-name){color:var(--text)}
 .font-option[hidden]{display:none}
 @media (hover:hover) and (pointer:fine){.font-option:hover .font-option-pair{color:var(--text)}}
+.font-rack-grid[hidden]{display:none}
+
+/* Whole compartments (§1 principle 5). typefaces() seats the case (.is-cased) when at least two rows fit under the controls:
+   the proof and controls stay put, the case scrolls on its own and snaps row by row, and JS sizes --case-row so the
+   visible height is a whole number of rows; the case ends on a hairline at the footer, never mid-glyph. --case-min is the
+   tallest compartment (two-line name); stretched compartments split the spare height above and below, pairs still in line. A lip (a fade inside the last
+   row's bottom padding) shows while rows remain below.
+   Too short for two rows (small or landscape phones): the sheet body scrolls everything and snaps whole rows under the
+   sticky controls (rows sized to that view); the first rest, with the proof showing, ends in a 24px lip at the footer. */
+.font-rack-grid{--case-min:124px;grid-auto-rows:var(--case-row,auto)}
+.font-option,.rack-proof{scroll-snap-align:start}
+.rack-proof{scroll-margin-top:6px} /* its snap point is the very top of the sheet body */
+#panel-content:has(>.font-rack:not(.is-cased)){scroll-snap-type:y mandatory;scroll-padding-top:calc(var(--rack-controls-h,0px) - 4px)}
+#panel-content:has(>.font-rack.has-more:not(.is-cased)){-webkit-mask:linear-gradient(#000 calc(100% - 24px),#0002);mask:linear-gradient(#000 calc(100% - 24px),#0002)}
+#panel-content:has(>.font-rack.is-cased){display:flex;flex-direction:column;overflow:hidden;padding-bottom:0}
+.font-rack.is-cased{flex:1 1 0;min-height:0;grid-template-rows:auto auto minmax(0,1fr) auto}
+.font-rack.is-cased .font-rack-grid{align-self:start;max-height:var(--case-h,100%);overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;scroll-snap-type:y mandatory;scrollbar-width:none}
+.font-rack.is-cased .font-rack-grid::-webkit-scrollbar{display:none}
+.font-rack-grid .font-option{padding-top:calc(32px + max(0px,var(--case-row,var(--case-min)) - var(--case-min))/2)}
+.font-rack.is-cased .font-option{min-height:0}
+.font-rack-grid.has-more{-webkit-mask:linear-gradient(#000 calc(100% - 12px),#0007);mask:linear-gradient(#000 calc(100% - 12px),#0007)}
+@media (min-width:801px){#panel-content:has(>.font-rack.is-cased){padding-bottom:calc(16px + env(safe-area-inset-bottom))}}
 #font-rack-empty{margin:0;padding:22px 2px;font:italic 400 17px/1.4 var(--reading-font);color:var(--muted)}

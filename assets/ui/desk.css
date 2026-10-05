@@ -42,36 +42,40 @@ html.is-short .desk-masthead{display:flex}
 /* Fore-edge: 50 stacked page edges below the fold; the read ones are lit. */
 .fore-edge{position:absolute;top:30px;right:0;bottom:12px;width:10px;background:linear-gradient(var(--lamp) 0 var(--p,0%),var(--rule) 0);-webkit-mask:repeating-linear-gradient(#000 0 1px,transparent 1px 2%);mask:repeating-linear-gradient(#000 0 1px,transparent 1px 2%);pointer-events:none}
 
-/* Contents page. Number and title share the first line; the leader and the datum sit on the last. */
+/* Contents page: a ledger on the gutter edge. Number and title share the first line; the datum sits on
+   the last, and the leader runs from the end of the title's last line to it (the title's words are
+   backed in the row colour, so the dots show only after them). */
 .desk-index{min-width:0;padding-top:2px}
-.desk-index>.group-label{margin:0 0 4px;padding-left:16px}
-.desk-section{align-items:flex-start;gap:8px;min-height:48px;padding:14px 0 14px 16px;transition:transform var(--t-press) var(--ease),background-color var(--t-fast)}
+.desk-index>.group-label{margin:0 0 4px}
+.desk-section{--desk-row-bg:var(--bg,#000);align-items:flex-start;gap:8px;min-height:48px;padding:14px 0;transition:transform var(--t-press) var(--ease),background-color var(--t-fast)}
 .desk-section .section-number{flex:none;min-width:2ch;font:400 var(--fs-data)/20px var(--data);color:var(--subtle)}
-.desk-section .section-title{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;flex:0 1 auto;min-width:0;font:450 var(--fs-ui)/20px var(--ui);color:var(--text);overflow-wrap:anywhere}
-.desk-section .leader{flex:1 1 12px;min-width:12px;align-self:flex-end;margin:0 0 5px}
+.desk-section .section-title{position:relative;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;flex:1 1 auto;min-width:0;font:450 var(--fs-ui)/20px var(--ui);color:var(--text);overflow-wrap:anywhere}
+.desk-section .section-text{position:relative;z-index:1;padding-right:8px;background:var(--desk-row-bg)}
+.desk-section .leader{position:absolute;left:0;right:0;bottom:5px;min-width:0;margin:0}
 .desk-section .section-at{flex:none;align-self:flex-end;min-width:3ch;font:400 var(--fs-data)/20px var(--data);color:var(--subtle);text-align:right}
-/* The row holding the reading position protrudes 6px with its pip lit, level with the number */
-.desk-section[aria-current="location"]{width:calc(100% + 6px);transform:translateX(-6px)}
+.desk-section:is(:active,.is-pressed){--desk-row-bg:var(--ink-1);transform:translateY(1px)}
+/* The row holding the reading position is pulled out of the ledger with its pip lit, level with the
+   number. Stacked, it pulls 14px into the gutter so the numerals keep one edge; the spread uses 6px. */
+.desk-section[aria-current="location"]{--desk-row-bg:var(--ink-1);width:calc(100% + 14px);margin-left:-14px;padding-left:14px}
 .desk-section.row[aria-current="location"]::before{left:3px;top:20px;margin-top:0}
 .desk-section[aria-current="location"] :is(.section-number,.section-at){color:var(--muted)}
-.desk-section[aria-current="location"]:is(:active,.is-pressed){transform:translate(-6px,1px)}
-@media (hover:hover) and (pointer:fine){.desk-section:hover{background:var(--ink-1)}}
-.desk-index-none{margin:10px 0 0 16px;font:italic 400 15px/1.5 var(--reading-font,var(--display));color:var(--muted)}
-.desk-index-foot{display:flex;flex-wrap:wrap;gap:0 22px;margin:6px 0 0 12px}
+@media (hover:hover) and (pointer:fine){.desk-section:hover{--desk-row-bg:var(--ink-1);background:var(--ink-1)}}
+.desk-index-none{margin:10px 0 0;font:italic 400 15px/1.5 var(--reading-font,var(--display));color:var(--muted)}
+.desk-index-foot{display:flex;flex-wrap:wrap;gap:0 22px;margin:6px 0 0 -4px}
 .desk-index-foot .key--text{color:var(--muted)}
 @media (hover:hover) and (pointer:fine){.desk-index-foot .key--text:hover{color:var(--text)}}
+/* In-desk text keys: the words carry the underline once; the arrow rides after it, undecorated. */
+.desk-arrow{display:inline-block;margin-left:.45em}
 
 @container desk (min-width:540px){
  .desk-spread{grid-template-columns:minmax(0,3fr) 24px minmax(200px,2fr)}
  .desk-crease{display:block;align-self:stretch;min-height:100%;background:linear-gradient(90deg,transparent,#ffffff09 48%,#000c 50%,#ffffff09 52%,transparent)}
  .resume-sheet h2{font-size:28px}
- /* The contents page sits flush; the current row's pip hangs into the crease. */
+ /* The contents page sits flush; the current row protrudes 6px and its pip hangs into the crease. */
  .desk-index{padding-top:20px}
- .desk-index>.group-label{padding-left:0}
- .desk-section{padding-left:0}
+ .desk-section[aria-current="location"]{width:calc(100% + 6px);margin-left:0;padding-left:0;transform:translateX(-6px)}
+ .desk-section[aria-current="location"]:is(:active,.is-pressed){transform:translate(-6px,1px)}
  .desk-section.row[aria-current="location"]::before{left:-12px}
- .desk-index-none{margin-left:0}
- .desk-index-foot{margin-left:-4px}
 }
 @container desk (min-width:760px){
  .resume-sheet{padding:26px 28px 24px}
@@ -105,7 +109,11 @@ svg.ruler{flex:none;display:block;width:64px;height:20px;overflow:visible}
 .desk-topics .tag-count{margin-left:.4em;font-size:var(--fs-data);color:var(--subtle)}
 .desk-topics .topic-sep{margin:0 .55em;color:var(--rule-2)}
 
-/* Empty Desk: centred on wide, in the bottom third on phone. The slot is the only drop target. */
+/* Empty Desk: centred on wide, in the bottom third on phone. The large slot is the layout's only Open
+   and the only drop target, so the shell's dock tab and tray slot step aside while it is shown
+   (keyed off the empty desk itself, so they return the moment any other view or a file replaces it). */
+body:has(#content>.desk.is-empty) :is(.mobile-nav .nav-load,.tray .slot--tray){display:none}
+body:has(#content>.desk.is-empty) .mobile-nav .nav-switchboard{grid-template-columns:minmax(0,1fr)}
 .desk.is-empty{display:flex;flex-direction:column;min-height:calc(100dvh - 76px - env(safe-area-inset-top))}
 .desk-imprint{margin:auto 0 28px;font:italic 400 72px/1 var(--display);font-variation-settings:var(--fv-mark);letter-spacing:-.01em;color:var(--text);opacity:.06;text-align:center;white-space:nowrap;user-select:none}
 .desk-empty{display:flex;flex-direction:column;align-items:center;gap:22px;margin:0 0 auto;text-align:center}
@@ -118,12 +126,12 @@ svg.ruler{flex:none;display:block;width:64px;height:20px;overflow:visible}
 .desk-empty-keys .key-label{overflow:visible}
 /* Paste: a ruled slip with a red-line margin drawn in rule */
 .desk-paste{background-image:linear-gradient(90deg,transparent 18px,var(--rule-2) 18px 19px,transparent 19px),linear-gradient(var(--rule) 0 0),linear-gradient(var(--rule) 0 0);background-size:100% 100%,100% 1px,100% 1px;background-position:0 0,0 calc(50% - 12px),0 calc(50% + 13px);background-repeat:no-repeat}
-/* Samples: three page edges fanned behind the top sheet */
-.desk-sample::before,.desk-sample::after{content:"";position:absolute;inset:0;z-index:-1;border-radius:var(--r-paper);background:var(--ink-1);box-shadow:inset 0 1px 0 var(--rule-2),inset -1px 0 0 var(--rule);pointer-events:none;transition:transform var(--t-press) var(--ease)}
-.desk-sample::before{transform:translate(4px,-4px)}
-.desk-sample::after{transform:translate(8px,-8px);background:var(--well)}
-.desk-sample:is(:active,.is-pressed)::before{transform:translate(4px,-6px)}
-.desk-sample:is(:active,.is-pressed)::after{transform:translate(8px,-10px)}
+/* Samples: two more pages fanned up and right behind the top sheet, nearer page on top. Each page is
+   a fill shadow plus a 1px-larger edge shadow (its top and right edges). Shadows ride the key's own
+   paint order, so a pressed key never lifts them above its face. The key gives up 8px on the right
+   so the outermost edge lands on the column edge, inside the gutter. */
+.desk-empty-keys .desk-sample{--fan:3px -3px 0 var(--ink-1),4px -4px 0 var(--rule-2),7px -7px 0 var(--well),8px -8px 0 var(--rule);margin-right:8px;box-shadow:var(--paper-lit),var(--fan)}
+.desk-empty-keys .desk-sample:is(:active,.is-pressed){box-shadow:inset 0 1px 0 var(--rule),inset 0 -1px 0 #000,var(--fan)}
 @media (max-width:800px){
  .desk.is-empty{min-height:calc(100dvh - env(safe-area-inset-top) - var(--mobile-nav-height,86px) - 24px)}
  .desk-imprint{display:none}

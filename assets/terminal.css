@@ -15,8 +15,16 @@
 .terminal-main :where(button:active:not(:disabled)){transform:translateY(1px)}
 .terminal-main :where(button:disabled){opacity:.45;cursor:default}
 @media (hover:hover) and (pointer:fine){.terminal-main .icon-btn:not(:disabled):hover{color:var(--text)}}
-/* Small hardware keys keep their drawn size but get a full 44px touch area. */
-.terminal-main :is(.terminal-header-tools>button,.speed-step,.terminal-presets button,.terminal-group button,.terminal-transport>.icon-btn)::before{content:"";position:absolute;inset-block:min(0px,calc((100% - 44px)/2));inset-inline:min(0px,calc((100% - 44px)/2))}
+/* Small hardware keys keep their drawn size but get a full 44px touch area. Each instrument spaces its keys
+   44px centre to centre, so neighbouring cells never overlap. The file tab uses ::after (Classic draws on ::before). */
+.terminal-main :is(.terminal-header-tools>button,.speed-step,.terminal-presets button,.terminal-group button,.terminal-transport>.icon-btn,.terminal-transport>.terminal-play)::before{content:"";position:absolute;inset-block:min(-1px,calc((100% - 46px)/2));inset-inline:min(0px,calc((100% - 44px)/2))}
+.terminal-main .terminal-header-tools>button{z-index:1}
+.terminal-main .terminal-file{position:relative}
+.terminal-main .terminal-file::after{content:"";position:absolute;inset-inline:0;inset-block:min(-1px,calc((100% - 46px)/2))}
+/* Ranges: the box is a 44px grab strip around the drawn track. The seek gives the strip back to the monitor with
+   negative margins; the rate trim centres its strip on the ruler, which each instrument spaces from its presets. */
+.terminal-main .terminal-seek{position:relative;z-index:1;min-height:44px;margin-block:-10px}
+.terminal-main .terminal-ruler input{min-height:44px;top:calc(50% - 22px)}
 
 .terminal-header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px}
 .terminal-label{font:400 11px/1.3 var(--data);letter-spacing:0;color:var(--muted)}
@@ -101,7 +109,7 @@
 @media(max-width:800px){.terminal-empty-help{display:block}}
 
 /* The type slug, restyled for the instrument monitor: a 32px block with a full touch area. */
-.terminal-main .terminal-monitor-top .type-trigger{min-height:32px;height:32px;padding:0 8px;max-width:150px;margin-left:auto;gap:6px;flex:none;border-radius:2px}
+.terminal-main .terminal-monitor-top .type-trigger{position:relative;z-index:2;min-height:32px;height:32px;padding:0 8px;max-width:150px;margin-left:auto;gap:6px;flex:none;border-radius:2px}
 .terminal-main .terminal-monitor-top .type-trigger::before{content:"";position:absolute;inset:-6px 0}
 .terminal-main .terminal-monitor-top .type-trigger-glyph{font-size:16px}
 .terminal-main .terminal-monitor-top .type-trigger-name{font-size:12px;max-width:84px}
@@ -121,14 +129,14 @@
 .terminal-file-choice[aria-current="true"] .row-end{color:var(--muted)}
 .terminal-picker-import{width:100%;margin-top:20px}
 
-/* Empty Read: a title, one plain line, the slot (only where the dock hides its own) and Paste text as a ruled slip, like the Desk's. */
+/* Empty Read: a title, one plain line, the slot and Paste text as a ruled slip, like the Desk's. In Read the shell hides both of its
+   own slots (the dock's and the rail's), so this slot is the single Open in every layout. */
 .terminal-main .terminal-empty{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:14px;max-width:440px;min-height:calc(100dvh - var(--mobile-nav-height,0px) - 120px);margin:0 auto;padding:48px 0 24px}
 .terminal-empty h1{margin:0;font:480 var(--fs-page)/1.1 var(--display);font-variation-settings:var(--fv-title);letter-spacing:-.01em;color:var(--text)}
 .terminal-empty-line{margin:0 0 10px;max-width:30ch;font:italic 400 20px/1.35 var(--display);font-variation-settings:var(--fv-sheet);color:var(--muted)}
 .terminal-empty-keys{display:flex;flex-direction:column;align-items:stretch;gap:16px;width:min(100%,400px)}
-.terminal-empty-slot{display:none;color:var(--text)}
+.terminal-empty-slot{color:var(--text)}
 .terminal-empty-paste{justify-content:flex-start;min-height:52px;padding:0 12px 0 30px;color:var(--text);background-image:linear-gradient(90deg,transparent 18px,var(--rule-2) 18px 19px,transparent 19px),linear-gradient(var(--rule) 0 0),linear-gradient(var(--rule) 0 0);background-size:100% 100%,100% 1px,100% 1px;background-position:0 0,0 calc(50% - 12px),0 calc(50% + 13px);background-repeat:no-repeat}
-@media (max-width:800px){.terminal-main .terminal-empty{justify-content:flex-end;padding-bottom:16px}.terminal-empty-slot{display:flex}}
+@media (max-width:800px){.terminal-main .terminal-empty{justify-content:flex-end;padding-bottom:16px}}
 html.is-short .terminal-main .terminal-empty{justify-content:flex-end}
-html.is-short .terminal-empty-slot{display:flex}
 .terminal-loading{margin:48px auto;max-width:520px;font:italic 17px/1.5 var(--reading-font,var(--display));color:var(--muted)}

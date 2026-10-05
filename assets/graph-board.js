@@ -10,7 +10,7 @@ const sectionsOf=a=>{const h=a?.headings||[];const two=h.filter(x=>x.level===2).
 export function boardMarkup({doc,docs,scope,filters,colors,glyph}){
  const none=!docs.length,off=none?' disabled':'';
  const name=doc?doc.analysis?.title||doc.name:'No file open';
- const toggles=layers.map(([filter,type,label])=>`<button class="key graph-toggle" data-action="graph-filter" data-filter="${filter}" aria-label="${label} graph layer" aria-pressed="${!!filters[filter]}" style="--layer-color:${colors[type]}"${off}><span class="layer-stub" aria-hidden="true"></span><span class="key-label">${label}</span><i data-graph-tally="${type}">0</i></button>`).join('');
+ const toggles=layers.map(([filter,type,label])=>`<button class="key graph-toggle" data-action="graph-filter" data-filter="${filter}" aria-label="${label} graph layer" aria-pressed="${!!filters[filter]}" style="--layer-color:${colors[type]}"${off}><span class="layer-rocker" aria-hidden="true"><span class="layer-stub"></span></span><span class="key-label">${label}</span><i data-graph-tally="${type}">0</i></button>`).join('');
  return `<div class="map-top"><button class="map-file" data-action="graph-files" aria-haspopup="dialog"${off}><span class="map-file-name">${esc(name)}</span>${glyph('down')}</button><div class="slide map-scope" role="group" aria-label="Graph scope"><button class="slide-pos" data-action="graph-scope" data-scope="document" aria-pressed="${scope==='document'}"${off}>This file</button><button class="slide-pos" data-action="graph-scope" data-scope="all" aria-pressed="${scope==='all'}"${off}>All files</button><span class="slide-thumb" aria-hidden="true"></span></div></div>
  <div class="graph-frame"><div id="graph-canvas" class="graph-canvas"></div><div class="plate-band"><h1 class="plate-stencil">Map</h1><span id="graph-count"></span></div><ul class="sr-only map-outline" role="tree" aria-label="Map outline"></ul>${none?'<div class="graph-empty"><h2 class="map-empty-title">Make a connection.</h2><p>Open a Markdown file. Its structure draws the map.</p></div>':''}<div id="graph-selected" class="map-tag paper paper--lit" role="region" aria-label="Selected on the map" hidden></div></div>
  <div class="map-zoom" role="group" aria-label="Zoom"><button class="key key--icon" data-action="graph-in" aria-label="Zoom graph in"${off}>${glyph('plus')}</button><button class="key key--icon" data-action="graph-fit" aria-label="Fit graph to screen"${off}>${glyph('fit')}</button><button class="key key--icon" data-action="graph-out" aria-label="Zoom graph out"${off}>${glyph('minus')}</button></div>
@@ -130,8 +130,9 @@ export function paintNode(node,ctx,scale,{colors,ink,near,selected,lod}){
   ctx.beginPath();ctx.arc(x,y,4.5*u,-Math.PI/12,-Math.PI/12-Math.PI*5/3,true);ctx.strokeStyle=c;ctx.lineWidth=1.5*u;ctx.lineCap='round';ctx.stroke();
  }
  ctx.restore();
- if(selected&&selected.id===node.id){ctx.beginPath();ctx.arc(x,y,(node.type==='document'?11:10)*u,0,Math.PI*2);ctx.strokeStyle=ink.lamp;ctx.lineWidth=1*u;ctx.stroke();}
+ if(selected&&selected.id===node.id)ring(ctx,node,u,ink);
 }
+const ring=(ctx,node,u,ink)=>{ctx.beginPath();ctx.arc(node.x,node.y,(node.type==='document'?11:10)*u,0,Math.PI*2);ctx.strokeStyle=ink.lamp;ctx.lineWidth=1*u;ctx.stroke();};
 
 /* Edges: orthogonal elbows in --rule; the selected neighbourhood in --lamp-dim. */
 export function paintLink(link,ctx,scale,{ink,near,lod}){
@@ -144,10 +145,11 @@ export function paintLink(link,ctx,scale,{ink,near,lod}){
 }
 
 const radius=n=>n.type==='document'?7:n.type==='heading'?((n.level||2)<=2?8:4):n.type==='tag'?7:5;
-/* Labels: Plex at 11px on screen, no plates; collisions include node discs, the stencil band and the tag.
-   Every elbow leaves its node horizontally, so a label first takes a side no wire uses, then tries to sit clear of the wires too. */
+/* Labels: Plex at 11px on screen, no plates; collisions include node discs, the stencil band, the tag and the labels already placed.
+   Every elbow leaves its node horizontally, so a label first takes a side no wire uses, then a spot clear of the wire columns, then the spot that crosses fewest.
+   Each label clears a --ink-1 knockout a few px wider than its text first, so any wire that still runs under it breaks cleanly around the words. */
 export function paintLabels(graph,ctx,scale,{colors,ink,near,selected,lod}){
- const all=graph.graphData().nodes,occupied=[],wires=[],busy=new Map(),u=1/scale,priority={document:0,tag:1,heading:2,link:3};
+ const all=graph.graphData().nodes,occupied=[],wires=[],busy=new Map(),placed=[],u=1/scale,priority={document:0,tag:1,heading:2,link:3};
  const rectOf=el=>{const c=document.querySelector('#graph-canvas')?.getBoundingClientRect(),r=el?.getBoundingClientRect();if(!c||!r||!r.width)return null;const a=graph.screen2GraphCoords(r.left-c.left,r.top-c.top),b=graph.screen2GraphCoords(r.right-c.left,r.bottom-c.top);return {x:a.x,y:a.y,w:b.x-a.x,h:b.y-a.y};};
  for(const el of [document.querySelector('.plate-band'),document.querySelector('#graph-selected:not([hidden])')]){const r=rectOf(el);if(r)occupied.push(r);}
  for(const n of all)if(Number.isFinite(n.x)&&Number.isFinite(n.y)){const r=(radius(n)+4)*u;occupied.push({x:n.x-r,y:n.y-r,w:r*2,h:r*2,node:n});}
@@ -157,20 +159,24 @@ export function paintLabels(graph,ctx,scale,{colors,ink,near,selected,lod}){
  const nodes=[...all].sort((a,b)=>(a.id===selected?.id?-1:priority[a.type])-(b.id===selected?.id?-1:priority[b.type]));
  ctx.font=`${11*u}px "NW Plex Mono",monospace`;ctx.textBaseline='top';ctx.textAlign='left';
  const hits=(c,o)=>!(c.x+c.w+4*u<o.x||c.x>o.x+o.w+4*u||c.y+c.h+2*u<o.y||c.y>o.y+o.h+2*u);
- const clear=(c,self)=>occupied.every(o=>o.node===self||!hits(c,o)),unwired=c=>wires.every(o=>c.x+c.w<o.x||c.x>o.x+o.w||c.y+c.h<o.y||c.y>o.y+o.h);
+ const clear=(c,self)=>occupied.every(o=>o.node===self||!hits(c,o)),crossings=c=>wires.filter(o=>!(c.x+c.w+3*u<o.x||c.x-3*u>o.x+o.w||c.y+c.h<o.y||c.y>o.y+o.h)).length;
  for(const n of nodes){
   n.hitLabel=null;if(!Number.isFinite(n.x)||!Number.isFinite(n.y))continue;
   if(lod&&n.type!=='document'&&n.id!==selected?.id)continue;if(n.type==='heading'&&scale<.85)continue;
-  const label=n.label.length>27?n.label.slice(0,26)+'…':n.label,w=Math.min(ctx.measureText(label).width,145*u),h=13*u,g=(radius(n)+5)*u;
-  const pos={right:{x:n.x+g,y:n.y-h/2},left:{x:n.x-g-w,y:n.y-h/2},below:{x:n.x-w/2,y:n.y+g-2*u},above:{x:n.x-w/2,y:n.y-g-h+2*u}},b=busy.get(n.id)||{};
-  const free=['right','left'].filter(k=>!b[k]),taken=['right','left'].filter(k=>b[k]);
-  const order=n.type==='heading'?[...free,'below','above',...taken]:['below','above',...free,...taken];let box=null;
+  const label=n.label.length>27?n.label.slice(0,26)+'…':n.label,w=Math.min(ctx.measureText(label).width,145*u),h=13*u,g=(radius(n)+5)*u,yb=n.y+g-2*u,ya=n.y-g-h+2*u,j=Math.min(w/2,w-10*u);
+  const pos={right:{x:n.x+g,y:n.y-h/2},left:{x:n.x-g-w,y:n.y-h/2},below:{x:n.x-w/2,y:yb},above:{x:n.x-w/2,y:ya},belowR:{x:n.x-w/2+j,y:yb},belowL:{x:n.x-w/2-j,y:yb},aboveR:{x:n.x-w/2+j,y:ya},aboveL:{x:n.x-w/2-j,y:ya}},b=busy.get(n.id)||{};
+  const free=['right','left'].filter(k=>!b[k]),taken=['right','left'].filter(k=>b[k]),drift=['belowR','belowL','aboveR','aboveL'];
+  const order=n.type==='heading'?[...free,'below','above',...drift,...taken]:['below','above',...drift,...free,...taken];
   const fits=c=>{const a=graph.graph2ScreenCoords(c.x,c.y),z=graph.graph2ScreenCoords(c.x+w,c.y+h);return a.x>=6&&a.y>=4&&z.x<=graph.width()-6&&z.y<=graph.height()-4;};
-  for(const pass of [0,1]){for(const k of order){const cand={...pos[k],w,h};if(fits(cand)&&clear(cand,n)&&(pass||unwired(cand))){box=cand;break;}}if(box)break;}
-  if(!box)continue;n.hitLabel=box;occupied.push(box);
+  let box=null,best=Infinity;for(const k of order){const cand={...pos[k],w,h};if(!fits(cand)||!clear(cand,n))continue;const x=crossings(cand);if(x<best){best=x;box=cand;if(!x)break;}}
+  if(!box)continue;n.hitLabel=box;occupied.push(box);placed.push([n,label,box]);
+ }
+ ctx.save();ctx.fillStyle=ink.ink1;for(const [,,box] of placed)ctx.fillRect(box.x-3*u,box.y-1*u,box.w+6*u,box.h+3*u);ctx.restore();
+ if(selected&&Number.isFinite(selected.x)&&Number.isFinite(selected.y)&&!lod)ring(ctx,selected,u,ink);
+ for(const [n,label,box] of placed){
   ctx.save();if(near&&!near.has(n.id))ctx.globalAlpha=.2;
   ctx.fillStyle=n.type==='document'?ink.text:n.type==='tag'?colors.tag:n.type==='heading'?mix(colors.heading,'#bac9bf',.55):ink.muted;
-  ctx.lineJoin='round';ctx.lineWidth=3*u;ctx.strokeStyle=ink.ink1;ctx.strokeText(label,box.x,box.y+1*u,145*u);ctx.fillText(label,box.x,box.y+1*u,145*u);ctx.restore();
+  ctx.fillText(label,box.x,box.y+1*u,145*u);ctx.restore();
  }
 }
 

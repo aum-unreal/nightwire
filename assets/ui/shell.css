@@ -7,12 +7,13 @@
 main{padding:calc(28px + env(safe-area-inset-top)) var(--gutter) 48px;outline:none}
 :root{--mobile-nav-height:0px}
 
-/* Wordmark: Fraunces italic; the dot of the first i is a lit pip. */
+/* Wordmark: Fraunces italic; the dot of the first i is a pip, unlit: it measures nothing, so it never spends the accent budget (§3.1). */
 .wordmark,.wordmark-n{position:relative;display:inline-block;font:italic 560 22px/1 var(--display);font-variation-settings:var(--fv-mark);letter-spacing:-.01em;color:var(--text);white-space:nowrap}
 .wordmark-i{position:relative;display:inline-block}
 .wordmark-i .pip{position:absolute;left:50%;top:.1em;width:6px;height:6px;margin-left:2px}
 .wordmark-n{display:none;font-size:26px}
 .wordmark-n .pip{position:absolute;right:-9px;top:1px;width:6px;height:6px}
+.tray-mark .pip{background:var(--lamp-dim);box-shadow:inset 0 0 0 1px #0006}
 
 /* Tray: a fixed column. Every block is flex:none except the cards, which take what is left in whole rows. */
 .sidebar{position:fixed;inset:0 auto 0 0;z-index:var(--z-tray);display:flex;flex-direction:column;width:var(--tray-w);padding:calc(12px + env(safe-area-inset-top)) 8px calc(8px + env(safe-area-inset-bottom)) calc(8px + env(safe-area-inset-left));background:var(--ink-1);box-shadow:inset -1px 0 0 var(--rule);transition:width var(--t-move) var(--ease)}
@@ -76,7 +77,8 @@ body:is([data-view="reader"],[data-view="terminal"]) .slot--tray{flex-direction:
 body:is([data-view="reader"],[data-view="terminal"]) .slot--tray .slot-grip{width:22px;height:6px;background:repeating-linear-gradient(90deg,var(--rule-2) 0 1px,transparent 1px 4px)}
 body:is([data-view="reader"],[data-view="terminal"]) .tray :is(.slot--tray .slot-label,.prefs-key .key-label){position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 body:is([data-view="reader"],[data-view="terminal"]) .tray .prefs-key{justify-content:center;padding:0}
-body[data-view="terminal"] .tray :is(.tray-search,.prefs-key){display:none}
+/* In Read the instrument has its own search, preferences and file chooser ("Open another file"), so the rail keeps routes only, as the dock does. */
+body[data-view="terminal"] .tray :is(.tray-search,.prefs-key,.slot--tray){display:none}
 
 /* Dock: the switchboard. Its internals hold in every mode; only display and height are conditional. */
 .mobile-nav{display:none;position:fixed;left:0;right:0;bottom:0;z-index:var(--z-dock);height:var(--mobile-nav-height);padding:0 max(6px,env(safe-area-inset-right)) env(safe-area-inset-bottom) max(6px,env(safe-area-inset-left));background:#000;box-shadow:inset 0 1px 0 var(--rule)}
@@ -86,6 +88,8 @@ body[data-view="terminal"] .tray :is(.tray-search,.prefs-key){display:none}
 #dock-section{flex:0 1 auto;max-width:46%;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:450 12px/1.2 var(--ui);color:var(--muted)}
 #dock-section:empty{display:none}
 #dock-count{flex:none;display:inline-flex;align-items:center;height:14px;overflow:hidden;font:500 var(--fs-data)/14px var(--data);color:var(--lamp)}
+/* Nothing read yet carries no light. */
+#dock-count.is-zero{color:var(--muted)}
 .odo-d{display:inline-block;width:.6em;height:14px;overflow:hidden}
 .odo-strip{display:flex;flex-direction:column;transform:translateY(calc(var(--d,0)*-14px));transition:transform var(--t-move) var(--ease)}
 .odo-strip>span{display:block;height:14px;text-align:center}
@@ -127,6 +131,8 @@ body[data-view="terminal"] .nav-switchboard{grid-template-columns:minmax(0,1fr)}
 /* Dock mode */
 @media (max-width:800px){
  :root{--mobile-nav-height:calc(86px + env(safe-area-inset-bottom))}
+ /* Focus scrolling keeps a focused control above the dock (and a receipt's extra lane, --receipt-x) instead of behind it. */
+ html{scroll-padding-bottom:calc(var(--mobile-nav-height) + var(--receipt-x,0px) + 8px)}
  body.dock-collapsed{--mobile-nav-height:calc(52px + env(safe-area-inset-bottom))}
  .sidebar{display:none}
  .mobile-nav{display:block}
@@ -135,7 +141,7 @@ body[data-view="terminal"] .nav-switchboard{grid-template-columns:minmax(0,1fr)}
  /* Keeps the full dock height while folded to the spine: a shorter page would clamp scrollY at the bottom, read as a scroll up, unfold the dock and loop. */
  :where(body:not([data-view="terminal"])) main{padding-bottom:calc(86px + env(safe-area-inset-bottom) + 24px)}
 }
-html.is-short{--mobile-nav-height:calc(86px + env(safe-area-inset-bottom))}
+html.is-short{--mobile-nav-height:calc(86px + env(safe-area-inset-bottom));scroll-padding-bottom:calc(var(--mobile-nav-height) + var(--receipt-x,0px) + 8px)}
 html.is-short body.dock-collapsed{--mobile-nav-height:calc(52px + env(safe-area-inset-bottom))}
 html.is-short .sidebar{display:none}
 html.is-short .mobile-nav{display:block}
@@ -162,6 +168,10 @@ html.is-short :where(body:not([data-view="terminal"])) main{padding-bottom:calc(
 #toast.receipt[hidden]{display:none}
 #toast[data-lane="top"]{top:calc(8px + env(safe-area-inset-top));left:8px;right:8px;max-width:480px;margin-inline:auto}
 .receipt-text{flex:1 1 auto;min-width:0;padding:10px 0 7px}
+/* In the dock register and the strip the slip holds one line, so it never stands over the page; a tap on a clipped line opens it in full (aria-live already read it whole). */
+#toast:is([data-lane="dock"],[data-lane="strip"]):not(.is-full) .receipt-text{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+/* The strip-centre lane takes the title's place: the title steps out rather than peeking past the slip. */
+body.receipt-on-strip .reader-toolbar .strip-title{visibility:hidden}
 .receipt .key{flex:none;min-height:var(--hit)}
 .receipt-undo{padding:0 10px;font-weight:550}
 .receipt-close{color:var(--subtle)}

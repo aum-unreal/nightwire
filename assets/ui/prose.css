@@ -18,17 +18,21 @@
 .markdown img{max-width:100%;height:auto;border-radius:var(--r-paper)}
 .markdown details:not(.frontmatter){margin:0 0 1.15em;padding:0 0 0 1em;border-left:1px solid var(--read-line)}
 .markdown details:not(.frontmatter)>summary{min-height:var(--hit);display:flex;align-items:center;cursor:pointer;color:var(--read-bold)}
-.markdown [id],.markdown [data-line]{scroll-margin-top:calc(var(--strip-h) + 16px)}
+/* The reader sets scroll-padding-top (strip + 8px, reader-page.css); the 8px margin makes headings land at strip + 16. */
+.markdown [id],.markdown [data-line]{scroll-margin-top:8px}
 
 /* Headings: the reading face, one colour, no rules. h2 and h3 carry counter numerals. */
-.markdown :is(h1,h2,h3,h4,h5,h6){position:relative;margin:1.6em 0 .55em;color:var(--read-h1);font-family:var(--reading-font);font-weight:600;line-height:1.25;letter-spacing:0;text-wrap:balance;scroll-margin-top:calc(var(--strip-h) + 16px)}
+.markdown :is(h1,h2,h3,h4,h5,h6){position:relative;margin:1.6em 0 .55em;color:var(--read-h1);font-family:var(--reading-font);font-weight:600;line-height:1.25;letter-spacing:0;text-wrap:balance;scroll-margin-top:8px}
 .markdown h1{margin:0 0 .5em;font-size:1.9em;font-weight:650;line-height:1.12;letter-spacing:-.01em}
 .markdown h2{margin-top:2.2em;font-size:1.35em;counter-increment:h2;counter-reset:h3}
 .markdown h3{font-size:1.1em;counter-increment:h3}
 .markdown :is(h4,h5,h6){font-size:1em}
-.markdown h2::before{content:counter(h2,decimal-leading-zero);font:400 12px/1 var(--data);font-variant-numeric:tabular-nums;color:var(--read-lamp)}
+/* Numerals rest unlit; only the current section's numeral (.is-here, set by updateProgress) takes the lamp. */
+.markdown h2::before{content:counter(h2,decimal-leading-zero);font:400 12px/1 var(--data);font-variant-numeric:tabular-nums;color:var(--subtle)}
 .markdown h3::before{content:counter(h2) "." counter(h3);font:400 11px/1 var(--data);font-variant-numeric:tabular-nums;color:var(--subtle)}
-.markdown.no-h2 h3::before{content:counter(h3,decimal-leading-zero)}
+.markdown.no-h2 h3::before{content:counter(h3,decimal-leading-zero);font-size:12px}
+:root:not([data-reader-theme="nightwire"]) .markdown :is(h2,h3)::before{color:var(--read-muted)}
+:root .markdown :is(h2,h3).is-here::before{color:var(--read-lamp)}
 .markdown :is(h2,h3)::before{display:inline-block;margin-right:.6em;vertical-align:.32em}
 @container reader (min-width:600px){
  .markdown :is(h2,h3)::before{position:absolute;right:calc(100% + 12px);top:.62em;min-width:0;margin:0;text-align:right;vertical-align:0}
@@ -103,7 +107,7 @@
 
 /* Source view: a punched ruler gutter; Markdown syntax in the second hue. */
 .source-view{--src-size:13px;max-width:100%;color:var(--read-text);font:400 var(--src-size)/1.75 var(--code);font-variant-ligatures:none;tab-size:2}
-.source-line{display:grid;grid-template-columns:4ch minmax(0,1fr);column-gap:14px;scroll-margin-top:calc(var(--strip-h) + 16px)}
+.source-line{display:grid;grid-template-columns:4ch minmax(0,1fr);column-gap:14px;scroll-margin-top:8px}
 .source-number{position:relative;padding-right:4px;text-align:right;font:400 11px/calc(var(--src-size)*1.75) var(--data);font-variant-numeric:tabular-nums;color:var(--subtle);user-select:none;-webkit-user-select:none}
 .source-number.is-fifth::after{content:"";position:absolute;top:calc(var(--src-size)*.875);right:-9px;width:4px;height:4px;margin-top:-2px;border-radius:50%;background:var(--read-well);box-shadow:inset 0 0 0 1px var(--rule-2)}
 .source-text{min-width:0;white-space:pre-wrap;overflow-wrap:anywhere}

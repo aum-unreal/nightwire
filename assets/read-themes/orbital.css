@@ -7,11 +7,11 @@
 .theme-orbital[data-terminal-size] .terminal-header h1{font:700 28px/.9 "NW Source Sans 3",system-ui,sans-serif;letter-spacing:-.04em;margin:5px 0 0;color:#eaf4f8;display:flex;align-items:center;gap:7px}
 .theme-orbital .terminal-header h1>span{color:#9bbfce;font-size:21px;font-weight:400}
 .theme-orbital[data-terminal-size] .terminal-header .terminal-label{font:11px var(--mono);letter-spacing:0;color:#96b4c3;white-space:nowrap}
-.theme-orbital .terminal-header-tools{gap:2px;align-items:center}
+.theme-orbital .terminal-header-tools{gap:10px;align-items:center}
 .theme-orbital[data-terminal-size] .terminal-header-tools>.icon-btn{width:34px;min-width:34px;height:38px;border-radius:0;background:#080f14;border:1px solid #1a303d;border-bottom:2px solid #345366;color:#a4c7d8}
 .theme-orbital .terminal-header-tools>.icon-btn:hover{background:#142b38;color:#e6f5fb}
 .theme-orbital .terminal-header-tools svg{width:16px;height:16px}
-.theme-orbital[data-terminal-size] .terminal-file{min-height:36px;border:0;border-left:2px solid #91c5db;background:#070e13;padding:5px 10px;gap:10px;border-radius:0}
+.theme-orbital[data-terminal-size] .terminal-file{min-height:44px;border:0;border-left:2px solid #91c5db;background:#070e13;padding:5px 10px;gap:10px;border-radius:0}
 .theme-orbital .orbital-payload-label{font:11px var(--mono);letter-spacing:0;flex:none;color:#a6c6d4;border-right:1px solid #38505d;padding-right:10px}
 .theme-orbital .terminal-filename{color:#e0eaf0;font:11px/1.4 var(--mono)}
 .theme-orbital .terminal-file>svg{color:#9bbfce}
@@ -44,13 +44,13 @@
 .theme-orbital .terminal-seek::-webkit-slider-runnable-track{height:1px;border-radius:0;background:linear-gradient(to right,var(--accent) 0 var(--position,0%),#274452 var(--position,0%) 100%)}
 .theme-orbital .terminal-seek::-webkit-slider-thumb{height:13px;width:7px;background:#c1eafb;border:0;border-radius:0;margin-top:-6px;box-shadow:0 0 0 3px #000}
 .theme-orbital[data-terminal-size] .terminal-transport{gap:3px;background:#0a141b;padding:4px;border-top:1px solid #4b7185;border-bottom:1px solid #1a303d;position:relative}
-.theme-orbital[data-terminal-size] .terminal-transport>.icon-btn{height:42px;width:42px;min-width:42px;border:0;border-bottom:2px solid #284653;border-radius:0;background:#13242e;color:#bdddec;box-shadow:inset 0 1px 0 #ffffff0c}
-.theme-orbital[data-terminal-size] .terminal-play.button{min-height:42px;border:0;border-radius:0;background:#b3e0f1;color:#0a1a22;font:600 12px var(--mono);letter-spacing:0;box-shadow:inset 0 1px 0 #eafaff,0 2px 0 #4c839b;padding:8px 10px;clip-path:polygon(7px 0,100% 0,100% calc(100% - 6px),calc(100% - 7px) 100%,0 100%,0 6px)}
+.theme-orbital[data-terminal-size] .terminal-transport>.icon-btn{height:44px;width:44px;min-width:44px;border:0;border-bottom:2px solid #284653;border-radius:0;background:#13242e;color:#bdddec;box-shadow:inset 0 1px 0 #ffffff0c}
+.theme-orbital[data-terminal-size] .terminal-play.button{min-height:44px;border:0;border-radius:0;background:#b3e0f1;color:#0a1a22;font:600 12px var(--mono);letter-spacing:0;box-shadow:inset 0 1px 0 #eafaff,0 2px 0 #4c839b;padding:8px 10px;clip-path:polygon(7px 0,100% 0,100% calc(100% - 6px),calc(100% - 7px) 100%,0 100%,0 6px)}
 .theme-orbital .terminal-transport button:active,.theme-orbital .terminal-transport button.is-pressed{transform:translateY(1px);filter:brightness(.86)}
 .theme-orbital[data-terminal-size] .terminal-speed{border:0;border-left:1px solid #456879;border-radius:0;background:linear-gradient(110deg,#08121a,#030608);box-shadow:none;padding:9px 9px 5px}
 .theme-orbital .terminal-speed-title{font:11px var(--mono);letter-spacing:0;color:#c1dbe8}
 .theme-orbital .terminal-speed-head .terminal-label{font:11px var(--mono);color:#8bb1c4;letter-spacing:0}
-.theme-orbital[data-terminal-size] .terminal-speed-value{gap:7px;margin:9px 0 5px;align-items:center}
+.theme-orbital[data-terminal-size] .terminal-speed-value{gap:7px;margin:9px 0 12px;align-items:center}
 .theme-orbital[data-terminal-size] .terminal-speed-value>div{gap:2px;flex-direction:column;align-items:center}
 .theme-orbital[data-terminal-size] .terminal-speed-value output{font:500 36px/.95 "NW Plex Mono",monospace;letter-spacing:-.085em;color:#e9f5fa}
 .theme-orbital .terminal-speed-value span{font:11px var(--mono);letter-spacing:0;color:#85b9cf}
@@ -60,7 +60,7 @@
 .theme-orbital[data-terminal-size] .terminal-ruler input{height:30px}
 .theme-orbital .terminal-ruler input::-webkit-slider-thumb{border-radius:0;width:22px;height:22px;border:1px solid #99c9de;background:linear-gradient(90deg,#5d8699 0 40%,#d2eef9 40% 60%,#5d8699 60%);box-shadow:inset 0 1px 0 #e2f6ff99,0 2px 4px #000}
 .theme-orbital .terminal-needle{background:var(--accent);clip-path:polygon(50% 0,100% 100%,0 100%)}
-.theme-orbital[data-terminal-size] .terminal-presets{gap:2px;margin-top:2px;padding-top:0;border:0}
+.theme-orbital[data-terminal-size] .terminal-presets{gap:2px;margin-top:15px;padding-top:0;border:0}
 .theme-orbital[data-terminal-size] .terminal-presets button{font:11px var(--mono);min-height:30px;padding-inline:1px;border-radius:0;border-bottom:1px solid #274a5c;color:#a3c8d9}
 .theme-orbital .terminal-presets button[aria-pressed=true]{background:#132c3b;border-bottom-color:#bbeafb;color:#e6f6ff;box-shadow:none}
 .theme-orbital[data-terminal-size] .terminal-options{flex-direction:column;justify-content:space-between;gap:7px;padding:8px 0 4px 8px;border-left:1px solid #294755}
@@ -89,6 +89,7 @@
 .theme-orbital[data-terminal-size=compact] .terminal-speed-value{margin:7px 0 3px;gap:4px}
 .theme-orbital[data-terminal-size=compact] .terminal-speed-value output{font-size:30px}
 .theme-orbital[data-terminal-size=compact] .speed-step.icon-btn{width:26px;min-width:26px;height:32px}
+.theme-orbital[data-terminal-size=compact] .terminal-presets{margin-top:2px}
 .theme-orbital[data-terminal-size=compact] .terminal-options{padding-top:6px;padding-left:6px;gap:6px}
 .theme-orbital[data-terminal-size=compact] .terminal-group button{font-size:11px}
 .theme-orbital[data-terminal-landscape=true] .terminal-deck{grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto;grid-template-areas:"header file" "monitor speed" "transport options";gap:7px}

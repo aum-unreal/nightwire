@@ -1,6 +1,9 @@
 /* Reader page (E3, §6.4): strip and chain, layout, file label, progress rail, contents, find, tools, links and end.
    The page takes the reading theme (--read-*); the strip, tools and keys stay lamp hardware on the room black. */
 
+/* Focus scrolling (Tab, find, anchors) clears the sticky strip; heading scroll-margin (prose.css) adds 8px more. */
+html:has(.reader-main){scroll-padding-top:calc(var(--strip-h,48px) + 8px)}
+html:has(body.focus-mode){scroll-padding-top:calc(8px + env(safe-area-inset-top))}
 .reader-main{--read-edge:var(--paper-edge);padding-top:0;padding-inline:0;min-height:100dvh;background:var(--read-bg);color:var(--read-text)}
 :root:not([data-reader-theme="nightwire"]) .reader-main{--read-edge:var(--read-line)}
 
@@ -60,6 +63,7 @@
 .markdown .file-label p.file-tags,.file-tags{display:flex;flex-wrap:wrap;gap:0 14px;margin:0;line-height:1}
 .file-tags .tag-mark{min-height:28px;font-size:12.5px}
 .frontmatter{margin:0}
+.file-label .file-tags+.frontmatter{margin-top:8px}   /* clears the tag marks' 44px hit area */
 .frontmatter>summary{display:flex;align-items:center;gap:6px;min-height:var(--hit);list-style:none;cursor:pointer;font:400 var(--fs-data)/1.2 var(--data);color:var(--read-muted)}
 .frontmatter>summary::-webkit-details-marker{display:none}
 .frontmatter>summary::marker{content:""}
@@ -74,12 +78,15 @@
 .progress-rail{position:fixed;z-index:calc(var(--z-strip) - 2);top:calc(var(--strip-h) + 20px);bottom:calc(var(--mobile-nav-height,0px) + 12px);right:8px;width:14px;pointer-events:none;transition:top var(--t-move) var(--ease)}
 .reader-main.strip-away .progress-rail{top:calc(12px + env(safe-area-inset-top))}
 .rail-track{position:absolute;top:0;bottom:0;left:50%;width:3px;margin-left:-1.5px;border-radius:1px;background:var(--rule)}
-.rail-fill{position:absolute;inset:0;border-radius:inherit;background:var(--lamp);transform:scaleY(var(--p,0));transform-origin:top}
+/* The travelled track is dim; only an 8px tip at the reading position (just above the tab) carries the full lamp. */
+.rail-fill{position:absolute;inset:0;border-radius:inherit;background:var(--lamp-dim);transform:scaleY(var(--p,0));transform-origin:top}
 .rail-notches{position:absolute;inset:0}
 .rail-notches i{position:absolute;left:-1.5px;top:calc(var(--at)*100%);width:6px;height:1px;background:var(--rule-2)}
 .rail-runner{position:absolute;left:0;right:0;top:calc(var(--p,0)*(100% - 28px));height:28px;display:grid;place-items:center}
 .rail-tab{display:grid;grid-template-rows:12px 12px;place-items:center;width:14px;height:28px;padding-top:1px;border-radius:var(--r-paper);background:var(--ink-3);box-shadow:inset 0 1px 0 var(--paper-edge),inset 0 -1px 0 #000;font:400 11px/1 var(--data);color:var(--text);letter-spacing:-.04em}
-.rail-tab>span{color:var(--subtle)}
+.rail-tab>span{color:var(--muted)}
+.rail-tab{position:relative}
+.rail-tab::before{content:"";position:absolute;bottom:100%;left:50%;width:3px;height:calc(8px*min(1,var(--p,0)*40));margin-left:-1.5px;border-radius:1px 1px 0 0;background:var(--lamp)}
 .rail-tab b{font-weight:400}
 #content[data-rail="slider"] .progress-rail{top:calc(var(--strip-h) + 28px);bottom:28px;left:var(--rail-x,4px);right:auto;width:var(--hit);pointer-events:auto;cursor:ns-resize;touch-action:none}
 #content[data-rail="slider"] .rail-runner{height:56px;top:calc(var(--p,0)*(100% - 56px))}
@@ -127,9 +134,13 @@
 .document-end{display:flex;flex-direction:column;align-items:center;gap:10px;max-width:66ch;margin:3.5em 0 0;padding-bottom:24px;text-align:center}
 .document-end .perf{align-self:stretch;margin:0 0 6px}
 .document-end .stamp{margin:0}
-.end-keys{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;max-width:100%}
-.end-keys .key{max-width:100%}
-.end-next{padding:0 16px;color:var(--text)}
+/* One object: the next file is a paper slip; "Back to top" is a text key on the same 48px line height. */
+.end-keys{display:flex;flex-direction:column;align-items:center;gap:8px;width:100%;max-width:100%}
+.end-keys .key{min-height:48px;max-width:100%}
+.end-top{gap:8px}
+.end-top .glyph{width:18px;height:18px;color:var(--muted)}
+.end-next{width:min(100%,440px);justify-content:space-between;gap:12px;padding:10px 16px;color:var(--text);text-align:left}
+.end-next .key-label{min-width:0;overflow-wrap:anywhere}
 .end-next>span:last-child{flex:none;color:var(--muted)}
 
 /* Tools sheet: the filename is the title, set in Plex. */
@@ -167,3 +178,6 @@ body.focus-mode .reader-spread{grid-template-columns:minmax(0,1fr)}
 body.focus-mode .document-container{border-right:0}
 body.focus-mode .document-container{padding-top:calc(56px + env(safe-area-inset-top));padding-right:max(24px,env(safe-area-inset-right))}
 @container reader (min-width:600px){body.focus-mode .document-container{padding-inline:64px}}
+
+/* Tools › Settings is the phone reader's Preferences entry only; in tray mode the rail keeps the one visible key (§8). */
+@media (min-width:801px){html:not(.is-short) .tools-group[aria-label="Settings"]{display:none}}

@@ -1,12 +1,12 @@
 /* MIXTAPE — enamel keys, oxide reels, printed cassette label and an amber tape counter. */
-.terminal-main.theme-mixtape[data-terminal-size]{--tape-cream:#e5d6b8;--tape-amber:#ffc780;--tape-oxide:#c76242;--muted:#b7aa92;--subtle:#867a65;--text:#e5d6b8;--read-text:#f3deb6;--surface:#12110e;--raised:#201d17;--line:#4b4435;background:#000;padding:10px 12px;font-family:var(--mono)}
+.terminal-main.theme-mixtape[data-terminal-size]{--tape-cream:#e5d6b8;--tape-amber:#ffc780;--tape-oxide:#c76242;--muted:#b7aa92;--subtle:#8f836d;--text:#e5d6b8;--read-text:#f3deb6;--surface:#12110e;--raised:#201d17;--line:#4b4435;background:#000;padding:10px 12px;font-family:var(--mono)}
 .terminal-main.theme-mixtape[data-terminal-size] .terminal-deck{max-width:760px;gap:0;padding:8px;background:#14130f;border:1px solid #70604b;border-radius:13px 13px 7px 7px;box-shadow:inset 0 0 0 3px #090906,inset 0 0 0 4px #29261e;position:relative}
 .terminal-main.theme-mixtape[data-terminal-size] .terminal-header{min-height:44px;padding:0 5px 6px;gap:8px;border-bottom:1px solid #454035}
 .terminal-main.theme-mixtape[data-terminal-size] .mixtape-brand{min-width:0}
 .terminal-main.theme-mixtape[data-terminal-size] .terminal-header .terminal-label{font:11px var(--mono);letter-spacing:0;color:#a59880;white-space:nowrap}
 .terminal-main.theme-mixtape[data-terminal-size] .terminal-header h1{font:900 italic 27px/.95 "NW Source Sans 3",var(--sans);letter-spacing:-.055em;margin:3px 0 0;color:var(--tape-cream)}
 .terminal-main.theme-mixtape[data-terminal-size] .terminal-header h1>span{color:var(--tape-oxide);font-size:11px;margin-left:6px;vertical-align:middle}
-.terminal-main.theme-mixtape[data-terminal-size] .terminal-header-tools{gap:4px}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-header-tools{gap:12px}
 .terminal-main.theme-mixtape[data-terminal-size] .terminal-header-tools>.icon-btn{height:32px;width:32px;min-width:32px;border:1px solid #645741;background:linear-gradient(#2b281f,#161510);color:var(--tape-cream);border-radius:50%;box-shadow:inset 0 1px 0 #ffffff0e,0 2px 0 #050503}
 .terminal-main.theme-mixtape[data-terminal-size] .terminal-header-tools svg{height:15px;width:15px}
 .terminal-main.theme-mixtape[data-terminal-size] .terminal-file{min-height:47px;background:#daceb4;border:0;border-radius:4px 4px 0 0;color:#2b261b;padding:5px 9px;gap:8px;margin-top:7px}
@@ -48,17 +48,17 @@
 .terminal-main.theme-mixtape[data-terminal-size] .terminal-speed{border:0;border-radius:0;padding:8px 9px 6px;background:#14130f;box-shadow:none;border-bottom:1px solid #4b4435}
 .terminal-main.theme-mixtape[data-terminal-size] .terminal-speed-title{font:11px var(--mono);letter-spacing:0;color:#c1b190}
 .terminal-main.theme-mixtape[data-terminal-size] .terminal-speed-head .terminal-label{font-size:11px;letter-spacing:0}
-.terminal-main.theme-mixtape[data-terminal-size] .terminal-speed-value{gap:13px;margin:6px 0 3px}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-speed-value{gap:13px;margin:6px 0 5px}
 .terminal-main.theme-mixtape[data-terminal-size] .terminal-speed-value>div{gap:6px;background:#020201;border:1px solid #645134;border-radius:2px;padding:3px 9px;max-width:160px;min-width:0;flex:1}
 .terminal-main.theme-mixtape[data-terminal-size] .terminal-speed-value output{font:500 31px/1 var(--mono);letter-spacing:-.06em;color:var(--tape-amber)}
 .terminal-main.theme-mixtape[data-terminal-size] .terminal-speed-value span{font-size:11px;letter-spacing:0;color:#b99a69}
 .terminal-main.theme-mixtape[data-terminal-size] .speed-step.icon-btn{width:34px;min-width:34px;height:34px;border:2px solid #514737;border-radius:50%;background:repeating-conic-gradient(#29261e 0 8deg,#444033 8deg 11deg);color:#e2d1ab;box-shadow:inset 0 0 0 3px #191711,0 2px 0 #000;font-size:19px}
-.terminal-main.theme-mixtape[data-terminal-size] .terminal-ruler{height:28px;margin-inline:6px;background:repeating-linear-gradient(90deg,#b9a076 0 1px,transparent 1px calc(100% / 46));background-size:100% 6px;background-repeat:no-repeat;background-position:center}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-ruler{height:44px;margin-inline:6px;background:repeating-linear-gradient(90deg,#b9a076 0 1px,transparent 1px calc(100% / 46));background-size:100% 6px;background-repeat:no-repeat;background-position:center}
 .terminal-main.theme-mixtape[data-terminal-size] .terminal-ruler::after{opacity:.3;inset:8px 0}
-.terminal-main.theme-mixtape[data-terminal-size] .terminal-ruler input{height:28px}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-ruler input{height:44px}
 .terminal-main.theme-mixtape[data-terminal-size] .terminal-ruler input::-webkit-slider-thumb{width:22px;height:24px;border-radius:1px;border:1px solid #b3a080;background:repeating-linear-gradient(90deg,#e2d4b7 0 3px,#b1a080 3px 4px);box-shadow:0 2px 0 #000,inset 0 1px 0 #fff4}
 .terminal-main.theme-mixtape[data-terminal-size] .terminal-needle{background:var(--accent);height:4px}
-.terminal-main.theme-mixtape[data-terminal-size] .terminal-presets{padding-top:4px;margin-top:0;border-top:1px solid #403b30;gap:4px}
+.terminal-main.theme-mixtape[data-terminal-size] .terminal-presets{padding-top:9px;margin-top:0;border-top:1px solid #403b30;gap:4px}
 .terminal-main.theme-mixtape[data-terminal-size] .terminal-presets button{font:11px var(--mono);min-height:29px;padding:4px 6px;border:1px solid #70604a;border-radius:2px;background:#28241c;color:#d8c8a7;box-shadow:inset 0 1px 0 #ffffff09,0 2px 0 #050504}
 .terminal-main.theme-mixtape[data-terminal-size] .terminal-presets button[aria-pressed=true]{color:#251b0c;background:#c2a476;border-color:#e6c890;box-shadow:inset 0 1px 0 #fff4}
 .terminal-main.theme-mixtape[data-terminal-size] .terminal-options{padding:7px 9px 3px;gap:10px;background:#14130f}
@@ -132,6 +132,7 @@
 .terminal-main.theme-mixtape[data-terminal-size=compact] .terminal-transport{padding-block:3px}
 .terminal-main.theme-mixtape[data-terminal-size=compact] .terminal-ruler,.terminal-main.theme-mixtape[data-terminal-size=compact] .terminal-ruler input{height:24px}
 .terminal-main.theme-mixtape[data-terminal-size=compact] .terminal-presets button{min-height:26px}
+.terminal-main.theme-mixtape[data-terminal-size=compact] .terminal-presets{padding-top:4px}
 .terminal-main.theme-mixtape[data-terminal-size=compact] .terminal-bionic{min-height:40px;padding-block:2px}
 /* Sideways and short: the reels ride in the status row, and the transport tightens, so the stage keeps its height. */
 .terminal-main.theme-mixtape[data-terminal-landscape=true] .mixtape-mechanism{position:absolute;top:5px;left:50%;width:min(170px,40%);height:24px;margin:0;gap:6px;transform:translateX(-50%)}

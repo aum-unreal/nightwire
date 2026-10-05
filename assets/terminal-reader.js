@@ -17,7 +17,7 @@ export function createTerminal({root,doc,index,settings,save,saveSettings,icon,e
  let pulse=null,needleMotion=null,dialMotion=null,entryMotion=null,disposed=false,player,blackoutSurface=null,stagePlaceholder=null,wasPlaying=false;
  // A live serial plate fills each instrument's label slot: file, length and time left. The name shrinks first.
  const left=seconds=>seconds>=60?`${Math.floor(seconds/60)} min ${seconds%60} s`:seconds+' s';
- root.querySelectorAll('.terminal-serial').forEach(el=>el.innerHTML=`<span class="serial-name">${esc(doc.name)}</span><span class="serial-meta"> · ${words.length} ${words.length===1?'word':'words'} · <span class="serial-left"></span></span>`);
+ root.querySelectorAll('.terminal-serial').forEach(el=>el.innerHTML=`<span class="serial-name">${esc(doc.name)}</span><span class="serial-meta"><span class="serial-sep"> · </span>${words.length} ${words.length===1?'word':'words'}<span class="serial-time"> · <span class="serial-left"></span></span></span>`);
  const on=(el,event,fn)=>el.addEventListener(event,fn,{signal});
  const persist=()=>{if(player)save(player.index);};
  function systemBlackout(value){if(typeof window.Native?.readingBlackout==='function')Native.readingBlackout(value);}
@@ -46,7 +46,14 @@ export function createTerminal({root,doc,index,settings,save,saveSettings,icon,e
   const height=Math.max(220,Math.floor(viewport-dockHeight));root.style.setProperty('--terminal-height',height+'px');
   root.dataset.terminalSize=height<650?'compact':'regular';
   root.dataset.terminalLandscape=root.clientWidth>=580&&root.clientWidth>height*1.25&&height<560?'true':'false';
-  fit();
+  // Full-size controls own 44px cells; if they leave the aperture too short for a large word, fold to the compact layout.
+  if(root.dataset.terminalSize==='regular'&&($('.terminal-stage')?.clientHeight??Infinity)<72)root.dataset.terminalSize='compact';
+  fitMark();fit();
+ }
+ // The header keys keep a 44px pitch, so on a narrow window the instrument's wordmark gives way instead.
+ function fitMark(){
+  const mark=root.querySelector('.terminal-header h1');if(!mark)return;mark.style.fontSize='';
+  for(let pass=0;pass<3&&mark.scrollWidth>mark.clientWidth+1;pass++)mark.style.fontSize=parseFloat(getComputedStyle(mark).fontSize)*mark.clientWidth/mark.scrollWidth*.98+'px';
  }
  function fit(){
   const el=$('#terminal-words');if(!el)return;el.style.fontSize='';el.style.removeProperty('--frame-font-size');

@@ -25,10 +25,10 @@
  linear-gradient(var(--m),var(--m)) 100% calc(100% - 12px)/8px 1px no-repeat,linear-gradient(var(--m),var(--m)) calc(100% - 12px) 100%/1px 8px no-repeat}
 .graph-canvas{position:absolute;inset:0}
 .graph-canvas canvas{display:block}
-.plate-band{position:absolute;z-index:2;top:0;left:22px;max-width:calc(100% - 44px);height:28px;display:flex;align-items:center;gap:8px;padding:2px 8px 0 4px;background:var(--ink-1);pointer-events:none;white-space:nowrap}
+.plate-band{position:absolute;z-index:2;top:0;left:30px;max-width:calc(100% - 60px);height:28px;display:flex;align-items:center;gap:0;padding:4px 8px 0 4px;background:var(--ink-1);pointer-events:none;white-space:nowrap}
 .plate-stencil{margin:0;font:400 var(--fs-data)/1 var(--data);letter-spacing:0;color:var(--muted)}
 #graph-count{min-width:0;overflow:hidden;text-overflow:ellipsis;font:400 var(--fs-data)/1 var(--data);color:var(--subtle)}
-#graph-count:not(:empty)::before{content:"";display:inline-block;width:1px;height:10px;margin-right:8px;vertical-align:-1px;background:var(--rule-2)}
+#graph-count:not(:empty)::before{content:"\a0·\a0"}
 
 /* Empty plate */
 .graph-empty{position:absolute;inset:28px 16px 16px;z-index:2;display:grid;place-content:center;justify-items:center;gap:10px;text-align:center;pointer-events:none}
@@ -48,14 +48,21 @@
 .graph-toggle{flex:1 1 auto;min-width:0;gap:8px;padding:0 10px;font-size:var(--fs-sm)}
 .graph-toggle .key-label{flex:0 1 auto}
 .graph-toggle i{flex:none;margin-left:auto;font:400 var(--fs-data)/1 var(--data);font-style:normal;color:var(--subtle)}
-.layer-stub{flex:none;width:10px;height:3px;background:var(--rule-2)}
-.graph-toggle[aria-pressed="true"] .layer-stub{background:var(--layer-color)}
+.layer-rocker{position:relative;flex:none;display:grid;grid-template-columns:1fr 1fr;gap:1px;width:38px;height:24px;padding:3px;border-radius:4px;background:var(--well);box-shadow:inset 0 1px 2px #000,0 1px 0 #1a1a18}
+.layer-rocker::before,.layer-stub{display:grid;place-items:center;background:#1c1c1a;box-shadow:inset 0 1px 0 #ffffff1a,inset 0 -2px 0 #000;transition:transform var(--t-press) var(--ease)}
+.layer-rocker::before{content:"";border-radius:2px 0 0 2px;background-image:radial-gradient(circle,transparent 2.2px,var(--rule-2) 2.4px 3.4px,transparent 3.7px)}
+.layer-stub{border-radius:0 2px 2px 0}
+.layer-stub::after{content:"";width:10px;height:3px;background:var(--rule-2)}
+.graph-toggle[aria-pressed="false"] .layer-rocker::before,.graph-toggle[aria-pressed="true"] .layer-stub{transform:translateY(2px);background-color:#060606;box-shadow:inset 0 1px 2px #000,inset 0 -1px 0 #ffffff10}
+.graph-toggle[aria-pressed="false"] .layer-rocker::before{background-image:radial-gradient(circle,transparent 2.2px,var(--subtle) 2.4px 3.4px,transparent 3.7px)}
+.graph-toggle[aria-pressed="true"] .layer-stub::after{background:var(--layer-color)}
 .graph-toggle[aria-pressed="true"] i{color:var(--muted)}
-@media (max-width:360px){.map-layers{gap:4px}.graph-toggle{gap:5px;padding:0 7px}}
+@media (max-width:800px){.graph-toggle{gap:6px;padding:0 8px}.layer-rocker{width:30px;height:22px;padding:2px}}
+@media (max-width:360px){.map-layers{gap:4px}.graph-toggle{gap:4px;padding:0 6px}.layer-rocker{width:26px}}
 @media (min-width:801px){html:not(.is-short) .map-layers{grid-column:1}html:not(.is-short) .graph-toggle{flex:1 1 0}}
 
 /* The paper tag: a file, tag or link selected on the plate. Phone: full width, rising from the bottom rail. Wide: bottom left, ≤360px. */
-.map-tag{position:absolute;z-index:3;left:-1px;right:-1px;bottom:-1px;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;column-gap:4px;padding:12px 4px 14px 40px;border-radius:0;clip-path:polygon(16px 0,100% 0,100% 100%,16px 100%,0 calc(100% - 16px),0 16px)}
+.map-tag{position:absolute;z-index:5;left:-1px;right:-1px;bottom:-1px;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;column-gap:4px;padding:12px 4px 14px 40px;border-radius:0;clip-path:polygon(16px 0,100% 0,100% 100%,16px 100%,0 calc(100% - 16px),0 16px)}
 .map-tag[hidden]{display:none}
 .map-tag:not([hidden]){animation:map-tag-rise var(--t-move) var(--ease)}
 .map-tag::before{content:"";position:absolute;left:13px;top:50%;width:10px;height:10px;margin-top:-5px;border-radius:50%;background:var(--ink-1);box-shadow:0 0 0 2px var(--rule-2),inset 0 1px 2px #000}

@@ -57,6 +57,8 @@ const server=http.createServer((req,res)=>{const file=path.join(root,req.url==='
    await page.locator(`#panel-dialog [data-action="heading"][data-anchor="${anchor}"]`).click();
    await page.waitForFunction(index=>{const heading=document.querySelectorAll('#markdown h2')[index],toolbar=document.querySelector('.reader-toolbar');return heading&&heading.getBoundingClientRect().top>=toolbar.getBoundingClientRect().bottom-1&&heading.getBoundingClientRect().bottom<innerHeight-70;},index);
   }
+  // §6.4: the strip's back key returns to the place the file was opened from.
+  await page.evaluate(()=>scrollTo(0,0));await page.waitForTimeout(300);const back=await page.evaluate(()=>Nightwire.debug.state().returnTo||'library');await page.locator('.reader-toolbar .strip-back').click();await page.waitForFunction(back=>document.body.dataset.view===back,back);
   await toDesk();
   for(const width of [320,412,800,1280]){await page.setViewportSize({width,height:915});assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),`Long filename widens home at ${width}px`);await page.locator('[data-action="library"]').first().evaluate(el=>el.click());assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),`Long filename widens library at ${width}px: ${JSON.stringify(await page.evaluate(()=>[...document.querySelectorAll("main *")].filter(el=>el.getBoundingClientRect().right>innerWidth+1).slice(0,10).map(el=>({tag:el.tagName,cls:el.className,right:el.getBoundingClientRect().right,text:el.textContent.slice(0,60)}))))}`);await page.locator('[data-action="home"]').first().evaluate(el=>el.click());}
   assert.deepEqual(errors,[]);

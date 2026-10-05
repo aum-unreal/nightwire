@@ -3,8 +3,8 @@ body[data-view=terminal][data-terminal-presentation] .main-column{height:100dvh;
 .terminal-main[data-terminal-size]{height:min(var(--terminal-height),calc(100dvh - var(--mobile-nav-height,0px)));min-height:0;padding:12px 18px;box-sizing:border-box}
 .terminal-main[data-terminal-size] .terminal-deck{height:100%;min-height:0;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto minmax(0,1fr) auto auto auto;grid-template-areas:"header" "file" "monitor" "transport" "speed" "options";gap:9px;max-width:760px}
 .terminal-main[data-terminal-size] .terminal-header,.terminal-main[data-terminal-size] .deck-header{grid-area:header;margin:0;min-width:0}
-.terminal-header-tools{display:flex;align-items:center;gap:4px}.terminal-header-tools>.icon-btn{width:38px;min-width:38px;height:38px}
-.terminal-main[data-terminal-size] .terminal-header h1{font-size:26px;margin:3px 0 0}
+.terminal-header-tools{display:flex;align-items:center;gap:6px}.terminal-header-tools>.icon-btn{width:38px;min-width:38px;height:38px}
+.terminal-main[data-terminal-size] .terminal-header h1{font-size:26px;margin:3px 0 0;white-space:nowrap}
 .terminal-main[data-terminal-size] .terminal-header .terminal-label{font-size:11px}
 .terminal-main[data-terminal-size] .terminal-header .button{min-height:38px;padding:8px 11px;gap:7px;font-size:11px}
 .terminal-main[data-terminal-size] .terminal-header .button svg:last-child{display:none}
@@ -103,7 +103,7 @@ body[data-view=terminal][data-terminal-presentation] .main-column{height:100dvh;
 .terminal-main[data-terminal-landscape=true] .terminal-stage #terminal-words{font-size:36px}
 .terminal-main[data-terminal-landscape=true] .terminal-section{display:none}
 
-@media(max-width:360px){.terminal-main[data-terminal-size] .terminal-header-tools{gap:0}.terminal-main[data-terminal-size] .terminal-header-tools>.icon-btn{width:32px;min-width:32px}.terminal-main[data-terminal-size] .terminal-header .button{padding-inline:8px}.cyberdeck-root[data-terminal-size] .deck-system-keys .icon-btn{width:32px;min-width:32px}}
+@media(max-width:360px){.terminal-main[data-terminal-size] .terminal-header-tools{gap:12px}.terminal-main[data-terminal-size] .terminal-header-tools>.icon-btn{width:32px;min-width:32px}.terminal-main[data-terminal-size] .terminal-header .button{padding-inline:8px}.cyberdeck-root[data-terminal-size] .deck-system-keys .icon-btn{width:32px;min-width:32px}}
 
 .terminal-main[data-terminal-landscape=true] .terminal-speed{min-height:0;padding-block:6px}
 .terminal-main[data-terminal-landscape=true] .terminal-ruler,.terminal-main[data-terminal-landscape=true] .terminal-ruler input{height:28px}

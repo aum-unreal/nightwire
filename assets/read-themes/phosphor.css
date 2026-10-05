@@ -1,15 +1,15 @@
 /* PHOSPHOR — a prose buffer inside a monochrome command workstation. */
-.terminal-main.theme-phosphor[data-terminal-size]{--phosphor:#a8eeb9;--phosphor-dim:#72967b;--phosphor-line:#294d33;--muted:#84a28c;--subtle:#57755f;--text:#c4e6cb;--read-text:#c4e6cb;--surface:#07100a;--raised:#0c180f;--line:#294d33;background:#000;padding:10px 12px;font-family:var(--mono)}
+.terminal-main.theme-phosphor[data-terminal-size]{--phosphor:#a8eeb9;--phosphor-dim:#72967b;--phosphor-line:#294d33;--muted:#84a28c;--subtle:#66896f;--text:#c4e6cb;--read-text:#c4e6cb;--surface:#07100a;--raised:#0c180f;--line:#294d33;background:#000;padding:10px 12px;font-family:var(--mono)}
 .terminal-main.theme-phosphor[data-terminal-size] .terminal-deck{max-width:800px;padding:5px;border:1px solid #355c40;background:#020704;box-shadow:inset 0 0 0 3px #000,0 0 0 1px #070f09;gap:0;border-radius:0;position:relative}
 .terminal-main.theme-phosphor[data-terminal-size] .terminal-header{gap:8px;min-height:45px;padding:0 7px 5px;border-bottom:1px solid var(--phosphor-line)}
 .terminal-main.theme-phosphor[data-terminal-size] .phosphor-title{min-width:0}
 .terminal-main.theme-phosphor[data-terminal-size] .terminal-header .terminal-label{font:11px var(--mono);letter-spacing:0;color:var(--phosphor-dim)}
 .terminal-main.theme-phosphor[data-terminal-size] .terminal-header h1{font:500 20px/1.1 var(--mono);letter-spacing:-.06em;color:var(--phosphor);margin:2px 0 0;white-space:nowrap}
 .terminal-main.theme-phosphor[data-terminal-size] .terminal-header h1>span{display:inline-block;font-size:11px;margin-left:7px;vertical-align:middle;opacity:.55}
-.terminal-main.theme-phosphor[data-terminal-size] .terminal-header-tools{gap:3px}
+.terminal-main.theme-phosphor[data-terminal-size] .terminal-header-tools{gap:12px}
 .terminal-main.theme-phosphor[data-terminal-size] .terminal-header-tools>.icon-btn{width:32px;min-width:32px;height:32px;border:1px solid var(--phosphor-line);border-radius:0;color:var(--phosphor);background:#060d08}
 .terminal-main.theme-phosphor[data-terminal-size] .terminal-header-tools svg{width:15px;height:15px}
-.terminal-main.theme-phosphor[data-terminal-size] .terminal-file{min-height:36px;padding:5px 9px;gap:9px;background:#060e08;border:0;border-bottom:1px solid var(--phosphor-line);color:var(--phosphor);font-family:var(--mono)}
+.terminal-main.theme-phosphor[data-terminal-size] .terminal-file{min-height:44px;padding:5px 9px;gap:9px;background:#060e08;border:0;border-bottom:1px solid var(--phosphor-line);color:var(--phosphor);font-family:var(--mono)}
 .terminal-main.theme-phosphor[data-terminal-size] .phosphor-command{white-space:nowrap;font-size:11px;color:var(--phosphor-dim)}
 .terminal-main.theme-phosphor[data-terminal-size] .terminal-filename{font-size:11px}
 .terminal-main.theme-phosphor[data-terminal-size] .terminal-monitor{padding:10px 12px 7px;border:0;border-radius:0;background:#000;box-shadow:inset 0 0 28px #132b1820;isolation:isolate}
@@ -33,17 +33,17 @@
 .terminal-main.theme-phosphor[data-terminal-size] .terminal-play.button{min-height:43px;height:43px;border-radius:1px;border:1px solid #9cd9aa;background:#93cfa1;color:#06130a;font:600 12px var(--mono);letter-spacing:0;box-shadow:inset 0 1px 0 #d2ffdf,0 2px 0 #000;padding:5px 8px;gap:6px}
 .terminal-main.theme-phosphor[data-terminal-size] .terminal-speed{border:0;border-radius:0;box-shadow:none;background:#040a06;padding:8px 10px 5px;border-bottom:1px solid var(--phosphor-line)}
 .terminal-main.theme-phosphor[data-terminal-size] .terminal-speed-title{font:11px var(--mono);letter-spacing:0;color:var(--phosphor-dim)}
-.terminal-main.theme-phosphor[data-terminal-size] .terminal-speed-value{margin:6px 0 3px;gap:12px}
+.terminal-main.theme-phosphor[data-terminal-size] .terminal-speed-value{margin:6px 0 5px;gap:12px}
 .terminal-main.theme-phosphor[data-terminal-size] .terminal-speed-value>div{gap:7px;min-width:0}
 .terminal-main.theme-phosphor[data-terminal-size] .terminal-speed-value output{font:500 32px/1 var(--mono);letter-spacing:-.06em;color:var(--phosphor)}
 .terminal-main.theme-phosphor[data-terminal-size] .terminal-speed-value span{font-size:11px;letter-spacing:0;color:var(--phosphor-dim)}
 .terminal-main.theme-phosphor[data-terminal-size] .speed-step.icon-btn{border:1px solid #385943;border-radius:1px;background:#102017;color:var(--phosphor);width:34px;min-width:34px;height:34px;box-shadow:inset 0 1px 0 #ffffff09,0 2px 0 #000}
-.terminal-main.theme-phosphor[data-terminal-size] .terminal-ruler{height:28px;background:repeating-linear-gradient(90deg,#4e7759 0 1px,transparent 1px calc(100% / 46));background-size:100% 5px;background-repeat:no-repeat;background-position:center;margin-inline:6px}
+.terminal-main.theme-phosphor[data-terminal-size] .terminal-ruler{height:44px;background:repeating-linear-gradient(90deg,#4e7759 0 1px,transparent 1px calc(100% / 46));background-size:100% 5px;background-repeat:no-repeat;background-position:center;margin-inline:6px}
 .terminal-main.theme-phosphor[data-terminal-size] .terminal-ruler::after{opacity:.25;inset:8px 0}
-.terminal-main.theme-phosphor[data-terminal-size] .terminal-ruler input{height:28px}
+.terminal-main.theme-phosphor[data-terminal-size] .terminal-ruler input{height:44px}
 .terminal-main.theme-phosphor[data-terminal-size] .terminal-ruler input::-webkit-slider-thumb{border:1px solid #91b29b;border-radius:0;background:#183b24;box-shadow:inset 0 0 0 3px #0b1d10;width:20px;height:24px}
 .terminal-main.theme-phosphor[data-terminal-size] .terminal-needle{height:4px;background:var(--accent)}
-.terminal-main.theme-phosphor[data-terminal-size] .terminal-presets{padding-top:3px;margin-top:0;border-top:1px solid var(--phosphor-line);gap:4px}
+.terminal-main.theme-phosphor[data-terminal-size] .terminal-presets{padding-top:8px;margin-top:0;border-top:1px solid var(--phosphor-line);gap:4px}
 .terminal-main.theme-phosphor[data-terminal-size] .terminal-presets button{min-height:31px;border:1px solid #294d33;background:#0c1910;border-radius:1px;color:var(--phosphor);font:11px var(--mono);display:flex;justify-content:space-between;align-items:center;gap:3px;padding:4px 7px}
 
 .terminal-main.theme-phosphor[data-terminal-size] .terminal-presets button[aria-pressed=true]{background:#142c1c;border-color:#6b9677;color:#e2f7e6;box-shadow:inset 0 1px 2px #000;transform:translateY(1px)}
@@ -71,6 +71,8 @@
 .terminal-main.theme-phosphor[data-terminal-size=compact] .terminal-speed-value output{font-size:27px}
 .terminal-main.theme-phosphor[data-terminal-size=compact] .terminal-speed-value span{font-size:11px}
 .terminal-main.theme-phosphor[data-terminal-size=compact] .speed-step.icon-btn{width:28px;min-width:28px;height:32px}
+.terminal-main.theme-phosphor[data-terminal-size=compact] .terminal-ruler,.terminal-main.theme-phosphor[data-terminal-size=compact] .terminal-ruler input{height:28px}
+.terminal-main.theme-phosphor[data-terminal-size=compact] .terminal-presets{padding-top:3px}
 .terminal-main.theme-phosphor[data-terminal-size=compact] .terminal-presets button{font-size:11px;padding:3px;min-height:29px;justify-content:center}
 
 .terminal-main.theme-phosphor[data-terminal-size=compact] .terminal-options{padding:7px;gap:6px}
