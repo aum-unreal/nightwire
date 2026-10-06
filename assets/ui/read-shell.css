@@ -6,3 +6,16 @@ body[data-terminal-presentation=phosphor] :is(.mobile-nav,.sidebar){--key-face:#
 body[data-terminal-presentation=mixtape] :is(.mobile-nav,.sidebar){--key-face:#1c1911;--key-edge:#4b4435;--key-ink:#c6b89b;--key-radius:2px;--slot-face:#be704f;--slot-ink:#fff0d8}
 body[data-terminal-presentation=orbital] :is(.mobile-nav,.sidebar){--key-face:#071116;--key-edge:#1a303d;--key-ink:#a4bfcc;--key-radius:0 0 9px 0;--slot-face:#0a141b;--slot-ink:#a4c7d8}
 body[data-terminal-presentation=nocturne] :is(.mobile-nav,.sidebar){--key-face:#0c070f;--key-edge:#342838;--key-ink:#b3a8b9;--key-radius:0;--slot-face:#211529;--slot-ink:#d6c8dc}
+/* The skipped-block key: code, diagrams, images and tables the word stream passed. It takes the mode readout's place
+   for a while after the block, lit like a pip, never filled. Each instrument's monitor ink colours the label. */
+.terminal-monitor-top.has-aside #terminal-mode{display:none}
+.read-aside{display:inline-flex;align-items:center;gap:7px;min-width:0;max-width:62%;min-height:44px;margin:-10px 0 -10px auto;padding:0 10px;border:1px solid color-mix(in srgb,currentColor 28%,transparent);border-radius:3px;background:transparent;color:inherit;font:inherit;font-family:var(--data);font-size:11px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.read-aside[hidden]{display:none}
+.read-aside .pip{background:radial-gradient(circle at 40% 35%,var(--lamp-hi),var(--lamp) 55%,var(--lamp-dim));box-shadow:var(--pip-glow)}
+.read-aside-label{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.read-aside-go{flex:none;opacity:.8}
+.read-aside:active{transform:translateY(1px)}
+.read-aside:focus-visible{outline:2px solid var(--lamp);outline-offset:2px}
+@media (prefers-reduced-motion:no-preference){.read-aside:not([hidden]){animation:read-aside-in .22s var(--ease,ease-out)}}
+@keyframes read-aside-in{from{opacity:0;transform:translateY(-3px)}}
+body.no-motion .read-aside{animation:none}

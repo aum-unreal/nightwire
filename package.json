@@ -1,6 +1,6 @@
 {
   "name": "nightwire",
-  "version": "0.9.3",
+  "version": "0.10.0",
   "description": "OLED Markdown reader for Android with direct file opening, full-text search and graph navigation",
   "main": "index.js",
   "directories": {

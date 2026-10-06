@@ -17,3 +17,14 @@ test('empty input, malformed preferences and late callbacks stay bounded',async(
  const empty=new WordPlayer([]);empty.play();assert.equal(empty.playing,false);
  let pending;const p=new WordPlayer([{text:'one'},{text:'two'},{text:'three'}],{index:-1,schedule:fn=>{pending=fn;return 1;},cancel:()=>{}});p.play();pending();assert.equal(p.index,1,'Late callbacks advance one frame');p.pause();pending();assert.equal(p.index,1);p.seek(999);assert.equal(p.index,3);p.play();assert.equal(p.index,0);p.destroy();
 });
+test('Read keeps skipped code, diagrams, tables and images as asides with Page lines',async()=>{
+ const {readingWords,asideAt,sectionStart}=await core;
+ const src='# Doc\n\nIntro words here.\n\n## Build\n\nRun this:\n\n```js\nconst x=1;\n```\n\nThen look:\n\n```mermaid\ngraph TD;A-->B\n```\n\n| a | b |\n|---|---|\n| 1 | 2 |\n\n![chart](data:image/png;base64,AA==) after image\n\n<!-- comment -->\n\nEnd.\n';
+ const a=C.analyze(src,'d.md'),words=readingWords(a),kinds=words.asides.map(x=>x.kind);
+ assert.deepEqual(kinds,['code','diagram','table','image']);
+ assert.deepEqual(words.asides.map(x=>x.label),['js code','mermaid diagram','Table','Image · chart']);
+ const code=words.asides[0];assert.equal(words[code.index].text,'Then');assert.equal(code.line,9);assert.equal(code.anchor,'build');
+ assert.equal(asideAt(words,code.index-1),null);assert.equal(asideAt(words,code.index),code);assert.equal(asideAt(words,code.index-1,2),code);
+ const many=Object.assign(Array.from({length:100},()=>({text:'x'})),{asides:[{index:5,kind:'code'}]});assert.ok(asideAt(many,52));assert.equal(asideAt(many,53),null);
+ assert.equal(words[sectionStart(words,'build')].text,'Build');assert.equal(sectionStart(words,'missing'),null);
+});

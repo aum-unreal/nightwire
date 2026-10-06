@@ -90,3 +90,4 @@
 
 /* Hover names on fine pointers only (force-graph's tooltip) */
 .graph-frame .float-tooltip-kap{padding:4px 8px;border-radius:var(--r-paper);background:var(--ink-3);box-shadow:var(--paper-lit);font:400 var(--fs-data)/1.3 var(--data);color:var(--text)}
+.map-tag-read{grid-column:1/-1;justify-self:start;margin-top:6px}

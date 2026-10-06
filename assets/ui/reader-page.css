@@ -181,3 +181,5 @@ body.focus-mode .document-container{padding-top:calc(56px + env(safe-area-inset-
 
 /* Tools › Settings is the phone reader's Preferences entry only; in tray mode the rail keeps the one visible key (§8). */
 @media (min-width:801px){html:not(.is-short) .tools-group[aria-label="Settings"]{display:none}}
+/* A block opened from Read's skipped-block key: a pool of lamp light on it that fades. */
+#markdown .is-aside-target{outline:1px solid var(--lamp);outline-offset:6px;box-shadow:0 0 0 6px color-mix(in srgb,var(--lamp) 8%,transparent);transition:outline-color 1.6s ease .9s,box-shadow 1.6s ease .9s}

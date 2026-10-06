@@ -1,10 +1,10 @@
 import {typefaceTrigger} from './reader-fonts.js';
 import {readStyle} from './read-styles.js';
 import {instrumentMarkup} from './read-theme-registry.js';
-import {readingWords,WordPlayer,clampWpm,bionicParts} from './terminal-core.js';
+import {readingWords,WordPlayer,clampWpm,bionicParts,asideAt} from './terminal-core.js';
 // Sentence-case readout shared by every instrument's monitor: "1 word · bionic".
 export const modeText=(group,settings)=>`${group===2?'2 words':'1 word'} · ${settings.terminalBionic!==false?'bionic':'plain'}`;
-export function createTerminal({root,doc,index,settings,save,saveSettings,icon,escape:esc,motion,feedback,icons,onDocument,onFiles,onStyleChange,onPlaying}) {
+export function createTerminal({root,doc,index,settings,save,saveSettings,icon,escape:esc,motion,feedback,icons,onDocument,onAside,onMap,onFiles,onStyleChange,onPlaying}) {
  const words=readingWords(doc.analysis),wpm=clampWpm(settings.terminalWpm),group=settings.terminalGroup===2?2:1;
  const presentation=readStyle(settings.terminalStyle);
  root.className='terminal-main theme-'+presentation+(presentation==='cyberdeck'?' cyberdeck-root':presentation==='classic'?'':' vibe-root vibe-'+presentation);
@@ -12,6 +12,9 @@ export function createTerminal({root,doc,index,settings,save,saveSettings,icon,e
  root.dataset.terminalAlignment=settings.terminalAlignment==='center'?'center':'fixed';
  root.innerHTML=instrumentMarkup({doc,words,wpm,group,settings,icon,esc,presentation});
  root.querySelector('.terminal-header-tools,.deck-system-keys').insertAdjacentHTML('afterbegin',`<button class="icon-btn" id="terminal-blackout" aria-label="Blackout reading"><svg class="glyph" aria-hidden="true"><use href="#g-visor"/></svg></button>`);
+ root.querySelector('.terminal-header-tools,.deck-system-keys').insertAdjacentHTML('beforeend',`<button class="icon-btn" id="terminal-map" aria-label="Map this section"><svg class="glyph" aria-hidden="true"><use href="#g-map"/></svg></button>`);
+ // The word stream skips code, diagrams, images and tables; a lit key offers the skipped block on the Page for a while after it passes.
+ root.querySelector('#terminal-mode').insertAdjacentHTML('afterend',`<button class="read-aside" id="terminal-aside" hidden><span class="pip" aria-hidden="true"></span><span class="read-aside-label"></span><span class="read-aside-go" aria-hidden="true">Page →</span></button>`);
  root.querySelector('.terminal-monitor-top').insertAdjacentHTML('beforeend',typefaceTrigger(settings.font,esc));
  const $=s=>root.querySelector(s),events=new AbortController(),signal=events.signal;
  let pulse=null,needleMotion=null,dialMotion=null,entryMotion=null,disposed=false,player,blackoutSurface=null,stagePlaceholder=null,wasPlaying=false;
@@ -82,6 +85,12 @@ export function createTerminal({root,doc,index,settings,save,saveSettings,icon,e
   const progress=words.length?position/words.length*100:0;root.style.setProperty('--word-progress',progress);root.style.setProperty('--reel-turn',position*9+'deg');$('#terminal-percent').textContent=Math.round(progress)+'%';$('#terminal-seek').value=position;$('#terminal-seek').style.setProperty('--position',progress+'%');
   const remaining=Math.ceil((words.length-position)/player.wpm*60);$('#terminal-remaining').textContent=left(remaining)+' left';root.querySelectorAll('.serial-left').forEach(el=>el.textContent=left(remaining)+' left');
   const heading=doc.analysis.headings.find(h=>h.id===values[0]?.anchor);$('#terminal-section').textContent=heading?.text||doc.analysis.title;$('#terminal-section').title=heading?.text||doc.analysis.title;
+  showAside(asideAt(words,position,player.group));
+ }
+ let aside=null;
+ function showAside(next){
+  if(next===aside)return;aside=next;const key=$('#terminal-aside');$('.terminal-monitor-top').classList.toggle('has-aside',!!next);key.hidden=!next;if(!next)return;
+  key.querySelector('.read-aside-label').textContent=next.label;key.dataset.kind=next.kind;key.setAttribute('aria-label',`Show the skipped ${next.label} on the page`);
  }
  function status(){if(disposed)return;$('#terminal-status').textContent=player.playing?'Reading':player.index===words.length&&words.length?'Finished':'Paused';if(player.playing!==wasPlaying){wasPlaying=player.playing;onPlaying?.(wasPlaying);}$('.terminal-monitor').classList.toggle('streaming',player.playing);$('#terminal-play').innerHTML=icon(player.playing?'pause':'play')+`<span>${player.playing?'Pause':player.index===words.length&&words.length?'Replay':'Start'}</span>`;$('#terminal-play').setAttribute('aria-label',player.playing?'Pause reading':'Start reading');icons();persist();}
  player=new WordPlayer(words,{index,wpm,group,onFrame:frame,onState:status});player.emit();status();
@@ -108,6 +117,9 @@ export function createTerminal({root,doc,index,settings,save,saveSettings,icon,e
  on($('#terminal-bionic'),'click',()=>{feedback();settings.terminalBionic=settings.terminalBionic===false;$('#terminal-bionic').setAttribute('aria-pressed',settings.terminalBionic);saveSettings();updateMode();player.emit();});
  on($('#terminal-file'),'click',()=>{feedback();player.pause();onFiles();});
  on($('#terminal-document'),'click',()=>onDocument(words[Math.min(player.index,words.length-1)]?.anchor));
+ on($('#terminal-aside'),'click',()=>{if(!aside)return;feedback();player.pause();persist();onAside?.(aside);});
+ on($('#terminal-map'),'click',()=>{feedback();player.pause();persist();onMap?.(words[Math.min(player.index,words.length-1)]?.anchor);});
+ $('#terminal-map').disabled=!words.length;
  on(document,'keydown',e=>{if(blackoutSurface&&(e.key==='Escape'||e.key==='Enter')){e.preventDefault();exitBlackout();return;}if(e.ctrlKey||e.altKey||e.metaKey||e.target.closest('input,select,textarea,button,[contenteditable]')||document.querySelector('dialog[open]'))return;if(e.key===' '){e.preventDefault();toggle();}else if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();player.step(e.key==='ArrowLeft'?-1:1);persist();}});
  const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
  on(reducedMotion,'change',()=>{if(!motion()){entryMotion?.revert();entryMotion=null;speed(player.wpm,false);}});
